@@ -183,3 +183,24 @@ managed using lock files.")
 	  ocaml-metrics-unix))
    (native-inputs
     (list ocaml-qcheck ocaml-hex ocaml-vector))))
+
+(define-public ocaml-irmin-tezos
+  (package
+   (inherit irmin)
+   (name "ocaml-irmin-tezos")
+   (arguments `(#:package "irmin-tezos"))
+   (propagated-inputs
+    (list ocaml-irmin
+	  ocaml-irmin-pack
+	  ocaml-ppx-irmin
+	  ocaml-tezos-base58
+	  ocaml-digestif
+	  ocaml-cmdliner
+	  ocaml-fmt
+	  ocaml-yojson
+	  gmp))
+   (native-inputs
+    (list ocaml-alcotest
+	  ocaml-hex
+	  ocaml-fpath
+	  ocaml-irmin-test))))
