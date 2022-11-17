@@ -322,3 +322,15 @@ are (will be) provided by default.  Metrics is heavily inspired by
     (list ocaml-alcotest
 	  ocaml-metrics-lwt
 	  gnuplot))))
+
+(define-public ocaml-alcotest-lwt
+  (package
+    (inherit ocaml-alcotest)
+    (name "ocaml-alcotest-lwt")
+    (arguments
+     `(#:package "alcotest-lwt"
+       #:tests? #f))
+    (propagated-inputs
+     `(("ocaml-alcotest" ,ocaml-alcotest)
+       ("ocaml-lwt" ,ocaml-lwt)
+       ("ocaml-logs" ,ocaml-logs)))))
