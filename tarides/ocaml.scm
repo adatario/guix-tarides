@@ -132,3 +132,26 @@ depends on target architecture.")
 declaratively specifying progress bar formats.  Supports rendering multiple
 progress bars simultaneously.")
    (license license:expat)))
+
+(define-public ocaml-semaphore-compat
+  (package
+   (name "ocaml-semaphore-compat")
+   (version "1.0.1")
+   (home-page "https://github.com/mirage/semaphore-compat")
+   (source
+    (origin
+     (method git-fetch)
+     (uri (git-reference
+	   (url home-page)
+	   (commit version)))
+     (file-name (git-file-name name version))
+     (sha256
+      (base32
+       "1k6pbc0170166wif6a92lc77ifhmb1hydx9r1h3wlpsz2r3j59ds"))))
+   (build-system dune-build-system)
+   (arguments `(#:test-target "."))
+   (synopsis "Compatibility Semaphore module")
+   (description
+    "Projects that want to use the Semaphore module defined in OCaml 4.12.0 while
+staying compatible with older versions of OCaml should use this library instead.")
+   (license license:lgpl2.0)))
