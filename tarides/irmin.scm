@@ -83,7 +83,7 @@ unikernels.")
 
 (define-public ocaml-ppx-irmin
   (package
-   (inherit irmin-dev-local)
+   (inherit irmin)
    (name "ocaml-ppx-irmin")
    (arguments `(#:package "ppx_irmin"))
    (propagated-inputs (list ocaml-ppx-repr ocaml-logs))
@@ -91,7 +91,7 @@ unikernels.")
 
 (define-public ocaml-irmin
   (package
-   (inherit irmin-dev-local)
+   (inherit irmin)
    (name "ocaml-irmin")
    (arguments `(#:package "irmin"))
    (propagated-inputs
@@ -149,7 +149,7 @@ managed using lock files.")
 
 (define-public ocaml-irmin-pack
   (package
-   (inherit irmin-dev-local)
+   (inherit irmin)
    (name "ocaml-irmin-pack")
    (arguments `(#:package "irmin-pack"))
    (propagated-inputs
@@ -164,3 +164,22 @@ managed using lock files.")
 	  ocaml-optint
 	  ocaml-checkseum
 	  ocaml-rusage))))
+
+(define-public ocaml-irmin-test
+  (package
+   (inherit irmin)
+   (name "ocaml-irmin-test")
+   (arguments `(#:package "irmin-test"))
+   (propagated-inputs
+    (list ocaml-alcotest
+	  ocaml-astring
+	  ocaml-fmt
+	  ocaml-irmin
+	  ocaml-jsonm
+	  ocaml-fmt
+	  ocaml-lwt
+	  ocaml-mtime
+	  ocaml-alcotest-lwt
+	  ocaml-metrics-unix))
+   (native-inputs
+    (list ocaml-qcheck ocaml-hex ocaml-vector))))
