@@ -3,7 +3,7 @@
 ; SPDX-License-Identifier: GPL-3.0-or-later
 
 (define-module (tarides irmin)
-  #:use-module (guix package)
+  #:use-module (guix packages)
   #:use-module (guix git)
   #:use-module (guix git-download)
   #:use-module (guix build-system dune)
@@ -11,7 +11,9 @@
   #:use-module (gnu packages ocaml)
   #:use-module (gnu packages maths)
   #:use-module (gnu packages multiprecision)
-  #:use-module (gnu packages pkg-config))
+  #:use-module (gnu packages pkg-config)
+
+  #:use-module (tarides ocaml))
 
 (define-public ocaml-repr
   (let (;; Tests are fixed in an unreleased commit (https://github.com/mirage/repr/pull/100)
@@ -107,3 +109,41 @@ unikernels.")
 	  ocaml-astring))
    (native-inputs (list ocaml-alcotest ocaml-vector ocaml-fmt))))
 
+(define-public ocaml-index
+  (package
+   (name "ocaml-index")
+   (version "1.6.1")
+   (home-page "https://github.com/mirage/index")
+   (source
+    (origin
+     (method git-fetch)
+     (uri (git-reference
+	   (url home-page)
+	   (commit version)))
+     (file-name (git-file-name name version))
+     (sha256
+      (base32
+       "0bw2yvjp5ccibfzhil58ks8w7pws8ln2a8kf1m2dxj7ywwfncpas"))))
+   (build-system dune-build-system)
+   (propagated-inputs (list ocaml-optint
+			    ocaml-repr
+			    ocaml-ppx-repr
+			    ocaml-fmt
+			    ocaml-logs
+			    ocaml-mtime
+			    ocaml-cmdliner
+			    ocaml-progress
+			    ocaml-semaphore-compat
+			    ocaml-jsonm
+			    ocaml-stdlib-shims
+			    ocaml-lru))
+   (native-inputs (list ocaml-alcotest ocaml-crowbar ocaml-re))
+   (synopsis "A platform-agnostic multi-level index for OCaml")
+   (description
+    "Index is a scalable implementation of persistent indices in OCaml.  It takes an
+arbitrary IO implementation and user-supplied content types and supplies a
+standard key-value interface for persistent storage.  Index provides instance
+sharing: each OCaml run-time can share a common singleton instance.  Index
+supports multiple-reader/single-writer access.  Concurrent access is safely
+managed using lock files.")
+   (license license:expat)))
