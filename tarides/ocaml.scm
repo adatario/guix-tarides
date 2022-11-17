@@ -7,7 +7,10 @@
   #:use-module (guix git-download)
   #:use-module (guix build-system dune)
   #:use-module ((guix licenses) #:prefix license:)
-  #:use-module (gnu packages ocaml))
+  #:use-module (gnu packages ocaml)
+  #:use-module (gnu packages maths)
+  #:use-module (gnu packages multiprecision)
+  #:use-module (gnu packages pkg-config))
 
 (define-public ocaml-monolith
   (package
@@ -203,3 +206,37 @@ your head because that A* didn't look quite right, a PSQ is what you needed.")
     "Lru provides weight-bounded finite maps that can remove the least-recently-used
 (LRU) bindings in order to maintain a weight constraint.")
    (license license:isc)))
+
+(define-public ocaml-checkseum
+  (package
+   (name "ocaml-checkseum")
+   (version "0.4.0")
+   (home-page "https://github.com/mirage/checkseum")
+   (source
+    (origin
+     (method git-fetch)
+     (uri (git-reference
+	   (url home-page)
+	   (commit (string-append "v" version))))
+     (file-name (git-file-name name version))
+     (sha256
+      (base32
+       "10xi3g1jini3nlijhvdawsxpzpbaahx5wq7n7fzxcj29dm29bzns"))))
+   (build-system dune-build-system)
+   (propagated-inputs (list ocaml-optint))
+   (native-inputs
+    (list pkg-config
+	  ocaml-alcotest
+	  ocaml-bos
+	  ocaml-astring
+	  ocaml-fmt
+	  ocaml-fpath
+	  ocaml-rresult
+	  ocaml-findlib))
+   (synopsis "Adler-32, CRC32 and CRC32-C implementation in C and OCaml")
+   (description
+    "Checkseum is a library to provide implementation of Adler-32, CRC32 and CRC32-C
+in C and OCaml.  This library use the linking trick to choose between the C
+implementation (checkseum.c) or the OCaml implementation (checkseum.ocaml).
+This library is on top of optint to get the best representation of an int32.")
+   (license license:expat)))
