@@ -240,3 +240,24 @@ in C and OCaml.  This library use the linking trick to choose between the C
 implementation (checkseum.c) or the OCaml implementation (checkseum.ocaml).
 This library is on top of optint to get the best representation of an int32.")
    (license license:expat)))
+
+(define-public ocaml-rusage
+  (package
+   (name "ocaml-rusage")
+   (version "1.0.0")
+   (home-page "https://github.com/CraigFe/ocaml-rusage")
+   (source
+    (origin
+     (method git-fetch)
+     (uri (git-reference
+	   (url home-page)
+	   (commit version)))
+     (file-name (git-file-name name version))
+     (sha256
+      (base32
+       "1359xzd8i0ilgb7jrcqxnbi8p2gx1na5jli5f1pf327j8kf2vk2s"))))
+   (build-system dune-build-system)
+   (arguments `(#:test-target "."))
+   (synopsis "Bindings to the GETRUSAGE(2) syscall")
+   (description "Bindings to the GETRUSAGE(2) syscall")
+   (license license:expat)))
