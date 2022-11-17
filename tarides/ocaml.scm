@@ -179,3 +179,27 @@ staying compatible with older versions of OCaml should use this library instead.
     "Typical applications are searches, schedulers and caches.  If you ever scratched
 your head because that A* didn't look quite right, a PSQ is what you needed.")
    (license license:isc)))
+
+(define-public ocaml-lru
+  (package
+   (name "ocaml-lru")
+   (version "0.3.1")
+   (home-page "https://github.com/pqwy/lru")
+   (source
+    (origin
+     (method git-fetch)
+     (uri (git-reference
+	   (url home-page)
+	   (commit (string-append "v" version))))
+     (file-name (git-file-name name version))
+     (sha256
+      (base32
+       "0xjy0h484j5skrxax26vnj9kn6pf40dkj6rjghw02c467s3lcfv8"))))
+   (build-system dune-build-system)
+   (propagated-inputs (list ocaml-psq))
+   (native-inputs (list ocaml-qcheck ocaml-alcotest))
+   (synopsis "Scalable LRU caches")
+   (description
+    "Lru provides weight-bounded finite maps that can remove the least-recently-used
+(LRU) bindings in order to maintain a weight constraint.")
+   (license license:isc)))
