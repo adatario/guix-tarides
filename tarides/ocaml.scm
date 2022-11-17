@@ -299,3 +299,26 @@ are (will be) provided by default.  Metrics is heavily inspired by
    (arguments `(#:package "metrics-lwt"))
    (propagated-inputs
     (list ocaml-metrics ocaml-lwt ocaml-logs))))
+
+(define-public ocaml-metrics-unix
+  (package
+   (inherit ocaml-metrics)
+   (arguments `(#:package "metrics-unix"))
+   ;; This add fix from https://github.com/mirage/metrics/pull/58
+   (source
+    (origin
+     (method git-fetch)
+     (uri (git-reference
+	   (url "https://github.com/adatario/metrics")
+	   (commit "98f05cdb98ccc26d6cf61d66b8c47737243ea7af")))
+     (sha256
+      (base32
+       "14mlakahpkhckiv3vmpkdndgmm70g790a2ncjm4r73fcscpvrlbr"))))
+   (propagated-inputs
+    (list ocaml-metrics ocaml-uuidm ocaml-mtime
+	  ocaml-lwt
+	  ocaml-fmt))
+   (native-inputs
+    (list ocaml-alcotest
+	  ocaml-metrics-lwt
+	  gnuplot))))
