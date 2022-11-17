@@ -291,3 +291,11 @@ decoupled from monitoring and is handled by a custom reporter.  A few reporters
 are (will be) provided by default.  Metrics is heavily inspired by
 [Logs](http://erratique.ch/software/logs).")
    (license license:isc)))
+
+(define-public ocaml-metrics-lwt
+  (package
+   (inherit ocaml-metrics)
+   (name "ocaml-metrics-lwt")
+   (arguments `(#:package "metrics-lwt"))
+   (propagated-inputs
+    (list ocaml-metrics ocaml-lwt ocaml-logs))))
