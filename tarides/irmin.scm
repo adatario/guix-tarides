@@ -53,3 +53,57 @@ public consumption and provides no stability guarantee.")
    (propagated-inputs
     (list ocaml-repr ocaml-ppxlib))
    (native-inputs (list ocaml-alcotest ocaml-hex))))
+
+(define irmin
+  (let ((commit "117873112abd5929f4a8b928eacdaa2dac17c210")
+	(revision "0"))
+    (package
+     (name "irmin")
+     (version (git-version "3.4.3" revision commit))
+     (home-page "https://github.com/mirage/irmin")
+     (source
+      (origin
+       (method git-fetch)
+       (uri (git-reference
+	     (url home-page)
+	     (commit commit)))
+       (sha256
+	(base32
+	 "0gbgscypp1xc84vh0b4f35m000hhvl2dxxc5ffinqalcwrl72hdp"))))
+     (build-system dune-build-system)
+     (synopsis "Irmin, a distributed database that follows the same design
+principles as Git")
+    (description "Irmin is a library for persistent stores with built-in
+snapshot, branching and reverting mechanisms. It is designed to use a large
+variety of backends. Irmin is written in pure OCaml and does not depend on
+external C stubs; it aims to run everywhere, from Linux, to browsers and Xen
+unikernels.")
+    (license license:isc))))
+
+(define-public ocaml-ppx-irmin
+  (package
+   (inherit irmin-dev-local)
+   (name "ocaml-ppx-irmin")
+   (arguments `(#:package "ppx_irmin"))
+   (propagated-inputs (list ocaml-ppx-repr ocaml-logs))
+   (synopsis "PPX deriver for Irmin type representations")))
+
+(define-public ocaml-irmin
+  (package
+   (inherit irmin-dev-local)
+   (name "ocaml-irmin")
+   (arguments `(#:package "irmin"))
+   (propagated-inputs
+    (list ocaml-repr
+	  ocaml-fmt
+	  ocaml-uri
+	  ocaml-uutf
+	  ocaml-jsonm
+	  ocaml-ppx-irmin
+	  ocaml-digestif
+	  ocaml-graph
+	  ocaml-logs
+	  ocaml-bheap
+	  ocaml-astring))
+   (native-inputs (list ocaml-alcotest ocaml-vector ocaml-fmt))))
+
