@@ -100,3 +100,35 @@ depends on target architecture.")
    (synopsis "Resizable Arrays for OCaml")
    (description "An OCaml library that provides vectors - dynamic, growable arrays.")
    (license license:lgpl2.1)))
+
+(define-public ocaml-progress
+  (package
+   (name "ocaml-progress")
+   (version "0.2.1")
+   (home-page "https://github.com/CraigFe/progress")
+   (source
+    (origin
+     (method git-fetch)
+     (uri (git-reference
+	   (url home-page)
+	   (commit version)))
+     (file-name (git-file-name name version))
+     (sha256
+      (base32
+       "07yi7qbhf5lm4ykff78wxbp1nzyxl9f4a3ndlrgwrcri7w41miid"))))
+   (build-system dune-build-system)
+   (arguments `(#:test-target "."))
+   (propagated-inputs (list ocaml-fmt
+			    ocaml-logs
+			    ocaml-mtime
+			    ocaml-uucp
+			    ocaml-uutf
+			    ocaml-vector
+			    ocaml-optint))
+   (native-inputs (list ocaml-alcotest ocaml-astring))
+   (synopsis "User-definable progress bars")
+   (description
+    "This package provides a progress bar library for OCaml, featuring a DSL for
+declaratively specifying progress bar formats.  Supports rendering multiple
+progress bars simultaneously.")
+   (license license:expat)))
