@@ -4,7 +4,6 @@
 
 (define-module (tarides irmin)
   #:use-module (guix packages)
-  #:use-module (guix git)
   #:use-module (guix git-download)
   #:use-module (guix build-system dune)
   #:use-module ((guix licenses) #:prefix license:)
@@ -147,3 +146,21 @@ sharing: each OCaml run-time can share a common singleton instance.  Index
 supports multiple-reader/single-writer access.  Concurrent access is safely
 managed using lock files.")
    (license license:expat)))
+
+(define-public ocaml-irmin-pack
+  (package
+   (inherit irmin-dev-local)
+   (name "ocaml-irmin-pack")
+   (arguments `(#:package "irmin-pack"))
+   (propagated-inputs
+    (list ocaml-irmin
+	  ocaml-ppx-irmin
+	  ocaml-index
+	  ocaml-fmt
+	  ocaml-logs
+	  ocaml-lwt
+	  ocaml-mtime
+	  ocaml-cmdliner
+	  ocaml-optint
+	  ocaml-checkseum
+	  ocaml-rusage))))
