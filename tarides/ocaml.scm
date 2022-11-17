@@ -79,3 +79,24 @@ depends on target architecture.")
     (description
       "Traditional implementation using a binary heap encoded in a resizable array.")
     (license license:lgpl2.1)))
+
+(define-public ocaml-vector
+  (package
+   (name "ocaml-vector")
+   (version "1.0.0")
+   (home-page "https://github.com/backtracking/vector")
+   (source
+    (origin
+     (method git-fetch)
+     (uri (git-reference
+	   (url home-page)
+	   (commit version)))
+     (file-name (git-file-name name version))
+     (sha256
+      (base32
+       "00ga0sjljhg9f8vfj297m2bip5hw4cmx8i3fdalzdk1fkvj7qmj6"))))
+   (build-system dune-build-system)
+   (arguments `(#:test-target "."))
+   (synopsis "Resizable Arrays for OCaml")
+   (description "An OCaml library that provides vectors - dynamic, growable arrays.")
+   (license license:lgpl2.1)))
