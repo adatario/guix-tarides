@@ -155,3 +155,27 @@ progress bars simultaneously.")
     "Projects that want to use the Semaphore module defined in OCaml 4.12.0 while
 staying compatible with older versions of OCaml should use this library instead.")
    (license license:lgpl2.0)))
+
+(define-public ocaml-psq
+  (package
+   (name "ocaml-psq")
+   (version "0.2.1")
+   (home-page "https://github.com/pqwy/psq")
+   (source
+    (origin
+     (method git-fetch)
+     (uri (git-reference
+	   (url home-page)
+	   (commit (string-append "v" version))))
+     (file-name (git-file-name name version))
+     (sha256
+      (base32
+       "0ahxbzkbq5sw8sqv31c2lil2zny4076q8b0dc7h5slq7i2r23d79"))))
+   (build-system dune-build-system)
+   (propagated-inputs (list ocaml-seq))
+   (native-inputs (list ocaml-qcheck ocaml-alcotest))
+   (synopsis "Functional Priority Search Queues")
+   (description
+    "Typical applications are searches, schedulers and caches.  If you ever scratched
+your head because that A* didn't look quite right, a PSQ is what you needed.")
+   (license license:isc)))
