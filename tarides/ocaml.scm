@@ -55,3 +55,27 @@ guarantee efficient representation on 64-bit architectures and provide a
 best-effort boxed representation on 32-bit architectures.  Implementation
 depends on target architecture.")
    (license license:isc)))
+
+(define-public ocaml-bheap
+  (package
+    (name "ocaml-bheap")
+    (version "2.0.0")
+    (home-page "https://github.com/backtracking/bheap")
+    (source
+      (origin
+        (method git-fetch)
+        (uri (git-reference
+              (url home-page)
+              (commit version)))
+        (file-name (git-file-name name version))
+        (sha256
+          (base32
+            "0b8md5zl4yz7j62jz0bf7lwyl0pyqkxqx36ghkgkbkxb4zzggfj1"))))
+    (build-system dune-build-system)
+    (arguments `(#:test-target "."))
+    (native-inputs
+      `(("ocaml-stdlib-shims" ,ocaml-stdlib-shims)))
+    (synopsis "Priority queues")
+    (description
+      "Traditional implementation using a binary heap encoded in a resizable array.")
+    (license license:lgpl2.1)))
