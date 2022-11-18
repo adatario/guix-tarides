@@ -55,43 +55,41 @@ public consumption and provides no stability guarantee.")
     (list ocaml-repr ocaml-ppxlib))
    (native-inputs (list ocaml-alcotest ocaml-hex))))
 
-(define irmin
-  (let ((commit "117873112abd5929f4a8b928eacdaa2dac17c210")
-	(revision "0"))
-    (package
-     (name "irmin")
-     (version (git-version "3.4.3" revision commit))
-     (home-page "https://github.com/mirage/irmin")
-     (source
-      (origin
-       (method git-fetch)
-       (uri (git-reference
-	     (url home-page)
-	     (commit commit)))
-       (sha256
-	(base32
-	 "0gbgscypp1xc84vh0b4f35m000hhvl2dxxc5ffinqalcwrl72hdp"))))
-     (build-system dune-build-system)
-     (synopsis "Irmin, a distributed database that follows the same design
+(define irmin-3.4
+  (package
+   (name "irmin")
+   (version "3.4.3")
+   (home-page "https://github.com/mirage/irmin")
+   (source
+    (origin
+     (method git-fetch)
+     (uri (git-reference
+	   (url home-page)
+	   (commit version)))
+     (sha256
+      (base32
+       "0s914y34skcmz81jzgspi6frjcrplpzs7y42mviic854b5ixja9i"))))
+   (build-system dune-build-system)
+   (synopsis "Irmin, a distributed database that follows the same design
 principles as Git")
-    (description "Irmin is a library for persistent stores with built-in
+   (description "Irmin is a library for persistent stores with built-in
 snapshot, branching and reverting mechanisms. It is designed to use a large
 variety of backends. Irmin is written in pure OCaml and does not depend on
 external C stubs; it aims to run everywhere, from Linux, to browsers and Xen
 unikernels.")
-    (license license:isc))))
+   (license license:isc)))
 
-(define-public ocaml-ppx-irmin
+(define-public ocaml-ppx-irmin-3.4
   (package
-   (inherit irmin)
+   (inherit irmin-3.4)
    (name "ocaml-ppx-irmin")
    (arguments `(#:package "ppx_irmin"))
    (propagated-inputs (list ocaml-ppx-repr ocaml-logs))
    (synopsis "PPX deriver for Irmin type representations")))
 
-(define-public ocaml-irmin
+(define-public ocaml-irmin-3.4
   (package
-   (inherit irmin)
+   (inherit irmin-3.4)
    (name "ocaml-irmin")
    (arguments `(#:package "irmin"))
    (propagated-inputs
@@ -100,7 +98,7 @@ unikernels.")
 	  ocaml-uri
 	  ocaml-uutf
 	  ocaml-jsonm
-	  ocaml-ppx-irmin
+	  ocaml-ppx-irmin-3.4
 	  ocaml-digestif
 	  ocaml-graph
 	  ocaml-logs
@@ -147,14 +145,14 @@ supports multiple-reader/single-writer access.  Concurrent access is safely
 managed using lock files.")
    (license license:expat)))
 
-(define-public ocaml-irmin-pack
+(define-public ocaml-irmin-pack-3.4
   (package
-   (inherit irmin)
+   (inherit ocaml-irmin-3.4)
    (name "ocaml-irmin-pack")
    (arguments `(#:package "irmin-pack"))
    (propagated-inputs
-    (list ocaml-irmin
-	  ocaml-ppx-irmin
+    (list ocaml-irmin-3.4
+	  ocaml-ppx-irmin-3.4
 	  ocaml-index
 	  ocaml-fmt
 	  ocaml-logs
@@ -165,16 +163,16 @@ managed using lock files.")
 	  ocaml-checkseum
 	  ocaml-rusage))))
 
-(define-public ocaml-irmin-test
+(define-public ocaml-irmin-test-3.4
   (package
-   (inherit irmin)
+   (inherit ocaml-irmin-3.4)
    (name "ocaml-irmin-test")
    (arguments `(#:package "irmin-test"))
    (propagated-inputs
     (list ocaml-alcotest
 	  ocaml-astring
 	  ocaml-fmt
-	  ocaml-irmin
+	  ocaml-irmin-3.4
 	  ocaml-jsonm
 	  ocaml-fmt
 	  ocaml-lwt
@@ -184,15 +182,15 @@ managed using lock files.")
    (native-inputs
     (list ocaml-qcheck ocaml-hex ocaml-vector))))
 
-(define-public ocaml-irmin-tezos
+(define-public ocaml-irmin-tezos-3.4
   (package
-   (inherit irmin)
+   (inherit ocaml-irmin-3.4)
    (name "ocaml-irmin-tezos")
    (arguments `(#:package "irmin-tezos"))
    (propagated-inputs
-    (list ocaml-irmin
-	  ocaml-irmin-pack
-	  ocaml-ppx-irmin
+    (list ocaml-irmin-3.4
+	  ocaml-irmin-pack-3.4
+	  ocaml-ppx-irmin-3.4
 	  ocaml-tezos-base58
 	  ocaml-digestif
 	  ocaml-cmdliner
@@ -203,4 +201,4 @@ managed using lock files.")
     (list ocaml-alcotest
 	  ocaml-hex
 	  ocaml-fpath
-	  ocaml-irmin-test))))
+	  ocaml-irmin-test-3.4))))
