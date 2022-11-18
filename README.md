@@ -14,6 +14,8 @@ For more information see also the [Guix Reference Manual](https://guix.gnu.org/m
 
 ## Using the channel
 
+### Setup
+
 1. Instal Guix. On Debian stable a package is available (`apt install guix`). For other systems use the [binary installation](https://guix.gnu.org/manual/en/html_node/Binary-Installation.html). Currently only Linux systems are supported.
 
 2. Add the channel to your `~/.config/guix/channels.scm`:
@@ -29,4 +31,14 @@ For more information see also the [Guix Reference Manual](https://guix.gnu.org/m
 
 3. Run `guix pull`. This will fetch the channel.
 
-4. Run `guix shell -D ocaml-irmin-pack` to get a environment with all dependencies to build `irmin-pack`.
+### Updating the channel
+
+When package definitions are updated in this repository, you need to update your local copy by running `git pull`.
+
+It is possible to pull a specific commit of the package definitions for reproducible builds.
+
+### Creating an environment with some packages
+
+Run `guix shell ocaml-irmin ocaml-alcotest` to get a shell that has the OCaml packages Irmin and Alcotest installed.
+
+Note: make sure that OPAM does not overwrite the shell environment (this can happen if you run `eval $(opam env)` in your `.bashrc`). Run `guix shell --check` to check that this does not happen.
