@@ -355,3 +355,24 @@ are (will be) provided by default.  Metrics is heavily inspired by
     " This library contains no ocaml code, but instead implements all of the Zarith C
 stubs in Javascript for use in Js_of_ocaml")
    (license license:expat)))
+
+(define-public ocaml-ringo
+  (package
+   (name "ocaml-ringo")
+   (version "1.0.0")
+   (source
+    (origin
+     (method git-fetch)
+     (uri (git-reference
+	   (url "https://gitlab.com/nomadic-labs/ringo.git")
+	   (commit (string-append "v" version))))
+
+     (sha256
+      (base32
+       "1r9sifyyndh18187l8llvcjndh9z6dy3072zdh7v3in1dqrvfxgl"))))
+   (build-system dune-build-system)
+   (arguments `(#:package "ringo"))
+   (home-page "https://gitlab.com/nomadic-labs/ringo")
+   (synopsis "Ring data-structure and ring-derived data-structures for OCaml")
+   (description "Ring data-structure and ring-derived data-structures for OCaml")
+   (license license:expat)))
