@@ -356,6 +356,27 @@ are (will be) provided by default.  Metrics is heavily inspired by
 stubs in Javascript for use in Js_of_ocaml")
    (license license:expat)))
 
+(define-public ocaml-ringo-0.9
+  (package
+   (name "ocaml-ringo")
+   (version "0.9")
+   (source
+    (origin
+     (method git-fetch)
+     (uri (git-reference
+	   (url "https://gitlab.com/nomadic-labs/ringo.git")
+	   (commit (string-append "v" version))))
+
+     (sha256
+      (base32
+       "1mb7sv2ks5xdjkawmf7fqjb0p0hyp1az8myhqfld76kcnidgxxll"))))
+   (build-system dune-build-system)
+   (arguments `(#:package "ringo"))
+   (home-page "https://gitlab.com/nomadic-labs/ringo")
+   (synopsis "Ring data-structure and ring-derived data-structures for OCaml")
+   (description "Ring data-structure and ring-derived data-structures for OCaml")
+   (license license:expat)))
+
 (define-public ocaml-ringo
   (package
    (name "ocaml-ringo")
