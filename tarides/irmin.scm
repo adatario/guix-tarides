@@ -50,6 +50,7 @@ public consumption and provides no stability guarantee.")
 (define-public ocaml-ppx-repr
   (package
    (inherit ocaml-repr)
+   (name "ocaml-ppx-repr")
    (arguments `(#:package "ppx_repr"))
    (propagated-inputs
     (list ocaml-repr ocaml-ppxlib))
