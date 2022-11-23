@@ -503,3 +503,24 @@ the command line tool `omd`.")
    (synopsis "Purely functional splittable PRNG")
    (description #f)
    (license license:expat)))
+
+(define-public ocaml-bigstring
+  (package
+   (name "ocaml-bigstring")
+   (version "0.3")
+   (home-page "https://github.com/c-cube/ocaml-bigstring")
+   (source
+    (origin
+     (method git-fetch)
+     (uri (git-reference
+	   (url home-page)
+	   (commit version)))
+     (sha256
+      (base32
+       "0bkxwdcswy80f6rmx5wjza92xzq4rdqsb4a9fm8aav8bdqx021n8"))))
+   (build-system dune-build-system)
+   (native-inputs
+    (list ocaml-alcotest))
+   (synopsis "Overlay over bigarrays of chars (deprecated use ocaml-bigstringaf)")
+   (description #f)
+   (license license:bsd-2)))
