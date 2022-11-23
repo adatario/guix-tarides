@@ -449,3 +449,38 @@ the command line tool `omd`.")
     (list ocaml-uri
 	  ocaml-json-data-encoding
 	  ocaml-ocplib-endian))))
+
+(define-public ocaml-data-encoding
+  (package
+    (name "ocaml-data-encoding")
+    (version "0.7.1")
+    (source
+     (origin
+      (method git-fetch)
+      (uri (git-reference
+	    (url "https://gitlab.com/nomadic-labs/data-encoding.git")
+	    (commit (string-append "v" version))))
+
+      (sha256
+       (base32
+	"0998b3vhbaa1swl6xqj9n0j95ml6dhi5b2lg70mynlv85c4f4xap"))))
+    (build-system dune-build-system)
+    (propagated-inputs (list ocaml-ezjsonm
+                             ocaml-zarith
+                             ocaml-zarith-stubs-js
+			     gmp
+                             ocaml-hex
+                             ocaml-json-data-encoding
+                             ocaml-json-data-encoding-bson
+                             ocaml-either
+                             ocaml-ppx-hash
+                             ocamlformat
+                             ocaml-odoc))
+    (native-inputs (list ocaml-alcotest
+			 ocaml-crowbar
+			 ocaml-ppx-expect
+			 js-of-ocaml))
+    (home-page "https://gitlab.com/nomadic-labs/data-encoding")
+    (synopsis "Library of JSON and binary encoding combinators")
+    (description #f)
+    (license license:expat)))
