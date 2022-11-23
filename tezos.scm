@@ -53,6 +53,21 @@
    (description "Tezos")
    (license license:expat)))
 
+(define-public ocaml-tezos-test-helpers
+  (package
+   (inherit tezos)
+   (name "ocaml-tezos-test-helpers")
+   (propagated-inputs
+    (list ocaml-uri
+	  ocaml-fmt
+	  ocaml-qcheck
+	  ocaml-alcotest
+	  ocaml-lwt
+	  ocaml-data-encoding
+	  ocaml-pure-splitmix))
+   (arguments `(#:package "tezos-test-helpers"
+		#:test-target "."))))
+
 (define-public ocaml-tezos-stdlib
   (package
    (inherit tezos)
