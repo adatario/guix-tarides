@@ -77,13 +77,15 @@
 	  ocaml-hex
 	  ocaml-zarith
 	  ocaml-zarith-stubs-js
+	  gmp
 	  ocaml-ppx-expect
-	  ocaml-ringo-0.9
-	  gmp))
+	  ocaml-ringo-0.9))
    (native-inputs
     (list ocaml-alcotest
-	  ocaml-qcheck))
+	  ocaml-alcotest-lwt
+	  ocaml-qcheck
+	  ocaml-bigstring
+	  ocaml-tezos-test-helpers
+	  ocaml-lwt-log))
    (arguments `(#:package "tezos-stdlib"
-		#:test-target "."
-		;; TODO package tezos-test-helpers for tests
-		#:tests? #f))))
+		#:test-target "."))))
