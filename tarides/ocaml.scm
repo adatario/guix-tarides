@@ -390,3 +390,29 @@ stubs in Javascript for use in Js_of_ocaml")
    (synopsis "Ring data-structure and ring-derived data-structures for OCaml")
    (description "Ring data-structure and ring-derived data-structures for OCaml")
    (license license:expat)))
+
+(define-public ocaml-omd
+  (package
+    (name "ocaml-omd")
+    (version "2.0.0-alpha2")
+    (home-page "https://github.com/ocaml/omd")
+    (source
+     (origin
+      (method git-fetch)
+      (uri (git-reference
+	    (url home-page)
+	    (commit "2.0.0.alpha2")))
+      (sha256
+       (base32
+	"1wa14fqr048dyldv2ppdj6p8wnb75i3rjb4phk5kwp6g43p8bnka"))))
+    (build-system dune-build-system)
+    (arguments `(#:test-target "."))
+    (synopsis "A Markdown frontend in pure OCaml")
+    (description
+     "This Markdown library is implemented using only pure OCaml (including I/O
+operations provided by the standard OCaml compiler distribution).  OMD is meant
+to be as faithful as possible to the original Markdown.  Additionally, OMD
+implements a few Github markdown features, an extension mechanism, and some
+other features.  Note that the opam package installs both the OMD library and
+the command line tool `omd`.")
+    (license license:isc)))
