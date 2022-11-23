@@ -264,26 +264,29 @@ This library is on top of optint to get the best representation of an int32.")
    (license license:expat)))
 
 (define-public ocaml-metrics
-  (package
-   (name "ocaml-metrics")
-   (version "0.4.0")
-   (home-page "https://github.com/mirage/metrics")
-   (source
-    (origin
-     (method git-fetch)
-     (uri (git-reference
-	   (url home-page)
-	   (commit (string-append "v" version))))
-     (sha256
-      (base32
-       "1wwhf9vngbwsilvgngsjjgp05lq5404ih9vzz91a5gq4zfxkdq5z"))))
-   (build-system dune-build-system)
-   (arguments `(#:package "metrics"))
-   (propagated-inputs (list ocaml-fmt))
-   (native-inputs (list ocaml-alcotest))
-   (synopsis "Metrics infrastructure for OCaml")
-   (description
-    "Metrics provides a basic infrastructure to monitor and gather runtime metrics
+  ;; Contains fix for more recent versions of mtime (see https://github.com/mirage/metrics/pull/58)
+  (let ((commit "995eb18d2837df02c8ead719c00fb156cf475ab5")
+	(revision "0"))
+    (package
+     (name "ocaml-metrics")
+     (version (git-version "0.4.0" revision commit))
+     (home-page "https://github.com/mirage/metrics")
+     (source
+      (origin
+       (method git-fetch)
+       (uri (git-reference
+	     (url home-page)
+	     (commit commit)))
+       (sha256
+	(base32
+	 "14mlakahpkhckiv3vmpkdndgmm70g790a2ncjm4r73fcscpvrlbr"))))
+     (build-system dune-build-system)
+     (arguments `(#:package "metrics"))
+     (propagated-inputs (list ocaml-fmt))
+     (native-inputs (list ocaml-alcotest))
+     (synopsis "Metrics infrastructure for OCaml")
+     (description
+      "Metrics provides a basic infrastructure to monitor and gather runtime metrics
 for OCaml program.  Monitoring is performed on sources, indexed by tags,
 allowing users to enable or disable at runtime the gathering of data-points.  As
 disabled metric sources have a low runtime cost (only a closure allocation), the
@@ -291,7 +294,7 @@ library is designed to instrument production systems.  Metric reporting is
 decoupled from monitoring and is handled by a custom reporter.  A few reporters
 are (will be) provided by default.  Metrics is heavily inspired by
 [Logs](http://erratique.ch/software/logs).")
-   (license license:isc)))
+     (license license:isc))))
 
 (define-public ocaml-metrics-lwt
   (package
@@ -305,16 +308,6 @@ are (will be) provided by default.  Metrics is heavily inspired by
   (package
    (inherit ocaml-metrics)
    (arguments `(#:package "metrics-unix"))
-   ;; This add fix from https://github.com/mirage/metrics/pull/58
-   (source
-    (origin
-     (method git-fetch)
-     (uri (git-reference
-	   (url "https://github.com/adatario/metrics")
-	   (commit "98f05cdb98ccc26d6cf61d66b8c47737243ea7af")))
-     (sha256
-      (base32
-       "14mlakahpkhckiv3vmpkdndgmm70g790a2ncjm4r73fcscpvrlbr"))))
    (propagated-inputs
     (list ocaml-metrics ocaml-uuidm ocaml-mtime
 	  ocaml-lwt
