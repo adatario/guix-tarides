@@ -439,3 +439,13 @@ the command line tool `omd`.")
     (synopsis "Type-safe encoding to and decoding from JSON")
     (description #f)
     (license license:expat)))
+
+(define-public ocaml-json-data-encoding-bson
+  (package
+   (inherit ocaml-json-data-encoding)
+   (name "ocaml-json-data-encoding-bson")
+   (arguments `(#:package "json-data-encoding-bson"))
+   (propagated-inputs
+    (list ocaml-uri
+	  ocaml-json-data-encoding
+	  ocaml-ocplib-endian))))
