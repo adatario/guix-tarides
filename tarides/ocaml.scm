@@ -484,3 +484,22 @@ the command line tool `omd`.")
     (synopsis "Library of JSON and binary encoding combinators")
     (description #f)
     (license license:expat)))
+
+(define-public ocaml-pure-splitmix
+  (package
+   (name "ocaml-pure-splitmix")
+   (version "0.3")
+   (home-page "https://github.com/Lysxia/pure-splitmix")
+   (source
+    (origin
+     (method git-fetch)
+     (uri (git-reference
+	   (url home-page)
+	   (commit version)))
+     (sha256
+      (base32
+       "1dd9ycciydnaj7ymphcfb1iwdcgd70bimcnh48xmyc913q0fqja5"))))
+   (build-system dune-build-system)
+   (synopsis "Purely functional splittable PRNG")
+   (description #f)
+   (license license:expat)))
