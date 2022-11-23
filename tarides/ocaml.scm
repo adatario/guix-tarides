@@ -416,3 +416,26 @@ implements a few Github markdown features, an extension mechanism, and some
 other features.  Note that the opam package installs both the OMD library and
 the command line tool `omd`.")
     (license license:isc)))
+
+(define-public ocaml-json-data-encoding
+  (package
+    (name "ocaml-json-data-encoding")
+    (version "0.12.1")
+    (source
+     (origin
+      (method git-fetch)
+      (uri (git-reference
+	    (url "https://gitlab.com/nomadic-labs/json-data-encoding.git")
+	    (commit version)))
+
+      (sha256
+       (base32
+	"03n24r4y472j5lq09jjzlk13zv20ai7l0knich4d8552waa2w9xn"))))
+    (build-system dune-build-system)
+    (arguments `(#:package "json-data-encoding"))
+    (propagated-inputs (list ocaml-uri js-of-ocaml))
+    (native-inputs (list ocaml-crowbar ocaml-alcotest))
+    (home-page "https://gitlab.com/nomadic-labs/json-data-encoding")
+    (synopsis "Type-safe encoding to and decoding from JSON")
+    (description #f)
+    (license license:expat)))
