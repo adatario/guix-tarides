@@ -9,6 +9,7 @@
   #:use-module ((guix licenses) #:prefix license:)
   #:use-module (gnu packages ocaml)
   #:use-module (gnu packages pkg-config)
+  #:use-module (gnu packages libevent)
   #:use-module (gnu packages multiprecision)
   #:use-module (tarides ocaml))
 
@@ -132,3 +133,26 @@
 	  ocaml-tezos-lwt-result-stdlib
 	  ocaml-lwt-log
 	  ocaml-uri))))
+
+(define-public ocmal-tezos-stdlib-unix
+  (package
+   (inherit tezos)
+   (name "ocaml-tezos-stdlib-unix")
+   (arguments `(#:package "tezos-stdlib-unix"
+		#:test-target "."))
+   (propagated-inputs
+    (list
+     ocaml-tezos-error-monad
+     ocaml-tezos-lwt-result-stdlib
+     ocaml-tezos-event-logging
+     ocaml-tezos-stdlib
+     ocaml-data-encoding
+     ocaml-lwt
+     ocaml-ipaddr
+     ocaml-re
+     ocaml-ezjsonm
+     ocaml-ptime
+     ocaml-mtime
+     ocaml-lwt-log
+     ocaml-uri
+     libev))))
