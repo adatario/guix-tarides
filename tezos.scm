@@ -156,3 +156,24 @@
      ocaml-lwt-log
      ocaml-uri
      libev))))
+
+(define-public ocaml-tezos-hacl
+  (package
+    (inherit tezos)
+    (name "ocaml-tezos-hacl")
+    (arguments `(#:package "tezos-hacl"
+		 #:test-target "."))
+    (propagated-inputs
+     (list ocaml-ctypes
+	   ocaml-hacl-star-raw-045
+	   ocaml-ezjsonm
+	   ocaml-hacl-star-045))
+    (native-inputs
+     (list ocaml-tezos-stdlib
+	   ocaml-tezos-error-monad
+	   ocaml-zarith
+	   ocaml-zarith-stubs-js
+	   ocaml-ctypes-stubs-js
+	   ocaml-data-encoding
+	   ocaml-qcheck
+	   ocaml-tezos-test-helpers))))
