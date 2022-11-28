@@ -667,3 +667,25 @@ classification * IPv4-mapped addresses in IPv6 (::ffff:0:0/96) are an embedding
 of IPv4 * MAC-48 (Ethernet) address support * `Macaddr` is a `Map.OrderedType` *
 All types have sexplib serializers/deserializers")
     (license license:isc)))
+
+(define-public ocaml-lwt-canceler
+  (package
+   (name "ocaml-lwt-canceler")
+   (version "0.3")
+   (source
+    (origin
+     (method git-fetch)
+     (uri (git-reference
+	   (url "https://gitlab.com/nomadic-labs/lwt-canceler.git")
+	   (commit (string-append "v" version))))
+     (sha256
+      (base32
+       "1xbb7012hp901b755kxmfgg293rz34rkhwzg2z9i6sakwd7i0h9p"))))
+   (build-system dune-build-system)
+   (propagated-inputs
+    (list ocaml-lwt))
+   (arguments `(#:package "lwt-canceler"))
+   (home-page "https://gitlab.com/nomadic-labs/lwt-canceler")
+   (synopsis "Cancellation synchronization object for OCaml Lwt")
+   (description #f)
+   (license license:expat)))
