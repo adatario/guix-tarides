@@ -743,3 +743,24 @@ library, along with automatically generated Ctypes bindings.  WARNING: This pack
     (propagated-inputs
      (list ocaml-hacl-star-raw ocaml-zarith gmp))
     (native-inputs (list cmake ocaml-cppo ocaml-alcotest))))
+
+(define-public ocaml-integers-stubs-js
+  (package
+    (name "ocaml-integers-stubs-js")
+    (version "1.0")
+    (home-page "https://github.com/o1-labs/integers_stubs_js")
+    (source
+     (origin
+       (method git-fetch)
+       (uri (git-reference
+	     (url home-page)
+	     (commit version)))
+       (sha256
+	(base32
+	 "0dlrzj07qmyn0gyn4fy5v5m9m8kggf6p15wd8xk5ahnbvxgmq3ln"))))
+    (build-system dune-build-system)
+    (propagated-inputs (list js-of-ocaml ocaml-zarith-stubs-js))
+    (properties `((upstream-name . "integers_stubs_js")))
+    (synopsis "Javascript stubs for the integers library in js_of_ocaml")
+    (description "Javascript stubs for the integers library in js_of_ocaml.")
+    (license license:expat)))
