@@ -613,3 +613,29 @@ to 253 (byte representation is 255), but other protocols (such as SMTP) may
 apply even smaller limits.  A domain name label is case preserving, comparison
 is done in a case insensitive manner.")
     (license license:isc)))
+
+(define-public ocaml-macaddr
+  (package
+   (name "ocaml-macaddr")
+   (version "5.3.1")
+   (home-page "https://github.com/mirage/ocaml-ipaddr")
+   (source
+    (origin
+     (method git-fetch)
+     (uri (git-reference
+	   (url home-page)
+	   (commit (string-append "v" version))))
+     (sha256
+      (base32
+       "1zgwx0ms3l4k4dzwnkrwq4zzqjrddjsvqn66mbd0rm6aq1ib019d"))))
+   (build-system dune-build-system)
+   (arguments `(#:package "macaddr"
+		#:test-target "."))
+   (native-inputs (list ocaml-ounit2 ocaml-ppx-sexp-conv))
+   (synopsis "An OCaml library for manipulation of MAC address representations")
+   (description
+    "This package provides a library for manipulation of MAC address representations.
+ Features: * ounit2-based tests * MAC-48 (Ethernet) address support * `Macaddr`
+is a `Map.OrderedType` * All types have sexplib serializers/deserializers
+optionally via the `Macaddr_sexp` library.")
+   (license license:isc)))
