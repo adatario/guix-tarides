@@ -726,3 +726,20 @@ All types have sexplib serializers/deserializers")
     "This package contains a snapshot of the EverCrypt crypto provider and the HACL*
 library, along with automatically generated Ctypes bindings.  WARNING: This package is not built from HaCl sources, instead pre-built OCaml code is used.")
    (license license:asl2.0)))
+
+(define-public ocaml-hacl-star
+  (package
+    (inherit ocaml-hacl-star-raw)
+    (name "ocaml-hacl-star")
+    (build-system dune-build-system)
+    (arguments
+     `(#:package "hacl-star"
+       #:test-target "."
+       #:phases
+       (modify-phases %standard-phases
+	 ;; The default unpack phase enters the first subdirectory.
+	 (add-after 'unpack 'leave-hacl-star-raw-subdirectory
+	   (lambda _ (chdir ".."))))))
+    (propagated-inputs
+     (list ocaml-hacl-star-raw ocaml-zarith gmp))
+    (native-inputs (list cmake ocaml-cppo ocaml-alcotest))))
