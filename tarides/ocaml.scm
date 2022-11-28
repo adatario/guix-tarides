@@ -764,3 +764,28 @@ library, along with automatically generated Ctypes bindings.  WARNING: This pack
     (synopsis "Javascript stubs for the integers library in js_of_ocaml")
     (description "Javascript stubs for the integers library in js_of_ocaml.")
     (license license:expat)))
+
+(define-public ocaml-ctypes-stubs-js
+  (package
+    (name "ocaml-ctypes-stubs-js")
+    (version "0.1")
+    (home-page "https://gitlab.com/nomadic-labs/ctypes_stubs_js")
+    (source
+     (origin
+       (method git-fetch)
+       (uri (git-reference
+	     (url "https://gitlab.com/nomadic-labs/ctypes_stubs_js.git")
+	     (commit version)))
+       (sha256
+	(base32
+	 "0jy9ja78ynqw2gbsynfdh5zqnmz7fha6sy3p83j4bhk7d21k74iq"))))
+    (build-system dune-build-system)
+    ;; TODO enable tests
+    (arguments `(#:tests? #f)) ; currennly failing due to build issue
+    (propagated-inputs (list ocaml-integers-stubs-js))
+    (native-inputs
+     (list ocaml-ctypes
+	   ocaml-ppx-expect))
+    (synopsis "Javascript stubs for the ctypes library in js_of_ocaml")
+    (description "Javascript stubs for the ctypes library in js_of_ocaml.")
+    (license license:expat)))
