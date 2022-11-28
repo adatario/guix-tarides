@@ -89,3 +89,17 @@
 	  ocaml-lwt-log))
    (arguments `(#:package "tezos-stdlib"
 		#:test-target "."))))
+
+(define-public ocaml-tezos-lwt-result-stdlib
+  (package
+   (inherit tezos)
+   (name "ocaml-tezos-lwt-result-stdlib")
+   (arguments `(#:package "tezos-lwt-result-stdlib"
+		#:test-target "."))
+   (propagated-inputs
+    (list ocaml-lwt))
+   (native-inputs
+    (list ocaml-alcotest
+	  ocaml-alcotest-lwt
+	  ocaml-qcheck
+	  ocaml-tezos-test-helpers))))
