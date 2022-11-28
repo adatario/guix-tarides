@@ -203,3 +203,17 @@ managed using lock files.")
 	  ocaml-hex
 	  ocaml-fpath
 	  ocaml-irmin-test-3.4))))
+
+(define-public ocaml-irmin-tezos-utils
+  (package
+   (inherit ocaml-irmin-3.4)
+   (name "ocaml-irmin-tezos-utils")
+   (arguments `(#:package "irmin-tezos-utils"))
+   (propagated-inputs
+    (list ocaml-irmin-pack-3.4
+	  ocaml-irmin-tezos-3.4
+	  ocaml-notty
+	  ocaml-hex
+	  ocaml-index
+	  ocaml-cmdliner
+	  ocaml-ppx-repr))))
