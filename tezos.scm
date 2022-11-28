@@ -103,3 +103,18 @@
 	  ocaml-alcotest-lwt
 	  ocaml-qcheck
 	  ocaml-tezos-test-helpers))))
+
+(define-public ocaml-tezos-error-monad
+  (package
+   (inherit tezos)
+   (name "ocaml-tezos-error-monad")
+   (arguments `(#:package "tezos-error-monad"
+		#:test-target "."))
+   (propagated-inputs
+    (list ocaml-data-encoding
+	  ocaml-tezos-stdlib
+	  ocaml-tezos-lwt-result-stdlib
+	  ocaml-lwt-canceler
+	  ocaml-lwt))
+   (native-inputs
+    (list ocaml-alcotest))))
