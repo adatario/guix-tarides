@@ -773,6 +773,23 @@ library, along with automatically generated Ctypes bindings.  WARNING: This pack
      (list ocaml-hacl-star-raw ocaml-zarith gmp))
     (native-inputs (list cmake ocaml-cppo ocaml-alcotest))))
 
+(define-public ocaml-hacl-star-045
+  (package
+    (inherit ocaml-hacl-star-raw-045)
+    (name "ocaml-hacl-star")
+    (build-system dune-build-system)
+    (arguments
+     `(#:package "hacl-star"
+       #:test-target "."
+       #:phases
+       (modify-phases %standard-phases
+	 ;; The default unpack phase enters the first subdirectory.
+	 (add-after 'unpack 'leave-hacl-star-raw-subdirectory
+	   (lambda _ (chdir ".."))))))
+    (propagated-inputs
+     (list ocaml-hacl-star-raw-045 ocaml-zarith gmp))
+    (native-inputs (list cmake ocaml-cppo ocaml-alcotest))))
+
 (define-public ocaml-integers-stubs-js
   (package
     (name "ocaml-integers-stubs-js")
