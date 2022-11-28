@@ -525,6 +525,33 @@ the command line tool `omd`.")
    (synopsis "Overlay over bigarrays of chars (deprecated use ocaml-bigstringaf)")
    (description #f)
    (license license:bsd-2)))
+
+(define-public ocaml-notty
+  (package
+   (name "ocaml-notty")
+   (version "0.2.3")
+   (home-page "https://github.com/pqwy/notty")
+   (source
+    (origin
+     (method git-fetch)
+     (uri (git-reference
+	   (url home-page)
+	   (commit (string-append "v" version))))
+     (sha256
+      (base32
+       "1j9788vdygw3n9nmr8f2c6v2hqm2b35366xwh8sb5cy5yhpbcr13"))))
+   (build-system dune-build-system)
+   (arguments `(#:package "notty"
+		#:test-target "."))
+   (propagated-inputs (list ocaml-uutf ocaml-ptime))
+   (native-inputs (list ocaml-cppo))
+   (synopsis "Declaring terminals for OCaml")
+   (description
+    "Notty is a declarative terminal library for OCaml structured around a notion of
+composable images.  It tries to abstract away the basic terminal programming
+model, providing something simpler and more expressive.")
+   (license license:isc)))
+
 (define-public ocaml-ptime
   (package
   (name "ocaml-ptime")
