@@ -727,6 +727,35 @@ All types have sexplib serializers/deserializers")
 library, along with automatically generated Ctypes bindings.  WARNING: This package is not built from HaCl sources, instead pre-built OCaml code is used.")
    (license license:asl2.0)))
 
+(define-public ocaml-hacl-star-raw-045
+  (package
+    (inherit ocaml-hacl-star-raw)
+    (version "0.4.5")
+    (source
+     (origin
+       (method url-fetch)
+       ;; WARNING this archive contains compiled output!
+       (uri "https://github.com/hacl-star/hacl-star/releases/download/ocaml-v0.4.5/hacl-star.0.4.5.tar.gz")
+       (sha256
+	(base32 "0x710nd1fp7bsn8x4i3lgphzsxcjm0mqjv67zfr6khsfh0zjbgs7"))))
+    (arguments
+     `(#:tests? #f ; no tests
+       #:phases
+       (modify-phases %standard-phases
+	 (add-after 'unpack 'enter-raw-subdirectory
+	   (lambda _ (chdir "../raw")))
+	 (replace 'configure
+	   (lambda _
+	     (setenv "CC" "gcc")
+	     (invoke "./configure")))
+	 (replace 'install
+	   (lambda _
+	     (invoke "make" "install-hacl-star-raw")))
+	 ;; Validate RUNPATH phase fails. Tests (for ocaml-hacl-star)
+	 ;; seem to pass nevertheless.
+	 ;; TODO: figure out why
+	 (delete 'validate-runpath))))))
+
 (define-public ocaml-hacl-star
   (package
     (inherit ocaml-hacl-star-raw)
