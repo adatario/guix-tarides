@@ -7,6 +7,7 @@
   #:use-module (guix download)
   #:use-module (guix git-download)
   #:use-module (guix build-system dune)
+  #:use-module (guix build-system ocaml)
   #:use-module ((guix licenses) #:prefix license:)
   #:use-module (gnu packages ocaml)
   #:use-module (gnu packages maths)
@@ -524,3 +525,37 @@ the command line tool `omd`.")
    (synopsis "Overlay over bigarrays of chars (deprecated use ocaml-bigstringaf)")
    (description #f)
    (license license:bsd-2)))
+(define-public ocaml-ptime
+  (package
+  (name "ocaml-ptime")
+  (version "0.8.5")
+  (source
+    (origin
+      (method url-fetch)
+      (uri "https://erratique.ch/software/ptime/releases/ptime-0.8.5.tbz")
+      (sha256
+        (base32
+          "1fxq57xy1ajzfdnvv5zfm7ap2nf49znw5f9gbi4kb9vds942ij27"))))
+  (build-system ocaml-build-system)
+  (arguments
+   `(#:build-flags (list "build" "--with-js_of_ocaml" "true" "--tests" "true")
+     #:phases
+     (modify-phases %standard-phases
+       (delete 'configure))))
+  (propagated-inputs
+   `(("ocaml-result" ,ocaml-result)
+     ("js-of-ocaml" ,js-of-ocaml)))
+  (native-inputs
+    `(("ocaml-findlib" ,ocaml-findlib)
+      ("ocamlbuild" ,ocamlbuild)
+      ("ocaml-topkg" ,ocaml-topkg)
+      ("opam" ,opam)))
+  (home-page "https://erratique.ch/software/ptime")
+  (synopsis "POSIX time for OCaml")
+  (description
+    "Ptime offers platform independent POSIX time support in pure OCaml. It
+provides a type to represent a well-defined range of POSIX timestamps
+with picosecond precision, conversion with date-time values,
+conversion with [RFC 3339 timestamps][rfc3339] and pretty printing to a
+human-readable, locale-independent representation.")
+  (license license:isc)))
