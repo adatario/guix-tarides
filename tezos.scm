@@ -118,3 +118,17 @@
 	  ocaml-lwt))
    (native-inputs
     (list ocaml-alcotest))))
+
+(define-public ocaml-tezos-event-logging
+  (package
+   (inherit tezos)
+   (name "ocaml-tezos-event-logging")
+   (arguments `(#:package "tezos-event-logging"
+		#:test-target "."))
+   (propagated-inputs
+    (list ocaml-tezos-stdlib
+	  ocaml-data-encoding
+	  ocaml-tezos-error-monad
+	  ocaml-tezos-lwt-result-stdlib
+	  ocaml-lwt-log
+	  ocaml-uri))))
