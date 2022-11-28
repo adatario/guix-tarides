@@ -9,6 +9,8 @@
   #:use-module (guix build-system dune)
   #:use-module (guix build-system ocaml)
   #:use-module ((guix licenses) #:prefix license:)
+  #:use-module (gnu packages base)
+  #:use-module (gnu packages cmake)
   #:use-module (gnu packages ocaml)
   #:use-module (gnu packages maths)
   #:use-module (gnu packages multiprecision)
@@ -689,3 +691,38 @@ All types have sexplib serializers/deserializers")
    (synopsis "Cancellation synchronization object for OCaml Lwt")
    (description #f)
    (license license:expat)))
+
+(define-public ocaml-hacl-star-raw
+  (package
+   (name "ocaml-hacl-star-raw")
+   (version "0.6.1")
+   (source
+    (origin
+     (method url-fetch)
+     ;; WARNING this archive contains compiled output!
+     (uri "https://github.com/cryspen/hacl-packages/releases/download/ocaml-v0.6.1/hacl-star.0.6.1.tar.gz")
+     (sha256
+      (base32 "043l7njd03pkllhlrfrg4scbccwbfpfr4s2m5rb0924j48vs49zw"))))
+   (build-system ocaml-build-system)
+   (arguments
+    `(#:phases
+      (modify-phases %standard-phases
+       (delete 'configure)
+       (replace 'build
+	 (lambda _
+	   (invoke "make" "-C" "." "build-c")
+	   (invoke "make" "CC=gcc" "-C" "." "build-bindings")
+	   #t))
+       (delete 'check) ; no tests fr hacl-star-raw
+       (replace 'install
+	 (lambda _
+	   (invoke "make" "-C" "." "install"))))))
+   (propagated-inputs (list ocaml-ctypes))
+   (native-inputs
+    (list ocaml-findlib which cmake))
+   (home-page "https://tech.cryspen.com/hacl-packages/")
+   (synopsis "Auto-generated low-level OCaml bindings for EverCrypt/HACL*")
+   (description
+    "This package contains a snapshot of the EverCrypt crypto provider and the HACL*
+library, along with automatically generated Ctypes bindings.  WARNING: This package is not built from HaCl sources, instead pre-built OCaml code is used.")
+   (license license:asl2.0)))
