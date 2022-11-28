@@ -586,3 +586,30 @@ with picosecond precision, conversion with date-time values,
 conversion with [RFC 3339 timestamps][rfc3339] and pretty printing to a
 human-readable, locale-independent representation.")
   (license license:isc)))
+
+(define-public ocaml-domain-name
+  (package
+    (name "ocaml-domain-name")
+    (version "0.4.0")
+    (home-page "https://github.com/hannesm/domain-name")
+    (source
+     (origin
+      (method git-fetch)
+      (uri (git-reference
+	    (url home-page)
+	    (commit (string-append "v" version))))
+      (sha256
+       (base32
+	"1a669zz1pc7sqbi1c13jsnp8algcph2b8gr5fjrjhyh3p232770k"))))
+    (build-system dune-build-system)
+    (arguments `(#:test-target "."))
+    (native-inputs (list ocaml-alcotest))
+    (synopsis "OCaml library for working with internet domain names")
+    (description
+     "This package provides a domain name is a sequence of labels separated by dots,
+such as `foo.example`.  Each label may contain any bytes.  The length of each
+label may not exceed 63 charactes.  The total length of a domain name is limited
+to 253 (byte representation is 255), but other protocols (such as SMTP) may
+apply even smaller limits.  A domain name label is case preserving, comparison
+is done in a case insensitive manner.")
+    (license license:isc)))
