@@ -874,6 +874,31 @@ OCaml")
     (description "@code{ocaml-mirage-crypto-rng} provides an OCaml random
 number generator interface, and implementations.")))
 
+(define-public ocaml-mirage-crypto-pk
+  (package
+    (inherit ocaml-mirage-crypto)
+    (name  "ocaml-mirage-crypto-pk")
+    (arguments `(#:package "mirage-crypto-pk"
+                 #:test-target "."))
+    (propagated-inputs
+     `(("ocaml-cstruct" ,ocaml-cstruct)
+       ("ocaml-logs" ,ocaml-logs)
+       ("ocaml-mirage-crypto" ,ocaml-mirage-crypto)
+       ("ocaml-mirage-crypto-rng" ,ocaml-mirage-crypto-rng)
+       ("ocaml-mtime" ,ocaml-mtime)
+       ("ocaml-sexplib" ,ocaml-sexplib)
+       ("ocaml-ppx-sexp-conv" ,ocaml-ppx-sexp-conv)
+       ("ocaml-zarith" ,ocaml-zarith)
+       ("ocaml-eqaf" ,ocaml-eqaf)
+       ("ocaml-rresult" ,ocaml-rresult)))
+    (native-inputs
+     `(("ocaml-ounit" ,ocaml-ounit)
+       ("ocaml-randomconv" ,ocaml-randomconv)))
+    (inputs `(("gmp" ,gmp)))
+    (synopsis "OCaml library providing public-key cryptography")
+    (description "@code{ocaml-mirage-crypto-pk} provides public-key
+cryptography (RSA, DSA, DH) for OCaml.")))
+
 (define-public ocaml-hacl-star-raw
   (package
    (name "ocaml-hacl-star-raw")
