@@ -204,7 +204,7 @@ managed using lock files.")
 	  ocaml-fpath
 	  ocaml-irmin-test-3.4))))
 
-(define-public ocaml-irmin-tezos-utils
+(define-public ocaml-irmin-tezos-utils-3.4
   (package
    (inherit ocaml-irmin-3.4)
    (name "ocaml-irmin-tezos-utils")
@@ -217,3 +217,20 @@ managed using lock files.")
 	  ocaml-index
 	  ocaml-cmdliner
 	  ocaml-ppx-repr))))
+
+(define-public ocaml-irmin-fs-3.4
+  (package
+   (inherit ocaml-irmin-3.4)
+   (name "ocaml-irmin-fs")
+   (arguments `(#:package "irmin-fs"
+		#:tests? #f ; requires irmin-watcher
+		))
+   (propagated-inputs
+    (list ocaml-irmin-3.4
+	  ocaml-astring
+	  ocaml-logs
+	  ocaml-lwt))
+   (native-inputs
+    (list ocaml-irmin-test-3.4
+	  ;; ocaml-irmin-watcher
+	  ))))
