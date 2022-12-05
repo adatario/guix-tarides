@@ -828,6 +828,31 @@ time duration as an usigned 64 bit integer.  This can be used for conversions
 between various time units.")
     (license license:isc)))
 
+(define-public ocaml-randomconv
+  (package
+    (name "ocaml-randomconv")
+    (version "0.1.3")
+    (home-page "https://github.com/hannesm/randomconv")
+    (source
+     (origin
+       (method git-fetch)
+       (uri (git-reference
+             (url home-page)
+             (commit (string-append "v" version))))
+       (file-name (git-file-name name version))
+       (sha256
+        (base32
+         "0pzq2zqz5bpy2snsvmn82hg79wfd0lmbbbhmhdvc8k20km86jqy7"))))
+    (build-system dune-build-system)
+    (arguments `(#:test-target "."))
+    (propagated-inputs
+     `(("ocaml-cstruct" ,ocaml-cstruct)))
+    (synopsis "OCaml library for converting random byte vectors to random numer")
+    (description
+     "This Ocaml library provides functions for converting random byte vectors
+as (C-like structures using @code{ocaml-cstruct}) to OCaml native numbers.")
+    (license license:isc)))
+
 (define-public ocaml-hacl-star-raw
   (package
    (name "ocaml-hacl-star-raw")
