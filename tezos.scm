@@ -165,6 +165,7 @@
 		 #:test-target "."))
     (propagated-inputs
      (list ocaml-ctypes
+	   ocaml-ctypes-stubs-js
 	   ocaml-hacl-star-raw-045
 	   ocaml-ezjsonm
 	   ocaml-hacl-star-045))
@@ -173,7 +174,6 @@
 	   ocaml-tezos-error-monad
 	   ocaml-zarith
 	   ocaml-zarith-stubs-js
-	   ocaml-ctypes-stubs-js
 	   ocaml-data-encoding
 	   ocaml-qcheck
 	   ocaml-tezos-test-helpers))))
