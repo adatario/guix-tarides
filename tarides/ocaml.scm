@@ -1550,3 +1550,33 @@ primitives built on top of it")
     (description "Implementation of BLS12-381 and some cryptographic
 primitives built on top of it")
     (license license:expat)))
+
+(define-public ocaml-bls12-381-signature
+  (package
+    (name "ocaml-bls12-381-signature")
+    (version "1.0.0")
+    (home-page
+     "https://gitlab.com/nomadic-labs/cryptography/ocaml-bls12-381-signature")
+    (source
+     (origin
+       (method git-fetch)
+       (uri (git-reference
+	     (url (string-append home-page ".git"))
+	     (commit version)))
+       (sha256
+	(base32
+	 "1gmqaj4hdhkdrivpmkr6wi8xbns7d24qn6ws7ya1jnw17w0jk999"))))
+    (build-system dune-build-system)
+    (arguments `(#:package "bls12-381-signature"))
+    (propagated-inputs
+     (list ocaml-bls12-381))
+    (native-inputs
+     (list ocaml-alcotest
+	   ocaml-bisect-ppx
+	   ocaml-integers-stubs-js))
+    (synopsis "Implementation of BLS signatures for the
+pairing-friendly curve BLS12-381")
+    (description "Implementation of BLS signatures for the
+pairing-friendly curve BLS12-381")
+    (license license:expat)))
+
