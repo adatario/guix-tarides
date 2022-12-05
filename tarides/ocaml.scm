@@ -803,6 +803,31 @@ RC4, ChaCha20/Poly1305), and hashes (MD5, SHA-1, SHA-2).  This library can be
 used from MirageOS unikernels.")
     (license license:isc)))
 
+(define-public ocaml-duration
+  (package
+    (name "ocaml-duration")
+    (version "0.2.1")
+    (home-page "https://github.com/hannesm/duration")
+    (source
+     (origin
+       (method git-fetch)
+       (uri (git-reference
+             (url home-page)
+             (commit (string-append "v" version))))
+       (file-name (git-file-name name version))
+       (sha256
+        (base32
+         "0vvxi0ipxmdz1k4h501brvccniwf3wpc32djbccyyrzraiz7qkff"))))
+    (build-system dune-build-system)
+    (arguments `(#:test-target "."))
+    (native-inputs
+     `(("ocaml-alcotest" ,ocaml-alcotest)))
+    (synopsis "OCaml library providing conversions between various time units")
+    (description "This OCaml library provides functions for representing a
+time duration as an usigned 64 bit integer.  This can be used for conversions
+between various time units.")
+    (license license:isc)))
+
 (define-public ocaml-hacl-star-raw
   (package
    (name "ocaml-hacl-star-raw")
