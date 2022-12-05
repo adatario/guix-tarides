@@ -11,8 +11,7 @@
   #:use-module (gnu packages maths)
   #:use-module (gnu packages multiprecision)
   #:use-module (gnu packages pkg-config)
-  #:use-module (tarides ocaml)
-  #:use-module (tezos))
+  #:use-module (tarides ocaml))
 
 (define-public ocaml-repr
   (let (;; Tests are fixed in an unreleased commit (https://github.com/mirage/repr/pull/100)
@@ -182,6 +181,28 @@ managed using lock files.")
 	  ocaml-metrics-unix))
    (native-inputs
     (list ocaml-qcheck ocaml-hex ocaml-vector))))
+
+(define-public ocaml-tezos-base58
+  (package
+   (name "ocaml-tezos-base58")
+   (version "1.0.0")
+   (home-page "https://github.com/tarides/tezos-base58")
+   (source
+    (origin
+     (method git-fetch)
+     (uri (git-reference
+	   (url home-page)
+	   (commit version)))
+     (file-name (git-file-name name version))
+     (sha256
+      (base32
+       "08s3klpj0zq2ax19n35swgl3m279a59c29xx0sr29k0898kpz96j"))))
+   (build-system dune-build-system)
+   (arguments `(#:test-target "."))
+   (propagated-inputs (list ocaml-zarith ocaml-digestif ocaml-fmt))
+   (synopsis "Base58 encoding for Tezos")
+   (description "Self-contained package for base58 encoding used by Tezos.")
+   (license license:expat)))
 
 (define-public ocaml-irmin-tezos-3.4
   (package
