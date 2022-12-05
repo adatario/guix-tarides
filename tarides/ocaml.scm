@@ -1147,6 +1147,32 @@ authenticate servers.  This library exposes this list so that it can be
 registered with ocaml-tls.")
     (license license:isc)))
 
+(define-public ocaml-lwt-ssl
+  (package
+    (name "ocaml-lwt-ssl")
+    (version "1.1.3")
+    (home-page "https://github.com/ocsigen/lwt_ssl")
+    (source
+     (origin
+       (method git-fetch)
+       (uri (git-reference
+             (url home-page)
+             (commit version)))
+       (file-name (git-file-name name version))
+       (sha256
+        (base32
+         "0v417ch5zn0yknj156awa5mrq3mal08pbrvsyribbn63ix6f9y3p"))))
+    (build-system dune-build-system)
+    (arguments `(#:test-target "."))
+    (propagated-inputs
+     (list ocaml-lwt
+	   ocaml-ssl))
+    (properties `((upstream-name . "lwt_ssl")))
+    (synopsis "OpenSSL binding for OCaml with concurrent I/O")
+    (description "This OCaml library provides an Lwt-enabled wrapper around
+@code{ocaml-ssl}, that performs I/O concurrently.")
+    (license license:lgpl2.1+))) ; with linking exception
+
 (define-public ocaml-hacl-star-raw
   (package
    (name "ocaml-hacl-star-raw")
