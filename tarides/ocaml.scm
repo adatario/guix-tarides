@@ -732,6 +732,24 @@ TCP and SSL/TLS connections.  This allows using the same type signatures
 regardless of the SSL library or platform being used.")
     (license license:isc)))
 
+(define-public ocaml-conduit-lwt
+  (package
+    (inherit ocaml-conduit)
+    (name "ocaml-conduit-lwt")
+    (arguments `(#:package "conduit-lwt"
+                 #:test-target "."))
+    (propagated-inputs
+     `(("ocaml-ppx-sexp-conv" ,ocaml-ppx-sexp-conv)
+       ("ocaml-sexplib" ,ocaml-sexplib)
+       ("ocaml-conduit" ,ocaml-conduit)
+       ("ocaml-lwt" ,ocaml-lwt)))
+    (synopsis "OCaml library for establishing TCP and SSL/TLS connections
+using Lwt")
+    (description "This OCaml library provides the abstractions for
+establishing TCP and SSL/TLS connections from @code{ocaml-conduit} using
+@code{ocaml-lwt}.")
+    (license license:isc)))
+
 (define-public ocaml-lwt-canceler
   (package
    (name "ocaml-lwt-canceler")
