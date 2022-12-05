@@ -557,28 +557,28 @@ model, providing something simpler and more expressive.")
 (define-public ocaml-ptime
   (package
   (name "ocaml-ptime")
-  (version "0.8.5")
+  (version "1.1.0")
   (source
     (origin
       (method url-fetch)
-      (uri "https://erratique.ch/software/ptime/releases/ptime-0.8.5.tbz")
+      (uri
+       (string-append
+	"https://erratique.ch/software/ptime/releases/ptime-"
+	version ".tbz"))
       (sha256
         (base32
-          "1fxq57xy1ajzfdnvv5zfm7ap2nf49znw5f9gbi4kb9vds942ij27"))))
+          "1c9y07vnvllfprf0z1vqf6fr73qxw7hj6h1k5ig109zvaiab3xfb"))))
   (build-system ocaml-build-system)
   (arguments
-   `(#:build-flags (list "build" "--with-js_of_ocaml" "true" "--tests" "true")
+   `(#:build-flags (list "build" "--tests" "true")
      #:phases
      (modify-phases %standard-phases
        (delete 'configure))))
-  (propagated-inputs
-   `(("ocaml-result" ,ocaml-result)
-     ("js-of-ocaml" ,js-of-ocaml)))
   (native-inputs
-    `(("ocaml-findlib" ,ocaml-findlib)
-      ("ocamlbuild" ,ocamlbuild)
-      ("ocaml-topkg" ,ocaml-topkg)
-      ("opam" ,opam)))
+   (list ocaml-findlib
+	 ocamlbuild
+	 ocaml-topkg
+	 opam))
   (home-page "https://erratique.ch/software/ptime")
   (synopsis "POSIX time for OCaml")
   (description
