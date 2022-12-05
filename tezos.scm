@@ -247,3 +247,24 @@
     (native-inputs
      (list ocaml-tezos-test-helpers
 	   ocaml-alcotest))))
+
+(define-public ocaml-tezos-context
+  (package
+   (inherit tezos)
+   (name "ocaml-tezos-context")
+   (arguments `(#:package "tezos-context"
+		#:test-target "."))
+   (propagated-inputs
+    (list ocaml-tezos-base
+	  ocaml-tezos-stdlib-unix
+	  ocaml-bigstringaf
+	  ocaml-fmt
+	  ocaml-logs
+	  ocaml-digestif
+	  ocaml-irmin-3.4
+	  ocaml-irmin-pack-3.4
+	  ocaml-tezos-stdlib))
+   (native-inputs
+    (list ocaml-qcheck
+	  ocaml-alcotest-lwt
+	  ocaml-tezos-test-helpers-extra))))
