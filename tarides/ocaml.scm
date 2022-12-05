@@ -772,6 +772,37 @@ establishing TCP and SSL/TLS connections from @code{ocaml-conduit} using
    (description #f)
    (license license:expat)))
 
+(define-public ocaml-mirage-crypto
+  (package
+    (name "ocaml-mirage-crypto")
+    (version "0.10.7")
+    (home-page "https://github.com/mirage/mirage-crypto")
+    (source
+     (origin
+       (method git-fetch)
+       (uri (git-reference
+             (url home-page)
+             (commit (string-append "v" version))))
+       (file-name (git-file-name name version))
+       (sha256
+        (base32
+         "1hn0y7cyvf2gqxgz5v7k4hfd829vcyqsa1d13vc4w258z55x0j4b"))))
+    (build-system dune-build-system)
+    (arguments `(#:package "mirage-crypto"
+                 #:test-target "."))
+    (propagated-inputs
+     `(("ocaml-cstruct" ,ocaml-cstruct)
+       ("ocaml-eqaf" ,ocaml-eqaf)
+       ("ocaml-bigarray-compat" ,ocaml-bigarray-compat)))
+    (native-inputs
+     `(("pkg-config" ,pkg-config)
+       ("ocaml-ounit" ,ocaml-ounit)))
+    (synopsis "OCaml library provding cryptographic primitives")
+    (description "This OCaml library provides symmetric ciphers (DES, AES,
+RC4, ChaCha20/Poly1305), and hashes (MD5, SHA-1, SHA-2).  This library can be
+used from MirageOS unikernels.")
+    (license license:isc)))
+
 (define-public ocaml-hacl-star-raw
   (package
    (name "ocaml-hacl-star-raw")
