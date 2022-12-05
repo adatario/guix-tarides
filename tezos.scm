@@ -204,3 +204,31 @@
 	   ocaml-tezos-stdlib
 	   ocaml-tezos-error-monad
 	   ocaml-data-encoding))))
+
+(define-public ocaml-tezos-crypto
+  (package
+    (inherit tezos)
+    (name "ocaml-tezos-crypto")
+    (arguments `(#:package "tezos-crypto"
+		 #:test-target "."
+		 ;; tests fail to compile. TODO: research
+		 #:tests? #f))
+    (propagated-inputs
+     (list
+	   ocaml-tezos-stdlib
+	   ocaml-tezos-error-monad
+	   ocaml-zarith
+	   ocaml-zarith-stubs-js
+	   ocaml-tezos-hacl
+	   ocaml-data-encoding
+	   ocaml-tezos-lwt-result-stdlib
+	   ocaml-secp256k1-internal
+	   ocaml-tezos-rpc
+	   ocaml-ringo-0.9
+	   ocaml-bls12-381
+	   ocaml-bls12-381-signature))
+    (native-inputs
+     (list ocaml-alcotest
+	   ocaml-alcotest-lwt
+	   ocaml-qcheck
+	   ocaml-tezos-test-helpers))))
