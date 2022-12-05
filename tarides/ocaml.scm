@@ -1063,6 +1063,53 @@ Algebraic Data Type")
 to create a type-safe heterogenous maps.")
     (license license:isc)))
 
+(define-public ocaml-x509
+  (package
+    (name "ocaml-x509")
+    (version "0.16.2")
+    (home-page "https://github.com/mirleft/ocaml-x509")
+    (source
+     (origin
+       (method git-fetch)
+       (uri (git-reference
+             (url home-page)
+             (commit (string-append "v" version))))
+       (file-name (git-file-name name version))
+       (sha256
+        (base32
+         "1a0gdz7jkgv25v2jmjrh4ynd3xqwvd7rjyfbda37c05pjk0fb0cg"))))
+    (build-system dune-build-system)
+    (arguments `(#:test-target "."))
+    (propagated-inputs
+     (list ocaml-cstruct
+	   ocaml-asn1-combinators
+	   ocaml-ptime
+	   ocaml-base64
+	   ocaml-mirage-crypto
+	   ocaml-mirage-crypto-pk
+	   ocaml-mirage-crypto-ec
+	   ocaml-mirage-crypto-rng
+	   ocaml-rresult
+	   ocaml-fmt
+	   ocaml-gmap
+	   ocaml-domain-name
+	   ocaml-ipaddr
+	   ocaml-logs
+	   ocaml-pbkdf))
+    (native-inputs
+     (list ocaml-alcotest
+	   ocaml-cstruct-unix))
+    (synopsis "Public Key Infrastructure (RFC 5280, PKCS) purely in OCaml")
+(description "X.509 is a public key infrastructure used mostly on the
+Internet.  It consists of certificates which include public keys and
+identifiers, signed by an authority.  Authorities must be exchanged over a
+second channel to establish the trust relationship.  This OCaml library
+implements most parts of RFC5280 and RFC6125.  The Public Key Cryptography
+Standards (PKCS) defines encoding and decoding (in ASN.1 DER and PEM format),
+which is also implemented by this library --- namely PKCS 1, PKCS 5, PKCS 7,
+PKCS 8, PKCS 9, PKCS 10, and PKCS 12.")
+    (license license:bsd-2)))
+
 (define-public ocaml-hacl-star-raw
   (package
    (name "ocaml-hacl-star-raw")
