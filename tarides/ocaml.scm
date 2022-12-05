@@ -835,3 +835,27 @@ library, along with automatically generated Ctypes bindings.  WARNING: This pack
     (synopsis "Javascript stubs for the ctypes library in js_of_ocaml")
     (description "Javascript stubs for the ctypes library in js_of_ocaml.")
     (license license:expat)))
+
+(define-public ocaml-cohttp-lwt
+  (package
+    (inherit ocaml-cohttp)
+    (name "ocaml-cohttp-lwt")
+    (arguments `(#:package "cohttp-lwt"
+                 #:test-target "."))
+    (propagated-inputs
+     `(("ocaml-cohttp" ,ocaml-cohttp)
+       ("ocaml-lwt" ,ocaml-lwt)
+       ("ocaml-sexplib0" ,ocaml-sexplib0)
+       ("ocaml-ppx-sexp-conv" ,ocaml-ppx-sexp-conv)
+       ("ocaml-logs" ,ocaml-logs)
+       ("ocaml-uri" ,ocaml-uri)))
+    (synopsis "OCaml library for HTTP clients and servers using the Lwt
+concurrency library")
+    (description "This is a portable implementation of HTTP that uses the Lwt
+concurrency library to multiplex IO.  It implements as much of the logic in an
+OS-independent way as possible, so that more specialised modules can be
+tailored for different targets.  For example, you can install
+@code{ocaml-cohttp-lwt-unix} or @code{ocaml-cohttp-lwt-jsoo} for a Unix or
+JavaScript backend, or @code{ocaml-cohttp-mirage} for the MirageOS unikernel
+version of the library.  All of these implementations share the same IO logic
+from this module.")))
