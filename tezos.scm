@@ -177,3 +177,15 @@
 	   ocaml-data-encoding
 	   ocaml-qcheck
 	   ocaml-tezos-test-helpers))))
+
+(define-public ocaml-tezos-rpc
+  (package
+    (inherit tezos)
+    (name "ocaml-tezos-rpc")
+    (arguments `(#:package "tezos-rpc"
+		 #:test-target "."))
+    (propagated-inputs
+     (list ocaml-data-encoding
+	   ocaml-tezos-error-monad
+	   ocaml-resto
+	   ocaml-uri))))
