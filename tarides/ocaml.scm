@@ -853,6 +853,27 @@ between various time units.")
 as (C-like structures using @code{ocaml-cstruct}) to OCaml native numbers.")
     (license license:isc)))
 
+(define-public ocaml-mirage-crypto-rng
+  (package
+    (inherit ocaml-mirage-crypto)
+    (name  "ocaml-mirage-crypto-rng")
+    (arguments `(#:package "mirage-crypto-rng"
+                 #:test-target "."))
+    (propagated-inputs
+     `(("ocaml-duration" ,ocaml-duration)
+       ("ocaml-cstruct" ,ocaml-cstruct)
+       ("ocaml-logs" ,ocaml-logs)
+       ("ocaml-mirage-crypto" ,ocaml-mirage-crypto)
+       ("ocaml-mtime" ,ocaml-mtime)
+       ("ocaml-lwt" ,ocaml-lwt)))
+    (native-inputs
+     `(("ocaml-ounit" ,ocaml-ounit)
+       ("ocaml-randomconv" ,ocaml-randomconv)))
+    (synopsis "Cryptographically secure pseudo-random number generator in
+OCaml")
+    (description "@code{ocaml-mirage-crypto-rng} provides an OCaml random
+number generator interface, and implementations.")))
+
 (define-public ocaml-hacl-star-raw
   (package
    (name "ocaml-hacl-star-raw")
