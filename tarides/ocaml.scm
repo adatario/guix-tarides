@@ -963,6 +963,40 @@ The only ASN.1 encodings currently supported are BER and DER.")
 plugin that provides a JSON codec generator.")
     (license license:expat)))
 
+(define-public ocaml-mirage-crypto-ec
+  ;; FIXME: This package contains generated code (see
+  ;; https://github.com/mirage/mirage-crypto/blob/main/ec/native/README.md). These
+  ;; should be re-generated during the build process.
+  (package
+    (inherit ocaml-mirage-crypto)
+    (name "ocaml-mirage-crypto-ec")
+    (arguments `(#:package "mirage-crypto-ec"
+                 #:test-target "."))
+    (propagated-inputs
+     (list ocaml-cstruct
+	   ocaml-eqaf
+	   ocaml-mirage-crypto
+	   ocaml-mirage-crypto-rng
+	   gmp))
+    (native-inputs
+     (list pkg-config
+	   ocaml-randomconv
+	   ocaml-ounit
+	   ocaml-mirage-crypto-pk
+	   ocaml-asn1-combinators
+	   ocaml-hex
+	   ocaml-alcotest
+	   ocaml-ppx-deriving-yojson
+	   ocaml-ppx-deriving
+	   ocaml-yojson))
+    (synopsis "OCaml library providing Elliptic Curve Cryptography")
+    (description "This OCaml library provides an implementation of key exchange
+(ECDH) and digital signature (ECDSA/EdDSA) algorithms.  The curves P224
+(SECP224R1), P256 (SECP256R1), P384 (SECP384R1),P521 (SECP521R1), and 25519
+(X25519, Ed25519) are implemented by this package.")
+    ;; See https://github.com/mirage/mirage-crypto/blob/main/ec/LICENSE.md
+    (license license:expat)))
+
 (define-public ocaml-hacl-star-raw
   (package
    (name "ocaml-hacl-star-raw")
