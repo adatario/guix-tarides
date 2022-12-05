@@ -683,6 +683,23 @@ All types have sexplib serializers/deserializers")
     (description "This OCaml library provides functions for manipulating as
 C-like structures using the @code{ocaml-cstruct} library.")))
 
+(define-public ocaml-ipaddr-sexp
+  (package
+    (inherit ocaml-macaddr)
+    (name "ocaml-ipaddr-sexp")
+    (arguments `(#:package "ipaddr-sexp"
+                 #:test-target "."))
+    (propagated-inputs
+     `(("ocaml-ipaddr" ,ocaml-ipaddr)
+       ("ocaml-ppx-sexp-conv" ,ocaml-ppx-sexp-conv)
+       ("ocaml-sexplib0" ,ocaml-sexplib0)))
+    (native-inputs
+     `(("ocaml-ipaddr-cstruct" ,ocaml-ipaddr-cstruct)
+       ("ocaml-ounit" ,ocaml-ounit)))
+    (synopsis "OCaml library for manipulation of IP addresses as S-expressions")
+    (description "This OCaml library provides functions for manipulating as
+S-expressions using the @code{ocaml-sexp} library.")))
+
 (define-public ocaml-lwt-canceler
   (package
    (name "ocaml-lwt-canceler")
