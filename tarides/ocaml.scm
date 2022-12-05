@@ -1199,6 +1199,31 @@ for establishing TCP and SSL/TLS connections for the @code{ocaml-conduit}
 signatures using Lwt_unix.")
     (license license:isc)))
 
+(define-public ocaml-magic-mime
+  (package
+    (name "ocaml-magic-mime")
+    (version "1.3.0")
+    (home-page "https://github.com/mirage/ocaml-magic-mime")
+    (source
+     (origin
+       (method git-fetch)
+       (uri (git-reference
+             (url home-page)
+             (commit (string-append "v" version))))
+       (file-name (git-file-name name version))
+       (sha256
+        (base32
+         "0l27c4bdn55jdzp6i7hlky7m5g40kgibv5j8xix6p2rkbs5qsy1y"))))
+    (build-system dune-build-system)
+    (arguments `(#:test-target "."))
+    (synopsis "OCaml library for mapping filenames to common MIME types")
+    (description "This library contains a database of MIME types that maps
+filename extensions into MIME types suitable for use in many Internet
+protocols such as HTTP or e-mail.  It is generated from the @file{mime.types}
+file found in Unix systems, but has no dependency on a filesystem since it
+includes the contents of the database as an ML datastructure.")
+    (license license:isc)))
+
 (define-public ocaml-hacl-star-raw
   (package
    (name "ocaml-hacl-star-raw")
