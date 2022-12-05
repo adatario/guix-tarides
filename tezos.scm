@@ -134,7 +134,7 @@
 	  ocaml-lwt-log
 	  ocaml-uri))))
 
-(define-public ocmal-tezos-stdlib-unix
+(define-public ocaml-tezos-stdlib-unix
   (package
    (inherit tezos)
    (name "ocaml-tezos-stdlib-unix")
