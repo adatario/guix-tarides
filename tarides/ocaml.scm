@@ -670,6 +670,19 @@ of IPv4 * MAC-48 (Ethernet) address support * `Macaddr` is a `Map.OrderedType` *
 All types have sexplib serializers/deserializers")
     (license license:isc)))
 
+(define-public ocaml-ipaddr-cstruct
+  (package
+    (inherit ocaml-macaddr)
+    (name "ocaml-ipaddr-cstruct")
+    (arguments `(#:package "ipaddr-cstruct"
+                 #:test-target "."))
+    (propagated-inputs
+     `(("ocaml-ipaddr" ,ocaml-ipaddr)
+       ("ocaml-cstruct" ,ocaml-cstruct)))
+    (synopsis "OCaml library for manipulation of IP addresses as C-like structres")
+    (description "This OCaml library provides functions for manipulating as
+C-like structures using the @code{ocaml-cstruct} library.")))
+
 (define-public ocaml-lwt-canceler
   (package
    (name "ocaml-lwt-canceler")
