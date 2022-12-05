@@ -1021,6 +1021,22 @@ plugin that provides a JSON codec generator.")
 2 as defined by PKCS#5 using @code{ocaml-mirage-crypto}.")
     (license license:bsd-2)))
 
+(define-public ocaml-cstruct-unix
+  (package
+    (inherit ocaml-cstruct)
+    (name "ocaml-cstruct-unix")
+    (build-system dune-build-system)
+    (arguments
+     `(#:package "cstruct-unix"
+       #:test-target "."))
+    (propagated-inputs (list ocaml-cstruct))
+    (synopsis "Unix variation of the @code{ocaml-cstruct} library")
+    (description "Cstruct is a library and syntax extension to make it easier
+to access C-like structures directly from OCaml.  It supports both reading and
+writing to these structures, and they are accessed via the `Bigarray`
+module.")
+    (license license:isc)))
+
 (define-public ocaml-hacl-star-raw
   (package
    (name "ocaml-hacl-star-raw")
