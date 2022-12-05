@@ -1414,3 +1414,36 @@ tailored for different targets.  For example, you can install
 JavaScript backend, or @code{ocaml-cohttp-mirage} for the MirageOS unikernel
 version of the library.  All of these implementations share the same IO logic
 from this module.")))
+
+(define-public ocaml-resto
+  (package
+   (name "ocaml-resto")
+   (version "1.0")
+   (source
+    (origin
+     (method git-fetch)
+     (uri (git-reference
+	   (url "https://gitlab.com/nomadic-labs/resto.git")
+	   (commit (string-append "v" version))))
+     (sha256
+      (base32
+       "0ryssy17b583fj685927yyrszc4k2kdxqa9f1q8jic0jc9zbp28c"))))
+   (build-system dune-build-system)
+   (arguments
+    ;; Tests require network.
+    `(#:tests? #f))
+   (propagated-inputs
+    (list ocaml-uri
+	  ocaml-json-data-encoding
+	  ocaml-json-data-encoding-bson
+	  ocaml-conduit-lwt-unix
+	  ocaml-cohttp-lwt-unix))
+   (native-inputs
+    (list ocaml-ezjsonm
+	  ocaml-lwt
+	  ocaml-alcotest
+	  ocaml-alcotest-lwt))
+   (home-page "https://gitlab.com/nomadic-labs/resto")
+   (synopsis "A small OCaml library for type-safe HTTP/JSON RPCs")
+   (description "A small OCaml library for type-safe HTTP/JSON RPCs")
+   (license license:expat)))
