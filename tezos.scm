@@ -48,6 +48,17 @@
    (arguments `(#:package "tezos-test-helpers"
 		#:test-target "."))))
 
+(define-public ocaml-tezos-test-helpers-extra
+  (package
+   (inherit tezos)
+   (name "ocaml-tezos-test-helpers-extra")
+   (propagated-inputs
+    (list ocaml-tezos-base
+	  ocaml-tezos-crypto
+	  ocaml-tezos-test-helpers))
+   (arguments `(#:package "tezos-test-helpers-extra"
+		#:test-target "."))))
+
 (define-public ocaml-tezos-stdlib
   (package
    (inherit tezos)
