@@ -1447,3 +1447,33 @@ from this module.")))
    (synopsis "A small OCaml library for type-safe HTTP/JSON RPCs")
    (description "A small OCaml library for type-safe HTTP/JSON RPCs")
    (license license:expat)))
+
+(define-public ocaml-secp256k1-internal
+  (package
+    (name "ocaml-secp256k1-internal")
+    (version "0.4.0")
+    (home-page
+     "https://gitlab.com/nomadic-labs/ocaml-secp256k1-internal")
+    (source
+     (origin
+       (method git-fetch)
+       (uri (git-reference
+	     (url (string-append home-page ".git"))
+	     (commit "v0.4")))
+       (sha256
+	(base32
+	 "0kczrwdnnm74k0w3xvs216fsas26dz1832am19qm64qwvsknsrba"))))
+    (build-system dune-build-system)
+    (propagated-inputs
+     (list gmp
+	   ocaml-cstruct
+	   ocaml-bigstring))
+    (native-inputs
+     (list ocaml-hex
+	   ocaml-alcotest
+	   js-of-ocaml))
+    (synopsis "Bindings to secp256k1 internal functions (generic
+operations on the curve)")
+    (description "Bindings to secp256k1 internal functions (generic
+operations on the curve)")
+   (license license:expat)))
