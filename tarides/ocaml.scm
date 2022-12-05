@@ -1503,3 +1503,15 @@ operations on the curve)")
     (synopsis "Minimal finite field signatures")
     (description "Minimal finite field signatures")
     (license license:expat)))
+
+(define-public ocaml-ff-pbt
+  (package
+    (inherit ocaml-ff-sig)
+    (name "ocaml-ff-pbt")
+    (arguments `(#:package "ff-pbt"))
+    (propagated-inputs
+     (list ocaml-zarith
+	   ocaml-ff-sig))
+    (native-inputs
+     (list ocaml-alcotest
+	   ocaml-bisect-ppx))))
