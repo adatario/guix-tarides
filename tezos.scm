@@ -232,3 +232,28 @@
 	   ocaml-alcotest-lwt
 	   ocaml-qcheck
 	   ocaml-tezos-test-helpers))))
+
+(define-public ocaml-tezos-base
+  (package
+    (inherit tezos)
+    (name "ocaml-tezos-base")
+    (arguments `(#:package "tezos-base"
+		 #:test-target "."))
+    (propagated-inputs
+     (list ocaml-tezos-error-monad
+	   ocaml-data-encoding
+	   ocaml-tezos-crypto
+	   ocaml-tezos-hacl
+	   ocaml-tezos-stdlib
+	   ocaml-tezos-stdlib-unix
+	   ocaml-uri
+	   ocaml-tezos-rpc
+	   ocaml-tezos-micheline
+	   ocaml-tezos-event-logging
+	   ocaml-ptime
+	   ocaml-ezjsonm
+	   ocaml-lwt
+	   ocaml-ipaddr))
+    (native-inputs
+     (list ocaml-tezos-test-helpers
+	   ocaml-alcotest))))
