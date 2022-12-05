@@ -189,3 +189,18 @@
 	   ocaml-tezos-error-monad
 	   ocaml-resto
 	   ocaml-uri))))
+
+(define-public ocaml-tezos-micheline
+  (package
+    (inherit tezos)
+    (name "ocaml-tezos-micheline")
+    (arguments `(#:package "tezos-micheline"
+		 #:test-target "."))
+    (propagated-inputs
+     (list ocaml-ppx-expect
+	   ocaml-uutf
+	   ocaml-zarith
+	   ocaml-zarith-stubs-js
+	   ocaml-tezos-stdlib
+	   ocaml-tezos-error-monad
+	   ocaml-data-encoding))))
