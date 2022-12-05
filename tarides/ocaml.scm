@@ -997,6 +997,30 @@ plugin that provides a JSON codec generator.")
     ;; See https://github.com/mirage/mirage-crypto/blob/main/ec/LICENSE.md
     (license license:expat)))
 
+(define-public ocaml-pbkdf
+  (package
+    (name "ocaml-pbkdf")
+    (version "1.2.0")
+    (home-page "https://github.com/abeaumont/ocaml-pbkdf")
+    (source
+     (origin
+       (method git-fetch)
+       (uri (git-reference
+             (url home-page)
+             (commit version)))
+       (file-name (git-file-name name version))
+       (sha256
+        (base32
+         "0cmalqa28b19bhprm85zl49vw2d2d4vynjfszi51lm5v1xbvhs3l"))))
+    (build-system dune-build-system)
+    (propagated-inputs (list ocaml-mirage-crypto))
+    (native-inputs (list ocaml-alcotest))
+    (synopsis "OCaml library for password based key derivation functions
+(PBKDF) from PKCS#5")
+    (description "This package provides an OCaml implementation of PBKDF 1 and
+2 as defined by PKCS#5 using @code{ocaml-mirage-crypto}.")
+    (license license:bsd-2)))
+
 (define-public ocaml-hacl-star-raw
   (package
    (name "ocaml-hacl-star-raw")
