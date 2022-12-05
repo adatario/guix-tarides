@@ -1037,6 +1037,32 @@ writing to these structures, and they are accessed via the `Bigarray`
 module.")
     (license license:isc)))
 
+(define-public ocaml-gmap
+  (package
+    (name "ocaml-gmap")
+    (version "0.3.0")
+    (home-page "https://github.com/hannesm/gmap")
+    (source
+     (origin
+       (method git-fetch)
+       (uri (git-reference
+             (url home-page)
+             (commit version)))
+       (file-name (git-file-name name version))
+       (sha256
+        (base32
+         "0880mhcybr662k6wnahx5mwbialh878kkzxacn47qniadd21x411"))))
+    (build-system dune-build-system)
+    (arguments `(#:test-target "."))
+    (native-inputs
+     (list ocaml-alcotest
+	   ocaml-fmt))
+    (synopsis "OCaml library for heterogenous maps over a Generalized
+Algebraic Data Type")
+    (description "@code{ocaml-gmap} exposes an OCaml functor which can be used
+to create a type-safe heterogenous maps.")
+    (license license:isc)))
+
 (define-public ocaml-hacl-star-raw
   (package
    (name "ocaml-hacl-star-raw")
