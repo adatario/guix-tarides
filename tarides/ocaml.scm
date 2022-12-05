@@ -1477,3 +1477,29 @@ operations on the curve)")
     (description "Bindings to secp256k1 internal functions (generic
 operations on the curve)")
    (license license:expat)))
+
+(define-public ocaml-ff-sig
+  (package
+    (name "ocaml-ff-sig")
+    (version "0.6.2")
+    (home-page
+     "https://gitlab.com/nomadic-labs/cryptography/ocaml-ff")
+    (source
+     (origin
+       (method git-fetch)
+       (uri (git-reference
+	     (url (string-append home-page ".git"))
+	     (commit version)))
+       (sha256
+	(base32
+	 "1rn3zwwmxqd5b739ii00kd6p9d7km2c16z7vkdlssf8cmkhhg192"))))
+    (build-system dune-build-system)
+    (arguments `(#:package "ff-sig"))
+    (propagated-inputs
+     (list ocaml-zarith))
+    (native-inputs
+     (list ocaml-alcotest
+	   ocaml-bisect-ppx))
+    (synopsis "Minimal finite field signatures")
+    (description "Minimal finite field signatures")
+    (license license:expat)))
