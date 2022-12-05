@@ -899,6 +899,41 @@ number generator interface, and implementations.")))
     (description "@code{ocaml-mirage-crypto-pk} provides public-key
 cryptography (RSA, DSA, DH) for OCaml.")))
 
+(define-public ocaml-asn1-combinators
+  (package
+    (name "ocaml-asn1-combinators")
+    (version "0.2.6")
+    (home-page "https://github.com/mirleft/ocaml-asn1-combinators")
+    (source
+     (origin
+       (method git-fetch)
+       (uri (git-reference
+             (url home-page)
+             (commit (string-append "v" version))))
+       (file-name (git-file-name name version))
+       (sha256
+        (base32
+         "1fkhlfglv0baiaxk4yxha9sv0l3acji74z9mkpdjkh9fn4c9yhv3"))))
+    (build-system dune-build-system)
+    (arguments `(#:test-target "."))
+    (propagated-inputs
+     `(("ocaml-cstruct" ,ocaml-cstruct)
+       ("ocaml-zarith" ,ocaml-zarith)
+       ("ocaml-bigarray-compat" ,ocaml-bigarray-compat)
+       ("ocaml-stdlib-shims" ,ocaml-stdlib-shims)
+       ("ocaml-ptime" ,ocaml-ptime)))
+    (native-inputs
+     `(("ocaml-alcotest" ,ocaml-alcotest)))
+    (inputs `(("gmp" ,gmp)))
+    (synopsis "OCaml library for embedding typed ASN.1 grammars")
+    (description "@{ocaml-asn1-combinators} is an OCaml library for expressing
+ASN.1 in OCaml.  This allows you to skip the notation part of ASN.1, and embed
+the abstract syntax directly in the language.  These abstract syntax
+representations can be used for parsing, serialization, or random testing.
+
+The only ASN.1 encodings currently supported are BER and DER.")
+    (license license:isc)))
+
 (define-public ocaml-hacl-star-raw
   (package
    (name "ocaml-hacl-star-raw")
