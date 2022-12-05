@@ -1515,3 +1515,38 @@ operations on the curve)")
     (native-inputs
      (list ocaml-alcotest
 	   ocaml-bisect-ppx))))
+
+(define-public ocaml-bls12-381
+  (package
+    (name "ocaml-bls12-381")
+    (version "5.0.0")
+    (home-page
+     "https://gitlab.com/nomadic-labs/cryptography/ocaml-bls12-381")
+    (source
+     (origin
+       (method git-fetch)
+       (uri (git-reference
+	     (url (string-append home-page ".git"))
+	     (commit version)))
+       (sha256
+	(base32
+	 "0wxqqgnv40r7qf7lvc674spyf7kgh1c193q1cvl2879ppvxwhbqz"))))
+    (build-system dune-build-system)
+    (arguments `(#:package "bls12-381"))
+    (propagated-inputs
+     (list ocaml-ff-sig
+	   ocaml-zarith
+	   gmp
+	   ocaml-hex
+	   ocaml-integers))
+    (native-inputs
+     (list ocaml-zarith-stubs-js
+	   ocaml-alcotest
+	   ocaml-integers-stubs-js
+	   ocaml-bisect-ppx
+	   ocaml-ff-pbt))
+    (synopsis "Implementation of BLS12-381 and some cryptographic
+primitives built on top of it")
+    (description "Implementation of BLS12-381 and some cryptographic
+primitives built on top of it")
+    (license license:expat)))
