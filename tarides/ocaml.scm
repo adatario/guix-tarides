@@ -1173,6 +1173,32 @@ registered with ocaml-tls.")
 @code{ocaml-ssl}, that performs I/O concurrently.")
     (license license:lgpl2.1+))) ; with linking exception
 
+(define-public ocaml-conduit-lwt-unix
+  (package
+    (inherit ocaml-conduit)
+    (name "ocaml-conduit-lwt-unix")
+    (arguments `(#:package "conduit-lwt-unix"
+                 #:test-target "."))
+    (propagated-inputs
+     (list ocaml-logs
+	   ocaml-ppx-sexp-conv
+	   ocaml-conduit-lwt
+	   ocaml-lwt
+	   ocaml-uri
+	   ocaml-ipaddr
+	   ocaml-ipaddr-sexp
+	   ocaml-ca-certs))
+    (native-inputs
+     (list ocaml-lwt-log
+	   ocaml-ssl
+	   ocaml-lwt-ssl))
+    (synopsis "OCaml library for establishing TCP and SSL/TLC connections
+using Lwt_unix")
+    (description "This OCaml library provides an implementation
+for establishing TCP and SSL/TLS connections for the @code{ocaml-conduit}
+signatures using Lwt_unix.")
+    (license license:isc)))
+
 (define-public ocaml-hacl-star-raw
   (package
    (name "ocaml-hacl-star-raw")
