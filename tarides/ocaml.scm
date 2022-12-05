@@ -1110,6 +1110,43 @@ which is also implemented by this library --- namely PKCS 1, PKCS 5, PKCS 7,
 PKCS 8, PKCS 9, PKCS 10, and PKCS 12.")
     (license license:bsd-2)))
 
+(define-public ocaml-ca-certs
+  (package
+    (name "ocaml-ca-certs")
+    (version "0.2.3")
+    (home-page "https://github.com/mirage/ca-certs")
+    (source
+     (origin
+       (method git-fetch)
+       (uri (git-reference
+             (url home-page)
+             (commit (string-append "v" version))))
+       (file-name (git-file-name name version))
+       (sha256
+        (base32
+         "198769wkmvvc89ygkq503611bhyspv40z0222ha4pqgjclcbl99i"))))
+    (build-system dune-build-system)
+    (arguments `(#:test-target "."
+                 ;; Tests are failing as they require certificates to be in /etc/ssl/certs
+                 #:tests? #f))
+    (propagated-inputs
+     (list ocaml-astring
+	   ocaml-bos
+	   ocaml-fpath
+	   ocaml-rresult
+	   ocaml-ptime
+	   ocaml-logs
+	   ocaml-mirage-crypto
+	   ocaml-x509))
+    (native-inputs (list ocaml-alcotest))
+    (synopsis
+     "Detect root CA certificates from the operating system")
+    (description
+     "TLS requires a set of root anchors (Certificate Authorities) to
+authenticate servers.  This library exposes this list so that it can be
+registered with ocaml-tls.")
+    (license license:isc)))
+
 (define-public ocaml-hacl-star-raw
   (package
    (name "ocaml-hacl-star-raw")
