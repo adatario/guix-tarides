@@ -700,6 +700,38 @@ C-like structures using the @code{ocaml-cstruct} library.")))
     (description "This OCaml library provides functions for manipulating as
 S-expressions using the @code{ocaml-sexp} library.")))
 
+(define-public ocaml-conduit
+  (package
+    (name "ocaml-conduit")
+    (version "6.0.1")
+    (home-page "https://github.com/mirage/ocaml-conduit")
+    (source
+     (origin
+       (method git-fetch)
+       (uri (git-reference
+             (url home-page)
+             (commit (string-append "v" version))))
+       (file-name (git-file-name name version))
+       (sha256
+        (base32
+         "1p46f8k9q3fl4vf00ln4yj0lhf2xp6zl23jyi5bzdaf4mrc6wvch"))))
+    (build-system dune-build-system)
+    (arguments `(#:package "conduit"
+                 #:test-target "."))
+    (propagated-inputs
+     `(("ocaml-ppx-sexp-conv" ,ocaml-ppx-sexp-conv)
+       ("ocaml-sexplib" ,ocaml-sexplib)
+       ("ocaml-astring" ,ocaml-astring)
+       ("ocaml-uri" ,ocaml-uri)
+       ("ocaml-logs" ,ocaml-logs)
+       ("ocaml-ipaddr" ,ocaml-ipaddr)
+       ("ocaml-ipaddr-sexp" ,ocaml-ipaddr-sexp)))
+    (synopsis "OCaml library for establishing TCP and SSL/TLS connections")
+    (description "This OCaml library provides an abstraction for establishing
+TCP and SSL/TLS connections.  This allows using the same type signatures
+regardless of the SSL library or platform being used.")
+    (license license:isc)))
+
 (define-public ocaml-lwt-canceler
   (package
    (name "ocaml-lwt-canceler")
