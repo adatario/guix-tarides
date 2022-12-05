@@ -934,6 +934,35 @@ representations can be used for parsing, serialization, or random testing.
 The only ASN.1 encodings currently supported are BER and DER.")
     (license license:isc)))
 
+(define-public ocaml-ppx-deriving-yojson
+  (package
+    (name "ocaml-ppx-deriving-yojson")
+    (version "3.6.1") ;; 3.7.0 requires an updated ppxlib
+    (home-page "https://github.com/ocaml-ppx/ppx_deriving_yojson")
+    (source
+     (origin
+       (method git-fetch)
+       (uri (git-reference
+             (url home-page)
+             (commit (string-append "v" version))))
+       (file-name (git-file-name name version))
+       (sha256
+        (base32
+         "1icz5h6p3pfj7my5gi7wxpflrb8c902dqa17f9w424njilnpyrbk"))))
+    (build-system dune-build-system)
+    (arguments `(#:test-target "."))
+    (propagated-inputs
+     (list ocaml-yojson
+	   ocaml-result
+	   ocaml-ppx-deriving
+	   ocaml-ppxlib))
+    (native-inputs (list ocaml-ounit))
+    (properties `((upstream-name . "ppx_deriving_yojson")))
+    (synopsis "JSON codec generator for OCaml")
+    (description "@code{ocaml-ppx-deriving-yojson} is an OCaml ppx_deriving
+plugin that provides a JSON codec generator.")
+    (license license:expat)))
+
 (define-public ocaml-hacl-star-raw
   (package
    (name "ocaml-hacl-star-raw")
