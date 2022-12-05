@@ -1224,6 +1224,29 @@ file found in Unix systems, but has no dependency on a filesystem since it
 includes the contents of the database as an ML datastructure.")
     (license license:isc)))
 
+(define-public ocaml-cohttp-lwt-unix
+  (package
+    (inherit ocaml-cohttp)
+    (name "ocaml-cohttp-lwt-unix")
+    (arguments `(#:package "cohttp-lwt-unix"
+                 ;; tests require network
+                 #:tests? #f))
+    (propagated-inputs
+     (list ocaml-conduit-lwt
+	   ocaml-conduit-lwt-unix
+	   ocaml-cmdliner
+	   ocaml-magic-mime
+	   ocaml-logs
+	   ocaml-fmt
+	   ocaml-cohttp-lwt
+	   ocaml-ppx-sexp-conv
+	   ocaml-lwt
+	   ocaml-lwt-ssl))
+    (native-inputs (list ocaml-ounit))
+    (synopsis "OCaml HTTP implementation for Unix using Lwt")
+    (description "This Ocaml package provides an implementation of an HTTP
+client and server for Unix using the Lwt concurrency library.")))
+
 (define-public ocaml-hacl-star-raw
   (package
    (name "ocaml-hacl-star-raw")
