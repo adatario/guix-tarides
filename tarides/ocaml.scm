@@ -456,7 +456,7 @@ the command line tool `omd`.")
 (define-public ocaml-data-encoding
   (package
     (name "ocaml-data-encoding")
-    (version "0.7.1")
+    (version "0.6")
     (source
      (origin
       (method git-fetch)
@@ -466,7 +466,7 @@ the command line tool `omd`.")
 
       (sha256
        (base32
-	"0998b3vhbaa1swl6xqj9n0j95ml6dhi5b2lg70mynlv85c4f4xap"))))
+	"0kaw8rblvr247r8lpd5s4sm7h8z3rj9pmv63a6szmyy6akp1a0d1"))))
     (build-system dune-build-system)
     (propagated-inputs (list ocaml-ezjsonm
                              ocaml-zarith
