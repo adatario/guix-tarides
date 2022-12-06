@@ -85,7 +85,7 @@ depends on target architecture.")
     (arguments `(#:test-target "."))
     (native-inputs
      (list ocaml-stdlib-shims))
-    (synopsis "An OCaml library providing priority queues")
+    (synopsis "OCaml library providing priority queues")
     (description
       "This OCaml library provides priority queues using a binary heap
 encoded in a resizable array.")
@@ -109,7 +109,8 @@ encoded in a resizable array.")
    (build-system dune-build-system)
    (arguments `(#:test-target "."))
    (synopsis "Resizable Arrays for OCaml")
-   (description "An OCaml library that provides vectors - dynamic, growable arrays.")
+   (description "An OCaml library that provides vectors - dynamic,
+growable arrays.")
    (license license:lgpl2.1)))
 
 (define-public ocaml-progress
@@ -137,7 +138,7 @@ encoded in a resizable array.")
 			    ocaml-vector
 			    ocaml-optint))
    (native-inputs (list ocaml-alcotest ocaml-astring))
-   (synopsis "User-definable progress bars")
+   (synopsis "User-definable progress bars for OCaml")
    (description
     "This package provides a progress bar library for OCaml, featuring a DSL for
 declaratively specifying progress bar formats.  Supports rendering multiple
@@ -161,7 +162,7 @@ progress bars simultaneously.")
        "1k6pbc0170166wif6a92lc77ifhmb1hydx9r1h3wlpsz2r3j59ds"))))
    (build-system dune-build-system)
    (arguments `(#:test-target "."))
-   (synopsis "Compatibility Semaphore module")
+   (synopsis "OCaml compatibility Semaphore module")
    (description
     "Projects that want to use the Semaphore module defined in OCaml 4.12.0 while
 staying compatible with older versions of OCaml should use this library instead.")
@@ -185,7 +186,7 @@ staying compatible with older versions of OCaml should use this library instead.
    (build-system dune-build-system)
    (propagated-inputs (list ocaml-seq))
    (native-inputs (list ocaml-qcheck ocaml-alcotest))
-   (synopsis "Functional Priority Search Queues")
+   (synopsis "Functional Priority Search Queues for OCaml")
    (description
     "Typical applications are searches, schedulers and caches.  If you ever scratched
 your head because that A* didn't look quite right, a PSQ is what you needed.")
@@ -209,10 +210,11 @@ your head because that A* didn't look quite right, a PSQ is what you needed.")
    (build-system dune-build-system)
    (propagated-inputs (list ocaml-psq))
    (native-inputs (list ocaml-qcheck ocaml-alcotest))
-   (synopsis "Scalable LRU caches")
+   (synopsis "Scalable LRU caches for OCaml")
    (description
-    "Lru provides weight-bounded finite maps that can remove the least-recently-used
-(LRU) bindings in order to maintain a weight constraint.")
+    "This OCaml library provides weight-bounded finite maps that can
+remove the least-recently-used (LRU) bindings in order to maintain a
+weight constraint.")
    (license license:isc)))
 
 (define-public ocaml-checkseum
@@ -332,9 +334,9 @@ are (will be) provided by default.  Metrics is heavily inspired by
      `(#:package "alcotest-lwt"
        #:tests? #f))
     (propagated-inputs
-     `(("ocaml-alcotest" ,ocaml-alcotest)
-       ("ocaml-lwt" ,ocaml-lwt)
-       ("ocaml-logs" ,ocaml-logs)))))
+     (list ocaml-alcotest
+	   ocaml-lwt
+	   ocaml-logs))))
 
 (define-public ocaml-zarith-stubs-js
   (package
@@ -681,8 +683,8 @@ All types have sexplib serializers/deserializers")
     (arguments `(#:package "ipaddr-cstruct"
                  #:test-target "."))
     (propagated-inputs
-     `(("ocaml-ipaddr" ,ocaml-ipaddr)
-       ("ocaml-cstruct" ,ocaml-cstruct)))
+     (list ocaml-ipaddr
+	   ocaml-cstruct))
     (synopsis "OCaml library for manipulation of IP addresses as C-like structres")
     (description "This OCaml library provides functions for manipulating as
 C-like structures using the @code{ocaml-cstruct} library.")))
@@ -694,12 +696,12 @@ C-like structures using the @code{ocaml-cstruct} library.")))
     (arguments `(#:package "ipaddr-sexp"
                  #:test-target "."))
     (propagated-inputs
-     `(("ocaml-ipaddr" ,ocaml-ipaddr)
-       ("ocaml-ppx-sexp-conv" ,ocaml-ppx-sexp-conv)
-       ("ocaml-sexplib0" ,ocaml-sexplib0)))
+     (list ocaml-ipaddr
+	   ocaml-ppx-sexp-conv
+	   ocaml-sexplib0))
     (native-inputs
-     `(("ocaml-ipaddr-cstruct" ,ocaml-ipaddr-cstruct)
-       ("ocaml-ounit" ,ocaml-ounit)))
+     (list ocaml-ipaddr-cstruct
+	   ocaml-ounit))
     (synopsis "OCaml library for manipulation of IP addresses as S-expressions")
     (description "This OCaml library provides functions for manipulating as
 S-expressions using the @code{ocaml-sexp} library.")))
@@ -723,13 +725,13 @@ S-expressions using the @code{ocaml-sexp} library.")))
     (arguments `(#:package "conduit"
                  #:test-target "."))
     (propagated-inputs
-     `(("ocaml-ppx-sexp-conv" ,ocaml-ppx-sexp-conv)
-       ("ocaml-sexplib" ,ocaml-sexplib)
-       ("ocaml-astring" ,ocaml-astring)
-       ("ocaml-uri" ,ocaml-uri)
-       ("ocaml-logs" ,ocaml-logs)
-       ("ocaml-ipaddr" ,ocaml-ipaddr)
-       ("ocaml-ipaddr-sexp" ,ocaml-ipaddr-sexp)))
+     (list ocaml-ppx-sexp-conv
+	   ocaml-sexplib
+	   ocaml-astring
+	   ocaml-uri
+	   ocaml-logs
+	   ocaml-ipaddr
+	   ocaml-ipaddr-sexp))
     (synopsis "OCaml library for establishing TCP and SSL/TLS connections")
     (description "This OCaml library provides an abstraction for establishing
 TCP and SSL/TLS connections.  This allows using the same type signatures
@@ -743,10 +745,10 @@ regardless of the SSL library or platform being used.")
     (arguments `(#:package "conduit-lwt"
                  #:test-target "."))
     (propagated-inputs
-     `(("ocaml-ppx-sexp-conv" ,ocaml-ppx-sexp-conv)
-       ("ocaml-sexplib" ,ocaml-sexplib)
-       ("ocaml-conduit" ,ocaml-conduit)
-       ("ocaml-lwt" ,ocaml-lwt)))
+     (list ocaml-ppx-sexp-conv
+	   ocaml-sexplib
+	   ocaml-conduit
+	   ocaml-lwt))
     (synopsis "OCaml library for establishing TCP and SSL/TLS connections
 using Lwt")
     (description "This OCaml library provides the abstractions for
@@ -795,12 +797,12 @@ establishing TCP and SSL/TLS connections from @code{ocaml-conduit} using
     (arguments `(#:package "mirage-crypto"
                  #:test-target "."))
     (propagated-inputs
-     `(("ocaml-cstruct" ,ocaml-cstruct)
-       ("ocaml-eqaf" ,ocaml-eqaf)
-       ("ocaml-bigarray-compat" ,ocaml-bigarray-compat)))
+     (list ocaml-cstruct
+	   ocaml-eqaf
+	   ocaml-bigarray-compat))
     (native-inputs
-     `(("pkg-config" ,pkg-config)
-       ("ocaml-ounit" ,ocaml-ounit)))
+     (list pkg-config
+	   ocaml-ounit))
     (synopsis "OCaml library provding cryptographic primitives")
     (description "This OCaml library provides symmetric ciphers (DES, AES,
 RC4, ChaCha20/Poly1305), and hashes (MD5, SHA-1, SHA-2).  This library can be
@@ -825,7 +827,7 @@ used from MirageOS unikernels.")
     (build-system dune-build-system)
     (arguments `(#:test-target "."))
     (native-inputs
-     `(("ocaml-alcotest" ,ocaml-alcotest)))
+     (list ocaml-alcotest))
     (synopsis "OCaml library providing conversions between various time units")
     (description "This OCaml library provides functions for representing a
 time duration as an usigned 64 bit integer.  This can be used for conversions
@@ -850,7 +852,7 @@ between various time units.")
     (build-system dune-build-system)
     (arguments `(#:test-target "."))
     (propagated-inputs
-     `(("ocaml-cstruct" ,ocaml-cstruct)))
+     (list ocaml-cstruct))
     (synopsis "OCaml library for converting random byte vectors to random numer")
     (description
      "This Ocaml library provides functions for converting random byte vectors
@@ -864,15 +866,15 @@ as (C-like structures using @code{ocaml-cstruct}) to OCaml native numbers.")
     (arguments `(#:package "mirage-crypto-rng"
                  #:test-target "."))
     (propagated-inputs
-     `(("ocaml-duration" ,ocaml-duration)
-       ("ocaml-cstruct" ,ocaml-cstruct)
-       ("ocaml-logs" ,ocaml-logs)
-       ("ocaml-mirage-crypto" ,ocaml-mirage-crypto)
-       ("ocaml-mtime" ,ocaml-mtime)
-       ("ocaml-lwt" ,ocaml-lwt)))
+     (list ocaml-duration
+	   ocaml-cstruct
+	   ocaml-logs
+	   ocaml-mirage-crypto
+	   ocaml-mtime
+	   ocaml-lwt))
     (native-inputs
-     `(("ocaml-ounit" ,ocaml-ounit)
-       ("ocaml-randomconv" ,ocaml-randomconv)))
+     (list ocaml-ounit
+	   ocaml-randomconv))
     (synopsis "Cryptographically secure pseudo-random number generator in
 OCaml")
     (description "@code{ocaml-mirage-crypto-rng} provides an OCaml random
@@ -885,20 +887,21 @@ number generator interface, and implementations.")))
     (arguments `(#:package "mirage-crypto-pk"
                  #:test-target "."))
     (propagated-inputs
-     `(("ocaml-cstruct" ,ocaml-cstruct)
-       ("ocaml-logs" ,ocaml-logs)
-       ("ocaml-mirage-crypto" ,ocaml-mirage-crypto)
-       ("ocaml-mirage-crypto-rng" ,ocaml-mirage-crypto-rng)
-       ("ocaml-mtime" ,ocaml-mtime)
-       ("ocaml-sexplib" ,ocaml-sexplib)
-       ("ocaml-ppx-sexp-conv" ,ocaml-ppx-sexp-conv)
-       ("ocaml-zarith" ,ocaml-zarith)
-       ("ocaml-eqaf" ,ocaml-eqaf)
-       ("ocaml-rresult" ,ocaml-rresult)))
+     (list ocaml-cstruct
+	   ocaml-logs
+	   ocaml-mirage-crypto
+	   ocaml-mirage-crypto-rng
+	   ocaml-mtime
+	   ocaml-sexplib
+	   ocaml-ppx-sexp-conv
+	   ocaml-zarith
+	   ocaml-eqaf
+	   ocaml-rresult))
+
     (native-inputs
-     `(("ocaml-ounit" ,ocaml-ounit)
-       ("ocaml-randomconv" ,ocaml-randomconv)))
-    (inputs `(("gmp" ,gmp)))
+     (list ocaml-ounit
+	   ocaml-randomconv))
+    (inputs (list gmp))
     (synopsis "OCaml library providing public-key cryptography")
     (description "@code{ocaml-mirage-crypto-pk} provides public-key
 cryptography (RSA, DSA, DH) for OCaml.")))
@@ -921,14 +924,14 @@ cryptography (RSA, DSA, DH) for OCaml.")))
     (build-system dune-build-system)
     (arguments `(#:test-target "."))
     (propagated-inputs
-     `(("ocaml-cstruct" ,ocaml-cstruct)
-       ("ocaml-zarith" ,ocaml-zarith)
-       ("ocaml-bigarray-compat" ,ocaml-bigarray-compat)
-       ("ocaml-stdlib-shims" ,ocaml-stdlib-shims)
-       ("ocaml-ptime" ,ocaml-ptime)))
+     (list ocaml-cstruct
+	   ocaml-zarith
+	   ocaml-bigarray-compat
+	   ocaml-stdlib-shims
+	   ocaml-ptime))
     (native-inputs
-     `(("ocaml-alcotest" ,ocaml-alcotest)))
-    (inputs `(("gmp" ,gmp)))
+     (list ocaml-alcotest))
+    (inputs (list gmp))
     (synopsis "OCaml library for embedding typed ASN.1 grammars")
     (description "@{ocaml-asn1-combinators} is an OCaml library for expressing
 ASN.1 in OCaml.  This allows you to skip the notation part of ASN.1, and embed
@@ -1402,12 +1405,12 @@ library, along with automatically generated Ctypes bindings.  WARNING: This pack
     (arguments `(#:package "cohttp-lwt"
                  #:test-target "."))
     (propagated-inputs
-     `(("ocaml-cohttp" ,ocaml-cohttp)
-       ("ocaml-lwt" ,ocaml-lwt)
-       ("ocaml-sexplib0" ,ocaml-sexplib0)
-       ("ocaml-ppx-sexp-conv" ,ocaml-ppx-sexp-conv)
-       ("ocaml-logs" ,ocaml-logs)
-       ("ocaml-uri" ,ocaml-uri)))
+     (list ocaml-cohttp
+	   ocaml-lwt
+	   ocaml-sexplib0
+	   ocaml-ppx-sexp-conv
+	   ocaml-logs
+	   ocaml-uri))
     (synopsis "OCaml library for HTTP clients and servers using the Lwt
 concurrency library")
     (description "This is a portable implementation of HTTP that uses the Lwt
