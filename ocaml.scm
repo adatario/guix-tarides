@@ -84,10 +84,11 @@ depends on target architecture.")
     (build-system dune-build-system)
     (arguments `(#:test-target "."))
     (native-inputs
-      `(("ocaml-stdlib-shims" ,ocaml-stdlib-shims)))
-    (synopsis "Priority queues")
+     (list ocaml-stdlib-shims))
+    (synopsis "An OCaml library providing priority queues")
     (description
-      "Traditional implementation using a binary heap encoded in a resizable array.")
+      "This OCaml library provides priority queues using a binary heap
+encoded in a resizable array.")
     (license license:lgpl2.1)))
 
 (define-public ocaml-vector
