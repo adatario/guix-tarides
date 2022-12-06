@@ -2,7 +2,10 @@
 ;
 ; SPDX-License-Identifier: GPL-3.0-or-later
 
-(define-module (tarides ocaml)
+;; This module contains general OCaml package definitions that could
+;; be/should be upstreamed to Guix.
+
+(define-module (ocaml)
   #:use-module (guix packages)
   #:use-module (guix download)
   #:use-module (guix git-download)

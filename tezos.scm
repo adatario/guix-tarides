@@ -11,7 +11,7 @@
   #:use-module (gnu packages pkg-config)
   #:use-module (gnu packages libevent)
   #:use-module (gnu packages multiprecision)
-  #:use-module (tarides ocaml)
+  #:use-module (ocaml)
   #:use-module (tarides irmin))
 
 (define tezos
