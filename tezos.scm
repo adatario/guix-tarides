@@ -40,8 +40,9 @@ uses the specified origin for all Tezos packages."
 	  "ocaml-tezos-shell-services"))
 
   (define (transform p)
-    (if (member (package-name p)
-		tezos-package-names)
+    (if (or (string-prefix? "ocaml-tezos" (package-name p))
+	    (member (package-name p)
+		    tezos-package-names))
 
 	(package
 	  (inherit p)
