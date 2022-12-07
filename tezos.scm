@@ -6,13 +6,54 @@
   #:use-module (guix packages)
   #:use-module (guix git-download)
   #:use-module (guix build-system dune)
+  #:use-module (guix build-system ocaml)
   #:use-module ((guix licenses) #:prefix license:)
   #:use-module (gnu packages ocaml)
   #:use-module (gnu packages pkg-config)
   #:use-module (gnu packages libevent)
   #:use-module (gnu packages multiprecision)
   #:use-module (ocaml)
-  #:use-module (tarides irmin))
+  #:use-module (tarides irmin)
+  #:export (package-with-explicit-tezos-origin))
+
+(define* (package-with-explicit-tezos-origin p #:key origin version)
+  "Return a procedure that takes a package and returns a package that
+uses the specified origin for all Tezos packages."
+
+  ;; packages that are built from the Tezos Git repository
+  (define tezos-package-names
+    (list "ocal-tezos-test-helpers"
+	  "ocaml-tezos-test-helpers-extra"
+	  "ocaml-tezos-stdlib"
+	  "ocaml-tezos-lwt-result-stdlib"
+	  "ocaml-tezos-error-monad"
+	  "ocaml-tezos-event-logging"
+	  "ocaml-tezos-stdlib-unix"
+	  "ocaml-tezos-hacl"
+	  "ocaml-tezos-rpc"
+	  "ocaml-tezos-micheline"
+	  "ocaml-tezos-crypto"
+	  "ocaml-tezos-base"
+	  "ocaml-tezos-context"))
+
+  (define (transform p)
+    (if (member (package-name p)
+		tezos-package-names)
+
+	(package
+	  (inherit p)
+	  (location (package-location p))
+	  (version (if version version (package-version p)))
+	  (source origin))
+
+	p))
+
+  ;; stop package transformations when it's not an OCaml package
+  (define (cut? p)
+    (not (or (eq? (package-build-system p) ocaml-build-system)
+             (eq? (package-build-system p) dune-build-system))))
+
+  ((package-mapping transform cut?) p))
 
 (define tezos
   (package
