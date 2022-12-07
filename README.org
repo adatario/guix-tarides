@@ -57,57 +57,65 @@ Note: make sure that OPAM does not overwrite the shell environment (this can hap
 
 ** Creating a development environment with package from custom branches
 
-#+BEGIN_SRC scheme
-(use-modules
- (guix packages)
- (guix git-download)
- (gnu packages ocaml)
- (ocaml)
- (tarides irmin)
- (tezos))
+The following snippet will allow you to reproducibly build the ~ocaml-tezos-context~ package with patches from a specific branch with a specific version of Irmin (from another Git branch):
 
-(define ocaml-tezos-context-replay-oct22
-  (package
-    (inherit ocaml-tezos-context)
-    (propagated-inputs
-     (append
+#+BEGIN_SRC scheme :tangle custom-ocaml-tezos-context.scm
+  (use-modules
+   (guix packages)
+   (guix git-download)
+   (gnu packages ocaml)
+   (ocaml)
+   (tarides irmin)
+   (tezos))
 
-      ;; extra packages required by the replay patches
-      `(("ocaml-ppx-deriving" ,ocaml-ppx-deriving)
-	("ocaml-ppx-deriving-yojson" ,ocaml-ppx-deriving-yojson)
-	("ocaml-printbox" ,ocaml-printbox)
-	("ocaml-bentov" ,ocaml-bentov))
+  (define ocaml-tezos-context-replay-oct22
+    (package
+      (inherit ocaml-tezos-context)
+      (propagated-inputs
+       (append
 
-      (package-propagated-inputs ocaml-tezos-context)))))
+	;; extra packages required by the replay patches
+	`(("ocaml-ppx-deriving" ,ocaml-ppx-deriving)
+	  ("ocaml-ppx-deriving-yojson" ,ocaml-ppx-deriving-yojson)
+	  ("ocaml-printbox" ,ocaml-printbox)
+	  ("ocaml-bentov" ,ocaml-bentov))
 
-(let* (;; Irmin version to use
-       (irmin-commit "2f37f2495ead523d043d0a2748414c2ab4b94ed0")
-       (irmin-version "3.5-dev") ; only used for package naming
-       (irmin-origin (origin
-		       (method git-fetch)
-		       (uri (git-reference
-			     (url "https://github.com/mirage/irmin")
-			     (commit irmin-commit)))
-		       (sha256
-			(base32
-			 "0n3gxgccc0qnj9g2s6l4dqmw09w7y7fp06zh4c05siq4a2hwz5dn"))))
+	(package-propagated-inputs ocaml-tezos-context)))))
 
-       ;; Tezos version to use
-       (tezos-commit "2f4126536c6b143fc00438e8dff84a29af402c46")
-       (tezos-version "15.0+replay_oct22")
-       (tezos-origin (origin
-		       (method git-fetch)
-		       (uri (git-reference
-			     (url "https://github.com/adatario/tezos.git")
-			     (commit tezos-commit)))
-		       (sha256
-			(base32
-			 "10chcnrjanlk31cbl2ywbrxlipdj610dmgzksk4y7964mp02sg9i")))))
+  (let* (;; Irmin version to use
+	 (irmin-commit "2f37f2495ead523d043d0a2748414c2ab4b94ed0")
+	 (irmin-version "3.5-dev") ; only used for package naming
+	 (irmin-origin (origin
+			 (method git-fetch)
+			 (uri (git-reference
+			       (url "https://github.com/mirage/irmin")
+			       (commit irmin-commit)))
+			 (sha256
+			  (base32
+			   "0n3gxgccc0qnj9g2s6l4dqmw09w7y7fp06zh4c05siq4a2hwz5dn"))))
 
-  (package-with-explicit-tezos-origin
-   (package-with-explicit-irmin-origin ocaml-tezos-context-replay-oct22
-				       #:origin irmin-origin
-				       #:version irmin-version)
-   #:origin tezos-origin
-   #:version tezos-version))
+	 ;; Tezos version to use
+	 (tezos-commit "2f4126536c6b143fc00438e8dff84a29af402c46")
+	 (tezos-version "15.0+replay_oct22")
+	 (tezos-origin (origin
+			 (method git-fetch)
+			 (uri (git-reference
+			       (url "https://github.com/adatario/tezos.git")
+			       (commit tezos-commit)))
+			 (sha256
+			  (base32
+			   "10chcnrjanlk31cbl2ywbrxlipdj610dmgzksk4y7964mp02sg9i")))))
+
+    (package-with-explicit-tezos-origin
+     (package-with-explicit-irmin-origin ocaml-tezos-context-replay-oct22
+					 #:origin irmin-origin
+					 #:version irmin-version)
+     #:origin tezos-origin
+     #:version tezos-version))
+#+END_SRC
+
+If stored in a file ~custom-ocaml-tezos-context.scm~ it can be built with:
+
+#+BEGIN_SRC bash
+  guix build -f custom-ocaml-tezos-context.scm
 #+END_SRC
