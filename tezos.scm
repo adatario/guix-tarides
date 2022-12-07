@@ -36,6 +36,7 @@ uses the specified origin for all Tezos packages."
 	  "ocaml-tezos-base"
 	  "ocaml-tezos-context"
 	  "ocaml-tezos-p2p-services"
+	  "ocaml-tezos-version"
 	  "ocaml-tezos-shell-services"))
 
   (define (transform p)
@@ -320,3 +321,15 @@ uses the specified origin for all Tezos packages."
 		 #:test-target "."))
     (propagated-inputs
      (list ocaml-tezos-base))))
+
+(define-public ocaml-tezos-version
+  (package
+    (inherit tezos)
+    (name "ocaml-tezos-version")
+    (arguments `(#:package "tezos-version"
+		 #:test-target "."))
+    (propagated-inputs
+     (list ocaml-tezos-base
+	   ocaml-ppx-deriving))
+    (native-inputs
+     (list ocaml-alcotest))))
