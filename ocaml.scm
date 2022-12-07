@@ -1617,3 +1617,24 @@ several formats")
 in several formats")
     (license license:bsd-2)))
 
+(define-public ocaml-bentov
+  (package
+    (name "ocaml-bentov")
+    (version "1")
+    (home-page "https://github.com/barko/bentov")
+    (source
+     (origin
+       (method git-fetch)
+       (uri (git-reference
+             (url home-page)
+             (commit version)))
+       (file-name (git-file-name name version))
+       (sha256
+        (base32
+         "1h2wmmhvwgkxv7dpvjzbg12032q4fvvrlrcvd4n2a334lighh69g"))))
+    (build-system dune-build-system)
+    (propagated-inputs
+     (list ocaml-cmdliner))
+    (synopsis "1D histogram sketching for OCaml")
+    (description "This OCaml library implements an algorithm which approximates a 1D histogram as data is streamed over it.")
+    (license license:bsd-3)))
