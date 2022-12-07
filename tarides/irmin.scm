@@ -6,12 +6,14 @@
   #:use-module (guix packages)
   #:use-module (guix git-download)
   #:use-module (guix build-system dune)
+  #:use-module (guix build-system ocaml)
   #:use-module ((guix licenses) #:prefix license:)
   #:use-module (gnu packages ocaml)
   #:use-module (gnu packages maths)
   #:use-module (gnu packages multiprecision)
   #:use-module (gnu packages pkg-config)
-  #:use-module (ocaml))
+  #:use-module (ocaml)
+  #:export (package-with-explicit-irmin-origin))
 
 (define-public ocaml-repr
   (let (;; Tests are fixed in an unreleased commit (https://github.com/mirage/repr/pull/100)
@@ -55,9 +57,42 @@ public consumption and provides no stability guarantee.")
     (list ocaml-repr ocaml-ppxlib))
    (native-inputs (list ocaml-alcotest ocaml-hex))))
 
+(define* (package-with-explicit-irmin-origin p #:key origin version)
+  "Return a procedure that takes a package and returns a package that
+uses the specified origin for all Irmin packages."
+
+  ;; packages that are built from the Irmin Git repository
+  (define irmin-package-names
+    (list "ocaml-irmin"
+	  "ocaml-ppx-irmin"
+	  "ocaml-irmin-pack"
+	  "ocaml-irmin-test"
+	  "ocaml-irmin-tezos"
+	  "ocaml-irmin-tezos-utils"
+	  "ocaml-irmin-fs"))
+
+  (define (transform p)
+    (if (member (package-name p)
+		irmin-package-names)
+
+	(package
+	  (inherit p)
+	  (location (package-location p))
+	  (version (if version version (package-version p)))
+	  (source origin))
+
+	p))
+
+  ;; stop package transformations when it's not an OCaml package
+  (define (cut? p)
+    (not (or (eq? (package-build-system p) ocaml-build-system)
+             (eq? (package-build-system p) dune-build-system))))
+
+  ((package-mapping transform cut?) p))
+
 (define irmin-3.4
   (package
-   (name "irmin")
+   (name "ocaml-irmin")
    (version "3.4.3")
    (home-page "https://github.com/mirage/irmin")
    (source
