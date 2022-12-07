@@ -1,0 +1,113 @@
+#+TITLE: Tarides Guix Channel
+
+[[https://guix.gnu.org][Guix]] channel containing packages used for development at [[https://tarides.com/][Tarides]].
+
+* Overview
+
+This repository contains [[https://guix.gnu.org/][Guix]] package defintions. A package definition defines the inputs required to build some package as well as the exact steps to build the package. Inputs include libraries used by the package (e.g. OCaml libraries) but also the OCaml compiler itself as well as any C libraries. Inputs themselves are also packages that are defined using package definitions. This allows us to pin the entire graph of transitive dependencies required to build some package (e.g. this includes the C compiler used to compile the OCaml compiler). Most packages are defined by the [[https://git.savannah.gnu.org/cgit/guix.git][Guix project]]. The root is formed by a [[https://guix.gnu.org/manual/en/html_node/Bootstrapping.html][binary bootstrap seed]].
+
+These exact definitions of packages allow dependable and reproducible builds and build environments. Guix has been used to keep old code (and the build environment for it) running [[[https://www.nature.com/articles/d41586-020-02462-7][1]]] and is used by projects to provide bootstrappable builds [[[https://github.com/bitcoin/bitcoin/tree/master/contrib/guix][2]]].
+
+Package definitions in this repository are specific to development for Tarides. Things that are useful more generally should be upstreamed to Guix (see the section on [[https://guix.gnu.org/manual/en/html_node/Contributing.html#Contributing][contributing]] in the Guix manual).
+
+For more information see also the [[https://guix.gnu.org/manual/en/html_node/index.html][Guix Reference Manual]] (also available in [[https://guix.gnu.org/manual/fr/html_node/][French]]).
+
+* Setup
+
+** Installing Guix
+
+Guix is currently only available for GNU/Linux systems (and GNU/Hurd).
+
+For Debian stable a package is available and Guix can be installed with ~apt install guix~.
+
+For Arch Linux see this [[https://wiki.archlinux.org/title/Guix][wiki entry]].
+
+For other systems use the [[https://guix.gnu.org/manual/en/html_node/Binary-Installation.html][binary installation]].
+
+** Adding the channel
+
+Add the channel to your ~.config/guix/channels.scm~:
+
+#+BEGIN_SRC scheme
+(cons
+ (channel
+  (name 'tarides)
+  (url "https://github.com/adatario/guix-tarides.git")
+  (branch "main"))
+ %default-channels)
+#+END_SRC
+
+See also [[https://guix.gnu.org/manual/en/html_node/Specifying-Additional-Channels.html#Specifying-Additional-Channels][Specifying Additional Channels]] in the Guix Reference Manual.
+
+** Updating the channel
+
+If updates are pushed to the channel you need to fetch these updates by running:
+
+#+BEGIN_SRC bash
+guix pull
+#+END_SRC
+
+* Usage
+
+** Creating an environment with some package
+
+Following command will create a shell (development environment) that has the OCaml packages Irmin and Alcotest installed:
+
+Note: make sure that OPAM does not overwrite the shell environment (this can happen if you run `eval $(opam env)` in your `.bashrc`). Run `guix shell --check` to check that this does not happen.
+
+** Creating a development environment with package from custom branches
+
+#+BEGIN_SRC scheme
+(use-modules
+ (guix packages)
+ (guix git-download)
+ (gnu packages ocaml)
+ (ocaml)
+ (tarides irmin)
+ (tezos))
+
+(define ocaml-tezos-context-replay-oct22
+  (package
+    (inherit ocaml-tezos-context)
+    (propagated-inputs
+     (append
+
+      ;; extra packages required by the replay patches
+      `(("ocaml-ppx-deriving" ,ocaml-ppx-deriving)
+	("ocaml-ppx-deriving-yojson" ,ocaml-ppx-deriving-yojson)
+	("ocaml-printbox" ,ocaml-printbox)
+	("ocaml-bentov" ,ocaml-bentov))
+
+      (package-propagated-inputs ocaml-tezos-context)))))
+
+(let* (;; Irmin version to use
+       (irmin-commit "2f37f2495ead523d043d0a2748414c2ab4b94ed0")
+       (irmin-version "3.5-dev") ; only used for package naming
+       (irmin-origin (origin
+		       (method git-fetch)
+		       (uri (git-reference
+			     (url "https://github.com/mirage/irmin")
+			     (commit irmin-commit)))
+		       (sha256
+			(base32
+			 "0n3gxgccc0qnj9g2s6l4dqmw09w7y7fp06zh4c05siq4a2hwz5dn"))))
+
+       ;; Tezos version to use
+       (tezos-commit "2f4126536c6b143fc00438e8dff84a29af402c46")
+       (tezos-version "15.0+replay_oct22")
+       (tezos-origin (origin
+		       (method git-fetch)
+		       (uri (git-reference
+			     (url "https://github.com/adatario/tezos.git")
+			     (commit tezos-commit)))
+		       (sha256
+			(base32
+			 "10chcnrjanlk31cbl2ywbrxlipdj610dmgzksk4y7964mp02sg9i")))))
+
+  (package-with-explicit-tezos-origin
+   (package-with-explicit-irmin-origin ocaml-tezos-context-replay-oct22
+				       #:origin irmin-origin
+				       #:version irmin-version)
+   #:origin tezos-origin
+   #:version tezos-version))
+#+END_SRC
