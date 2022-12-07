@@ -1587,3 +1587,33 @@ pairing-friendly curve BLS12-381")
 pairing-friendly curve BLS12-381")
     (license license:expat)))
 
+(define-public ocaml-printbox
+  (package
+    (name "ocaml-printbox")
+    (version "0.6.1")
+    (home-page "https://github.com/c-cube/printbox/")
+    (source
+     (origin
+       (method git-fetch)
+       (uri (git-reference
+             (url home-page)
+             (commit (string-append "v" version))))
+       (file-name (git-file-name name version))
+       (sha256
+        (base32
+         "1scpkd5dlsllcmlf2h2w89dil1vj6apb01fp4awgbpjc322r7vgf"))))
+    (build-system dune-build-system)
+    (arguments `(#:test-target "."))
+    (propagated-inputs
+     (list ocaml-uutf
+	   ocaml-uucp
+	   ocaml-tyxml
+	   ocaml-re))
+    (native-inputs
+     (list ocaml-mdx))
+    (synopsis "Allows to print nested boxes, lists, arrays, tables in
+several formats")
+    (description "Allows to print nested boxes, lists, arrays, tables
+in several formats")
+    (license license:bsd-2)))
+
