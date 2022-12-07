@@ -333,3 +333,17 @@ uses the specified origin for all Tezos packages."
 	   ocaml-ppx-deriving))
     (native-inputs
      (list ocaml-alcotest))))
+
+(define-public ocaml-tezos-shell-services
+  (package
+    (inherit tezos)
+    (name "ocaml-tezos-shell-services")
+    (arguments `(#:package "tezos-shell-services"
+		 #:test-target "."))
+    (propagated-inputs
+     (list ocaml-tezos-base
+	   ocaml-tezos-p2p-services
+	   ocaml-tezos-version
+	   ocaml-tezos-context))
+    (native-inputs
+     (list ocaml-alcotest))))
