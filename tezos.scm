@@ -34,7 +34,9 @@ uses the specified origin for all Tezos packages."
 	  "ocaml-tezos-micheline"
 	  "ocaml-tezos-crypto"
 	  "ocaml-tezos-base"
-	  "ocaml-tezos-context"))
+	  "ocaml-tezos-context"
+	  "ocaml-tezos-p2p-services"
+	  "ocaml-tezos-shell-services"))
 
   (define (transform p)
     (if (member (package-name p)
@@ -309,3 +311,12 @@ uses the specified origin for all Tezos packages."
     (list ocaml-qcheck
 	  ocaml-alcotest-lwt
 	  ocaml-tezos-test-helpers-extra))))
+
+(define-public ocaml-tezos-p2p-services
+  (package
+    (inherit tezos)
+    (name "ocaml-tezos-p2p-services")
+    (arguments `(#:package "tezos-p2p-services"
+		 #:test-target "."))
+    (propagated-inputs
+     (list ocaml-tezos-base))))
