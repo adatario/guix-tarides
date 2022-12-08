@@ -71,16 +71,15 @@ The following snippet will allow you to reproducibly build the ~ocaml-tezos-cont
   (define ocaml-tezos-context-replay-oct22
     (package
       (inherit ocaml-tezos-context)
+
       (propagated-inputs
-       (append
-
+       (modify-inputs
+	(package-propagated-inputs ocaml-tezos-context)
 	;; extra packages required by the replay patches
-	`(("ocaml-ppx-deriving" ,ocaml-ppx-deriving)
-	  ("ocaml-ppx-deriving-yojson" ,ocaml-ppx-deriving-yojson)
-	  ("ocaml-printbox" ,ocaml-printbox)
-	  ("ocaml-bentov" ,ocaml-bentov))
-
-	(package-propagated-inputs ocaml-tezos-context)))))
+	(append ocaml-ppx-deriving
+		ocaml-ppx-deriving-yojson
+		ocaml-printbox
+		ocaml-bentov)))))
 
   (let* (;; Irmin version to use
 	 (irmin-commit "2f37f2495ead523d043d0a2748414c2ab4b94ed0")
