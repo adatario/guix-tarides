@@ -53,6 +53,10 @@ guix pull
 
 Following command will create a shell (development environment) that has the OCaml packages Irmin and Alcotest installed:
 
+#+BEGIN_SRC bash
+  guix shell ocaml-irmin ocaml-alcotest
+#+END_SRC
+
 Note: make sure that OPAM does not overwrite the shell environment (this can happen if you run `eval $(opam env)` in your `.bashrc`). Run `guix shell --check` to check that this does not happen.
 
 ** Creating a development environment with package from custom branches
