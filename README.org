@@ -59,7 +59,7 @@ Note: make sure that OPAM does not overwrite the shell environment (this can hap
 
 The following snippet will allow you to reproducibly build replay binaries used for benchmarking Irmin. It uses a custom branch of Tezos with some patches and a specific version of Irmin:
 
-#+BEGIN_SRC scheme :tangle custom-ocaml-tezos-context.scm
+#+BEGIN_SRC scheme :tangle custom-ocaml-tezos-context-replay.scm
   (use-modules
    (guix packages)
    (guix git-download)
@@ -127,8 +127,22 @@ The following snippet will allow you to reproducibly build replay binaries used 
      #:version tezos-version))
 #+END_SRC
 
-If stored in a file ~custom-ocaml-tezos-context.scm~ it can be built with:
+If stored in a file ~custom-ocaml-tezos-context-replay.scm~ (in Emacs try ~org-babel-tangle~) it can be built with:
 
 #+BEGIN_SRC bash
-  guix build -f custom-ocaml-tezos-context.scm
+  guix build -f custom-ocaml-tezos-context-replay.scm
 #+END_SRC
+
+#+BEGIN_RESULT
+/gnu/store/kha1bmd3iaj7176xgazyf6kdnbsvks02-ocaml-tezos-context-15.0+replay_oct22
+#+END_RESULT
+
+The replay executables can then be run:
+
+#+BEGIN_SRC bash
+  /gnu/store/kha1bmd3iaj7176xgazyf6kdnbsvks02-ocaml-tezos-context-15.0+replay_oct22/bin/replay --help
+#+END_SRC
+
+* License
+
+[[./LICENSE/GPL-3.0-or-later.txt][GPL-3.0-or-later]] (same as [[https://guix.gnu.org/en/about/][Guix]]).
