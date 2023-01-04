@@ -1044,6 +1044,26 @@ writing to these structures, and they are accessed via the `Bigarray`
 module.")
     (license license:isc)))
 
+(define-public ocaml-cstruct-sexp
+  (package
+    (inherit ocaml-cstruct)
+    (name "ocaml-cstruct-sexp")
+    (build-system dune-build-system)
+    (arguments
+     `(#:package "cstruct-sexp"
+       #:test-target "."))
+    (propagated-inputs
+     (list ocaml-cstruct
+	   ocaml-sexplib))
+    (native-inputs
+     (list ocaml-alcotest))
+    (synopsis
+     "OCaml S-expression serialisers for C-like structures")
+    (description
+     "This library provides Sexplib serialisers for the C-like
+structures as provided by the @code{ocaml-cstruct} package.")
+    (license license:isc)))
+
 (define-public ocaml-gmap
   (package
     (name "ocaml-gmap")
