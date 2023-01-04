@@ -1064,6 +1064,33 @@ module.")
 structures as provided by the @code{ocaml-cstruct} package.")
     (license license:isc)))
 
+(define-public ocaml-ppx-cstruct
+  (package
+    (inherit ocaml-cstruct)
+    (name "ocaml-ppx-cstruct")
+    (build-system dune-build-system)
+    (arguments
+     `(#:package "ppx_cstruct"
+       #:test-target "."))
+    (propagated-inputs
+     (list ocaml-cstruct
+	   ocaml-sexplib
+	   ocaml-ppxlib))
+    (native-inputs
+     (list ocaml-ounit
+	   ocaml-ppx-sexp-conv
+	   ocaml-cstruct-sexp
+	   ocaml-cppo
+	   ocaml-cstruct-unix
+	   ocaml-migrate-parsetree
+	   ocaml-lwt))
+    (synopsis
+     "OCaml syntax extension for writing serialisers for C-like structures")
+    (description
+     "This OCaml syntax extension generates helper functions for
+accessing C-like structures")
+    (license license:isc)))
+
 (define-public ocaml-gmap
   (package
     (name "ocaml-gmap")
