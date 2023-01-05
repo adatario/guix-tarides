@@ -65,10 +65,6 @@ To build a package with Irmin 3.5:
 
 #+BEGIN_SRC scheme :tangle with-irmin-3.5.scm
   (use-modules
-   (guix packages)
-   (guix git-download)
-   (gnu packages ocaml)
-   (tarides packages ocaml)
    (tarides packages irmin)
    (tarides packages tezos))
 
@@ -79,10 +75,6 @@ or with 3.4:
 
 #+BEGIN_SRC scheme :tangle with-irmin-3.4.scm
   (use-modules
-   (guix packages)
-   (guix git-download)
-   (gnu packages ocaml)
-   (tarides packages ocaml)
    (tarides packages irmin)
    (tarides packages tezos))
 
@@ -95,11 +87,7 @@ Easy peasy:
 
 #+BEGIN_SRC scheme :tangle irmin-with-ocaml5.scm
   (use-modules
-   (guix packages)
-   (guix git-download)
-   (gnu packages ocaml)
    (guix build-system ocaml)
-   (tarides packages ocaml)
    (tarides packages irmin))
 
   (package-with-ocaml5.0 ocaml-irmin)
