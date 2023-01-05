@@ -2,7 +2,7 @@
 ;
 ; SPDX-License-Identifier: GPL-3.0-or-later
 
-(define-module (tezos)
+(define-module (tarides packages tezos)
   #:use-module (guix packages)
   #:use-module (guix git-download)
   #:use-module (guix build-system dune)
@@ -12,8 +12,8 @@
   #:use-module (gnu packages pkg-config)
   #:use-module (gnu packages libevent)
   #:use-module (gnu packages multiprecision)
-  #:use-module (ocaml)
-  #:use-module (tarides irmin)
+  #:use-module (tarides packages ocaml)
+  #:use-module (tarides packages irmin)
   #:export (package-with-explicit-tezos-origin))
 
 (define* (package-with-explicit-tezos-origin p #:key origin version)

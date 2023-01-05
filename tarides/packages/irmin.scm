@@ -2,7 +2,7 @@
 ;
 ; SPDX-License-Identifier: GPL-3.0-or-later
 
-(define-module (tarides irmin)
+(define-module (tarides packages irmin)
   #:use-module (guix packages)
   #:use-module (guix git-download)
   #:use-module (guix build-system dune)
@@ -12,7 +12,7 @@
   #:use-module (gnu packages maths)
   #:use-module (gnu packages multiprecision)
   #:use-module (gnu packages pkg-config)
-  #:use-module (ocaml)
+  #:use-module (tarides packages ocaml)
   #:export (package-with-explicit-irmin-origin))
 
 (define-public ocaml-repr

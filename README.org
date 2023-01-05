@@ -68,9 +68,9 @@ The following snippet will allow you to reproducibly build replay binaries used 
    (guix packages)
    (guix git-download)
    (gnu packages ocaml)
-   (ocaml)
-   (tarides irmin)
-   (tezos))
+   (tarides packages ocaml)
+   (tarides packages irmin)
+   (tarides packages tezos))
 
   ;; the patched tezos-context library
   (define ocaml-tezos-context-replay-oct22

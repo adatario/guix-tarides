@@ -5,7 +5,7 @@
 ;; This module contains general OCaml package definitions that could
 ;; be/should be upstreamed to Guix.
 
-(define-module (ocaml)
+(define-module (tarides packages ocaml)
   #:use-module (guix packages)
   #:use-module (guix download)
   #:use-module (guix git-download)
