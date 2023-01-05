@@ -59,6 +59,52 @@ Following command will create a shell (development environment) that has the OCa
 
 Note: make sure that OPAM does not overwrite the shell environment (this can happen if you run `eval $(opam env)` in your `.bashrc`). Run `guix shell --check` to check that this does not happen.
 
+** Building a package with a specific Irmin
+
+To build a package with Irmin 3.5:
+
+#+BEGIN_SRC scheme :tangle with-irmin-3.5.scm
+  (use-modules
+   (guix packages)
+   (guix git-download)
+   (gnu packages ocaml)
+   (tarides packages ocaml)
+   (tarides packages irmin)
+   (tarides packages tezos))
+
+  (package-with-irmin-3.5 ocaml-tezos-context)
+#+END_SRC
+
+or with 3.4:
+
+#+BEGIN_SRC scheme :tangle with-irmin-3.4.scm
+  (use-modules
+   (guix packages)
+   (guix git-download)
+   (gnu packages ocaml)
+   (tarides packages ocaml)
+   (tarides packages irmin)
+   (tarides packages tezos))
+
+  (package-with-irmin-3.4 ocaml-tezos-context)
+#+END_SRC
+
+** Build Irmin with OCaml 5
+
+Easy peasy:
+
+#+BEGIN_SRC scheme :tangle irmin-with-ocaml5.scm
+  (use-modules
+   (guix packages)
+   (guix git-download)
+   (gnu packages ocaml)
+   (guix build-system ocaml)
+   (tarides packages ocaml)
+   (tarides packages irmin))
+
+  (package-with-ocaml5.0 ocaml-irmin)
+#+END_SRC
+
 ** Creating a development environment with package from custom branches
 
 The following snippet will allow you to reproducibly build replay binaries used for benchmarking Irmin. It uses a custom branch of Tezos with some patches and a specific version of Irmin:
