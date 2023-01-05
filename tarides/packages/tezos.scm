@@ -306,8 +306,8 @@ uses the specified origin for all Tezos packages."
 	  ocaml-fmt
 	  ocaml-logs
 	  ocaml-digestif
-	  ocaml-irmin-3.4
-	  ocaml-irmin-pack-3.4
+	  ocaml-irmin
+	  ocaml-irmin-pack
 	  ocaml-tezos-stdlib))
    (native-inputs
     (list ocaml-qcheck

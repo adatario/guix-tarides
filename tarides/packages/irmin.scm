@@ -90,7 +90,38 @@ uses the specified origin for all Irmin packages."
 
   ((package-mapping transform cut?) p))
 
-(define irmin-3.4
+(define-public (package-with-irmin-3.4 p)
+  (let ((version "3.4.3")
+	(home-page "https://github.com/mirage/irmin"))
+    (package-with-explicit-irmin-origin
+     p
+     #:origin (origin
+		(method git-fetch)
+		(uri (git-reference
+		      (url home-page)
+		      (commit version)))
+		(sha256
+		 (base32
+		  "0s914y34skcmz81jzgspi6frjcrplpzs7y42mviic854b5ixja9i")))
+     #:version version)))
+
+(define-public (package-with-irmin-3.5 p)
+  (let ((version "3.5.1")
+	(home-page "https://github.com/mirage/irmin"))
+
+    (package-with-explicit-irmin-origin
+     p
+     #:origin (origin
+		(method git-fetch)
+		(uri (git-reference
+		      (url home-page)
+		      (commit version)))
+		(sha256
+		 (base32
+		  "1bjbi1m3n8pw6yb87i5l52cbi4n53xzv0179fb2p2hr5158hdiyy")))
+     #:version version)))
+
+(define irmin-base
   (package
    (name "ocaml-irmin")
    (version "3.4.3")
@@ -114,33 +145,17 @@ external C stubs; it aims to run everywhere, from Linux, to browsers and Xen
 unikernels.")
    (license license:isc)))
 
-(define-public (package-with-irmin-3.5 p)
-  (let ((version "3.5.1")
-	(home-page "https://github.com/mirage/irmin"))
-
-    (package-with-explicit-irmin-origin
-     p
-     #:origin (origin
-		(method git-fetch)
-		(uri (git-reference
-		      (url home-page)
-		      (commit version)))
-		(sha256
-		 (base32
-		  "1bjbi1m3n8pw6yb87i5l52cbi4n53xzv0179fb2p2hr5158hdiyy")))
-     #:version version)))
-
-(define-public ocaml-ppx-irmin-3.4
+(define-public ocaml-ppx-irmin
   (package
-   (inherit irmin-3.4)
+   (inherit irmin-base)
    (name "ocaml-ppx-irmin")
    (arguments `(#:package "ppx_irmin"))
    (propagated-inputs (list ocaml-ppx-repr ocaml-logs))
    (synopsis "PPX deriver for Irmin type representations")))
 
-(define-public ocaml-irmin-3.4
+(define-public ocaml-irmin
   (package
-   (inherit irmin-3.4)
+   (inherit irmin-base)
    (name "ocaml-irmin")
    (arguments `(#:package "irmin"))
    (propagated-inputs
@@ -149,7 +164,7 @@ unikernels.")
 	  ocaml-uri
 	  ocaml-uutf
 	  ocaml-jsonm
-	  ocaml-ppx-irmin-3.4
+	  ocaml-ppx-irmin
 	  ocaml-digestif
 	  ocaml-graph
 	  ocaml-logs
@@ -158,7 +173,7 @@ unikernels.")
    (native-inputs (list ocaml-alcotest ocaml-vector ocaml-fmt))))
 
 (define-public ocaml-irmin-3.5
-  (package-with-irmin-3.5 ocaml-irmin-3.4))
+  (package-with-irmin-3.5 ocaml-irmin))
 
 (define-public ocaml-index
   (package
@@ -199,14 +214,14 @@ supports multiple-reader/single-writer access.  Concurrent access is safely
 managed using lock files.")
    (license license:expat)))
 
-(define-public ocaml-irmin-pack-3.4
+(define-public ocaml-irmin-pack
   (package
-   (inherit ocaml-irmin-3.4)
+   (inherit ocaml-irmin)
    (name "ocaml-irmin-pack")
    (arguments `(#:package "irmin-pack"))
    (propagated-inputs
-    (list ocaml-irmin-3.4
-	  ocaml-ppx-irmin-3.4
+    (list ocaml-irmin
+	  ocaml-ppx-irmin
 	  ocaml-index
 	  ocaml-fmt
 	  ocaml-logs
@@ -217,16 +232,16 @@ managed using lock files.")
 	  ocaml-checkseum
 	  ocaml-rusage))))
 
-(define-public ocaml-irmin-test-3.4
+(define-public ocaml-irmin-test
   (package
-   (inherit ocaml-irmin-3.4)
+   (inherit ocaml-irmin)
    (name "ocaml-irmin-test")
    (arguments `(#:package "irmin-test"))
    (propagated-inputs
     (list ocaml-alcotest
 	  ocaml-astring
 	  ocaml-fmt
-	  ocaml-irmin-3.4
+	  ocaml-irmin
 	  ocaml-jsonm
 	  ocaml-fmt
 	  ocaml-lwt
@@ -258,15 +273,15 @@ managed using lock files.")
    (description "Self-contained package for base58 encoding used by Tezos.")
    (license license:expat)))
 
-(define-public ocaml-irmin-tezos-3.4
+(define-public ocaml-irmin-tezos
   (package
-   (inherit ocaml-irmin-3.4)
+   (inherit ocaml-irmin)
    (name "ocaml-irmin-tezos")
    (arguments `(#:package "irmin-tezos"))
    (propagated-inputs
-    (list ocaml-irmin-3.4
-	  ocaml-irmin-pack-3.4
-	  ocaml-ppx-irmin-3.4
+    (list ocaml-irmin
+	  ocaml-irmin-pack
+	  ocaml-ppx-irmin
 	  ocaml-tezos-base58
 	  ocaml-digestif
 	  ocaml-cmdliner
@@ -277,35 +292,35 @@ managed using lock files.")
     (list ocaml-alcotest
 	  ocaml-hex
 	  ocaml-fpath
-	  ocaml-irmin-test-3.4))))
+	  ocaml-irmin-test))))
 
-(define-public ocaml-irmin-tezos-utils-3.4
+(define-public ocaml-irmin-tezos-utils
   (package
-   (inherit ocaml-irmin-3.4)
+   (inherit ocaml-irmin)
    (name "ocaml-irmin-tezos-utils")
    (arguments `(#:package "irmin-tezos-utils"))
    (propagated-inputs
-    (list ocaml-irmin-pack-3.4
-	  ocaml-irmin-tezos-3.4
+    (list ocaml-irmin-pack
+	  ocaml-irmin-tezos
 	  ocaml-notty
 	  ocaml-hex
 	  ocaml-index
 	  ocaml-cmdliner
 	  ocaml-ppx-repr))))
 
-(define-public ocaml-irmin-fs-3.4
+(define-public ocaml-irmin-fs
   (package
-   (inherit ocaml-irmin-3.4)
+   (inherit ocaml-irmin)
    (name "ocaml-irmin-fs")
    (arguments `(#:package "irmin-fs"
 		#:tests? #f ; requires irmin-watcher
 		))
    (propagated-inputs
-    (list ocaml-irmin-3.4
+    (list ocaml-irmin
 	  ocaml-astring
 	  ocaml-logs
 	  ocaml-lwt))
    (native-inputs
-    (list ocaml-irmin-test-3.4
+    (list ocaml-irmin-test
 	  ;; ocaml-irmin-watcher
 	  ))))
