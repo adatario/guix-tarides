@@ -114,6 +114,22 @@ external C stubs; it aims to run everywhere, from Linux, to browsers and Xen
 unikernels.")
    (license license:isc)))
 
+(define-public (package-with-irmin-3.5 p)
+  (let ((version "3.5.1")
+	(home-page "https://github.com/mirage/irmin"))
+
+    (package-with-explicit-irmin-origin
+     p
+     #:origin (origin
+		(method git-fetch)
+		(uri (git-reference
+		      (url home-page)
+		      (commit version)))
+		(sha256
+		 (base32
+		  "1bjbi1m3n8pw6yb87i5l52cbi4n53xzv0179fb2p2hr5158hdiyy")))
+     #:version version)))
+
 (define-public ocaml-ppx-irmin-3.4
   (package
    (inherit irmin-3.4)
@@ -140,6 +156,9 @@ unikernels.")
 	  ocaml-bheap
 	  ocaml-astring))
    (native-inputs (list ocaml-alcotest ocaml-vector ocaml-fmt))))
+
+(define-public ocaml-irmin-3.5
+  (package-with-irmin-3.5 ocaml-irmin-3.4))
 
 (define-public ocaml-index
   (package
