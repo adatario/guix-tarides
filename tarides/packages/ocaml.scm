@@ -19,28 +19,6 @@
   #:use-module (gnu packages multiprecision)
   #:use-module (gnu packages pkg-config))
 
-(define-public ocaml-monolith
-  (package
-   (name "ocaml-monolith")
-   (version "20210525")
-   (home-page "https://gitlab.inria.fr/fpottier/monolith")
-   (source
-    (origin
-     (method git-fetch)
-     (uri (git-reference
-	   (url (string-append home-page ".git"))
-	   (commit version)))
-     (sha256
-      (base32
-       "1b6jj4ivl9ni8kba7wls4xsqdy8nm7q9mnx9347jvb99dmmlj5mc"))))
-   (build-system dune-build-system)
-   (arguments `(#:test-target "."))
-   (native-inputs (list ocaml-afl-persistent ocaml-pprint ocaml-seq))
-   (synopsis "An OCaml framework for testing a library using
-afl-fuzz")
-   (description #f)
-   (license license:lgpl3+)))
-
 (define-public ocaml-bheap
   (package
     (name "ocaml-bheap")
