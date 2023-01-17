@@ -203,7 +203,16 @@ unikernels.")
 			    ocaml-jsonm
 			    ocaml-stdlib-shims
 			    ocaml-lru))
-   (native-inputs (list ocaml-alcotest ocaml-crowbar ocaml-re))
+   (native-inputs (list ocaml-alcotest
+			ocaml-crowbar
+			ocaml-re
+			ocaml-yojson
+			ocaml-digestif
+			ocaml-ppx-deriving-yojson
+			ocaml-rusage
+			ocaml-metrics-unix
+			ocaml-tezos-base58
+			gmp))
    (synopsis "A platform-agnostic multi-level index for OCaml")
    (description
     "Index is a scalable implementation of persistent indices in OCaml.  It takes an
