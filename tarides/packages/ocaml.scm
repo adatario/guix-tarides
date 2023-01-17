@@ -291,6 +291,7 @@ are (will be) provided by default.  Metrics is heavily inspired by
 (define-public ocaml-metrics-unix
   (package
    (inherit ocaml-metrics)
+   (name "ocaml-metrics-unix")
    (arguments `(#:package "metrics-unix"))
    (propagated-inputs
     (list ocaml-metrics ocaml-uuidm ocaml-mtime
