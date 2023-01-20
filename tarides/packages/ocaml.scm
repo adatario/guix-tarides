@@ -35,7 +35,6 @@
           (base32
             "0b8md5zl4yz7j62jz0bf7lwyl0pyqkxqx36ghkgkbkxb4zzggfj1"))))
     (build-system dune-build-system)
-    (arguments `(#:test-target "."))
     (native-inputs
      (list ocaml-stdlib-shims))
     (synopsis "OCaml library providing priority queues")
@@ -60,7 +59,6 @@ encoded in a resizable array.")
       (base32
        "00ga0sjljhg9f8vfj297m2bip5hw4cmx8i3fdalzdk1fkvj7qmj6"))))
    (build-system dune-build-system)
-   (arguments `(#:test-target "."))
    (synopsis "Resizable Arrays for OCaml")
    (description "An OCaml library that provides vectors - dynamic,
 growable arrays.")
@@ -82,7 +80,6 @@ growable arrays.")
       (base32
        "07yi7qbhf5lm4ykff78wxbp1nzyxl9f4a3ndlrgwrcri7w41miid"))))
    (build-system dune-build-system)
-   (arguments `(#:test-target "."))
    (propagated-inputs (list ocaml-fmt
 			    ocaml-logs
 			    ocaml-mtime
@@ -114,7 +111,6 @@ progress bars simultaneously.")
       (base32
        "1k6pbc0170166wif6a92lc77ifhmb1hydx9r1h3wlpsz2r3j59ds"))))
    (build-system dune-build-system)
-   (arguments `(#:test-target "."))
    (synopsis "OCaml compatibility Semaphore module")
    (description
     "Projects that want to use the Semaphore module defined in OCaml 4.12.0 while
@@ -220,7 +216,6 @@ This library is on top of optint to get the best representation of an int32.")
       (base32
        "1359xzd8i0ilgb7jrcqxnbi8p2gx1na5jli5f1pf327j8kf2vk2s"))))
    (build-system dune-build-system)
-   (arguments `(#:test-target "."))
    (synopsis "Bindings to the GETRUSAGE(2) syscall")
    (description "Bindings to the GETRUSAGE(2) syscall")
    (license license:expat)))
@@ -385,7 +380,6 @@ for resources")))
        (base32
 	"1wa14fqr048dyldv2ppdj6p8wnb75i3rjb4phk5kwp6g43p8bnka"))))
     (build-system dune-build-system)
-    (arguments `(#:test-target "."))
     (synopsis "A Markdown frontend in pure OCaml")
     (description
      "This Markdown library is implemented using only pure OCaml (including I/O
@@ -519,8 +513,7 @@ the command line tool `omd`.")
       (base32
        "1j9788vdygw3n9nmr8f2c6v2hqm2b35366xwh8sb5cy5yhpbcr13"))))
    (build-system dune-build-system)
-   (arguments `(#:package "notty"
-		#:test-target "."))
+   (arguments `(#:package "notty"))
    (propagated-inputs (list ocaml-uutf ocaml-ptime))
    (native-inputs (list ocaml-cppo))
    (synopsis "Declaring terminals for OCaml")
@@ -580,7 +573,6 @@ human-readable, locale-independent representation.")
        (base32
 	"1a669zz1pc7sqbi1c13jsnp8algcph2b8gr5fjrjhyh3p232770k"))))
     (build-system dune-build-system)
-    (arguments `(#:test-target "."))
     (native-inputs (list ocaml-alcotest))
     (synopsis "OCaml library for working with internet domain names")
     (description
@@ -607,8 +599,7 @@ is done in a case insensitive manner.")
       (base32
        "1zgwx0ms3l4k4dzwnkrwq4zzqjrddjsvqn66mbd0rm6aq1ib019d"))))
    (build-system dune-build-system)
-   (arguments `(#:package "macaddr"
-		#:test-target "."))
+   (arguments `(#:package "macaddr"))
    (native-inputs (list ocaml-ounit2 ocaml-ppx-sexp-conv))
    (synopsis "An OCaml library for manipulation of MAC address representations")
    (description
@@ -623,8 +614,7 @@ optionally via the `Macaddr_sexp` library.")
    (inherit ocaml-macaddr)
    (name "ocaml-ipaddr")
     (build-system dune-build-system)
-    (arguments `(#:package "ipaddr"
-		 #:test-target "."))
+    (arguments `(#:package "ipaddr"))
     (propagated-inputs (list ocaml-macaddr ocaml-domain-name))
     (native-inputs (list ocaml-ounit2 ocaml-ppx-sexp-conv))
     (home-page "https://github.com/mirage/ocaml-ipaddr")
@@ -650,8 +640,7 @@ All types have sexplib serializers/deserializers")
   (package
     (inherit ocaml-macaddr)
     (name "ocaml-ipaddr-cstruct")
-    (arguments `(#:package "ipaddr-cstruct"
-                 #:test-target "."))
+    (arguments `(#:package "ipaddr-cstruct"))
     (propagated-inputs
      (list ocaml-ipaddr
 	   ocaml-cstruct))
@@ -663,8 +652,7 @@ C-like structures using the @code{ocaml-cstruct} library.")))
   (package
     (inherit ocaml-macaddr)
     (name "ocaml-ipaddr-sexp")
-    (arguments `(#:package "ipaddr-sexp"
-                 #:test-target "."))
+    (arguments `(#:package "ipaddr-sexp"))
     (propagated-inputs
      (list ocaml-ipaddr
 	   ocaml-ppx-sexp-conv
@@ -692,8 +680,7 @@ S-expressions using the @code{ocaml-sexp} library.")))
         (base32
          "1p46f8k9q3fl4vf00ln4yj0lhf2xp6zl23jyi5bzdaf4mrc6wvch"))))
     (build-system dune-build-system)
-    (arguments `(#:package "conduit"
-                 #:test-target "."))
+    (arguments `(#:package "conduit"))
     (propagated-inputs
      (list ocaml-ppx-sexp-conv
 	   ocaml-sexplib
@@ -712,8 +699,7 @@ regardless of the SSL library or platform being used.")
   (package
     (inherit ocaml-conduit)
     (name "ocaml-conduit-lwt")
-    (arguments `(#:package "conduit-lwt"
-                 #:test-target "."))
+    (arguments `(#:package "conduit-lwt"))
     (propagated-inputs
      (list ocaml-ppx-sexp-conv
 	   ocaml-sexplib
@@ -764,8 +750,7 @@ establishing TCP and SSL/TLS connections from @code{ocaml-conduit} using
         (base32
          "1hn0y7cyvf2gqxgz5v7k4hfd829vcyqsa1d13vc4w258z55x0j4b"))))
     (build-system dune-build-system)
-    (arguments `(#:package "mirage-crypto"
-                 #:test-target "."))
+    (arguments `(#:package "mirage-crypto"))
     (propagated-inputs
      (list ocaml-cstruct
 	   ocaml-eqaf
@@ -795,7 +780,6 @@ used from MirageOS unikernels.")
         (base32
          "0vvxi0ipxmdz1k4h501brvccniwf3wpc32djbccyyrzraiz7qkff"))))
     (build-system dune-build-system)
-    (arguments `(#:test-target "."))
     (native-inputs
      (list ocaml-alcotest))
     (synopsis "OCaml library providing conversions between various time units")
@@ -820,7 +804,6 @@ between various time units.")
         (base32
          "0pzq2zqz5bpy2snsvmn82hg79wfd0lmbbbhmhdvc8k20km86jqy7"))))
     (build-system dune-build-system)
-    (arguments `(#:test-target "."))
     (propagated-inputs
      (list ocaml-cstruct))
     (synopsis "OCaml library for converting random byte vectors to random numer")
@@ -833,8 +816,7 @@ as (C-like structures using @code{ocaml-cstruct}) to OCaml native numbers.")
   (package
     (inherit ocaml-mirage-crypto)
     (name  "ocaml-mirage-crypto-rng")
-    (arguments `(#:package "mirage-crypto-rng"
-                 #:test-target "."))
+    (arguments `(#:package "mirage-crypto-rng"))
     (propagated-inputs
      (list ocaml-duration
 	   ocaml-cstruct
@@ -854,8 +836,7 @@ number generator interface, and implementations.")))
   (package
     (inherit ocaml-mirage-crypto)
     (name  "ocaml-mirage-crypto-pk")
-    (arguments `(#:package "mirage-crypto-pk"
-                 #:test-target "."))
+    (arguments `(#:package "mirage-crypto-pk"))
     (propagated-inputs
      (list ocaml-cstruct
 	   ocaml-logs
@@ -892,7 +873,6 @@ cryptography (RSA, DSA, DH) for OCaml.")))
         (base32
          "1fkhlfglv0baiaxk4yxha9sv0l3acji74z9mkpdjkh9fn4c9yhv3"))))
     (build-system dune-build-system)
-    (arguments `(#:test-target "."))
     (propagated-inputs
      (list ocaml-cstruct
 	   ocaml-zarith
@@ -927,7 +907,6 @@ The only ASN.1 encodings currently supported are BER and DER.")
         (base32
          "1icz5h6p3pfj7my5gi7wxpflrb8c902dqa17f9w424njilnpyrbk"))))
     (build-system dune-build-system)
-    (arguments `(#:test-target "."))
     (propagated-inputs
      (list ocaml-yojson
 	   ocaml-result
@@ -947,8 +926,7 @@ plugin that provides a JSON codec generator.")
   (package
     (inherit ocaml-mirage-crypto)
     (name "ocaml-mirage-crypto-ec")
-    (arguments `(#:package "mirage-crypto-ec"
-                 #:test-target "."))
+    (arguments `(#:package "mirage-crypto-ec"))
     (propagated-inputs
      (list ocaml-cstruct
 	   ocaml-eqaf
@@ -1004,8 +982,7 @@ plugin that provides a JSON codec generator.")
     (name "ocaml-cstruct-unix")
     (build-system dune-build-system)
     (arguments
-     `(#:package "cstruct-unix"
-       #:test-target "."))
+     `(#:package "cstruct-unix"))
     (propagated-inputs (list ocaml-cstruct))
     (synopsis "Unix variation of the @code{ocaml-cstruct} library")
     (description "Cstruct is a library and syntax extension to make it easier
@@ -1020,8 +997,7 @@ module.")
     (name "ocaml-cstruct-sexp")
     (build-system dune-build-system)
     (arguments
-     `(#:package "cstruct-sexp"
-       #:test-target "."))
+     `(#:package "cstruct-sexp"))
     (propagated-inputs
      (list ocaml-cstruct
 	   ocaml-sexplib))
@@ -1040,8 +1016,7 @@ structures as provided by the @code{ocaml-cstruct} package.")
     (name "ocaml-ppx-cstruct")
     (build-system dune-build-system)
     (arguments
-     `(#:package "ppx_cstruct"
-       #:test-target "."))
+     `(#:package "ppx_cstruct"))
     (propagated-inputs
      (list ocaml-cstruct
 	   ocaml-sexplib
@@ -1077,7 +1052,6 @@ accessing C-like structures")
         (base32
          "0880mhcybr662k6wnahx5mwbialh878kkzxacn47qniadd21x411"))))
     (build-system dune-build-system)
-    (arguments `(#:test-target "."))
     (native-inputs
      (list ocaml-alcotest
 	   ocaml-fmt))
@@ -1103,7 +1077,6 @@ to create a type-safe heterogenous maps.")
         (base32
          "1a0gdz7jkgv25v2jmjrh4ynd3xqwvd7rjyfbda37c05pjk0fb0cg"))))
     (build-system dune-build-system)
-    (arguments `(#:test-target "."))
     (propagated-inputs
      (list ocaml-cstruct
 	   ocaml-asn1-combinators
@@ -1150,8 +1123,8 @@ PKCS 8, PKCS 9, PKCS 10, and PKCS 12.")
         (base32
          "198769wkmvvc89ygkq503611bhyspv40z0222ha4pqgjclcbl99i"))))
     (build-system dune-build-system)
-    (arguments `(#:test-target "."
-                 ;; Tests are failing as they require certificates to be in /etc/ssl/certs
+    (arguments `(;; Tests are failing as they require certificates to
+		 ;; be in /etc/ssl/certs
                  #:tests? #f))
     (propagated-inputs
      (list ocaml-astring
@@ -1187,7 +1160,6 @@ registered with ocaml-tls.")
         (base32
          "0v417ch5zn0yknj156awa5mrq3mal08pbrvsyribbn63ix6f9y3p"))))
     (build-system dune-build-system)
-    (arguments `(#:test-target "."))
     (propagated-inputs
      (list ocaml-lwt
 	   ocaml-ssl))
@@ -1201,8 +1173,7 @@ registered with ocaml-tls.")
   (package
     (inherit ocaml-conduit)
     (name "ocaml-conduit-lwt-unix")
-    (arguments `(#:package "conduit-lwt-unix"
-                 #:test-target "."))
+    (arguments `(#:package "conduit-lwt-unix"))
     (propagated-inputs
      (list ocaml-logs
 	   ocaml-ppx-sexp-conv
@@ -1239,7 +1210,6 @@ signatures using Lwt_unix.")
         (base32
          "0l27c4bdn55jdzp6i7hlky7m5g40kgibv5j8xix6p2rkbs5qsy1y"))))
     (build-system dune-build-system)
-    (arguments `(#:test-target "."))
     (synopsis "OCaml library for mapping filenames to common MIME types")
     (description "This library contains a database of MIME types that maps
 filename extensions into MIME types suitable for use in many Internet
@@ -1252,8 +1222,7 @@ includes the contents of the database as an ML datastructure.")
   (package
     (inherit ocaml-cohttp)
     (name "ocaml-cohttp-lwt")
-    (arguments `(#:package "cohttp-lwt"
-                 #:test-target "."))
+    (arguments `(#:package "cohttp-lwt"))
     (propagated-inputs
      (list ocaml-cohttp
 	   ocaml-lwt
@@ -1366,7 +1335,6 @@ library, along with automatically generated Ctypes bindings.  WARNING: This pack
     (build-system dune-build-system)
     (arguments
      `(#:package "hacl-star"
-       #:test-target "."
        #:phases
        (modify-phases %standard-phases
 	 ;; The default unpack phase enters the first subdirectory.
@@ -1383,7 +1351,6 @@ library, along with automatically generated Ctypes bindings.  WARNING: This pack
     (build-system dune-build-system)
     (arguments
      `(#:package "hacl-star"
-       #:test-target "."
        #:phases
        (modify-phases %standard-phases
 	 ;; The default unpack phase enters the first subdirectory.
@@ -1620,7 +1587,6 @@ pairing-friendly curve BLS12-381")
         (base32
          "1scpkd5dlsllcmlf2h2w89dil1vj6apb01fp4awgbpjc322r7vgf"))))
     (build-system dune-build-system)
-    (arguments `(#:test-target "."))
     (propagated-inputs
      (list ocaml-uutf
 	   ocaml-uucp
