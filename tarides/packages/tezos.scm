@@ -66,10 +66,10 @@ uses the specified origin for all Tezos packages."
 
   ((package-mapping transform cut?) p))
 
-(define tezos
+(define tezos-15.1
   (package
    (name "tezos")
-   (version "15.0")
+   (version "15.1")
    (home-page "https://gitlab.com/tezos/tezos")
    (source
     (origin
@@ -79,15 +79,21 @@ uses the specified origin for all Tezos packages."
 	   (commit (string-append "v" version))))
      (sha256
       (base32
-       "0jmzgw4ay1kjywhq8ygbndddfgwm05w2zki853wx04vdgd9i1zi9"))))
+       "0lvf226hahlflfvyx9jh65axvain7lhzi6m62ih3pbwi72d600wr"))))
    (build-system dune-build-system)
    (synopsis "Tezos")
    (description "Tezos")
    (license license:expat)))
 
+(define-public (package-with-tezos-15 p)
+  (package-with-explicit-tezos-origin
+   p
+   #:origin (package-origin tezos-15.1)
+   #:version "15.1"))
+
 (define-public ocaml-tezos-test-helpers
   (package
-   (inherit tezos)
+   (inherit tezos-15.1)
    (name "ocaml-tezos-test-helpers")
    (propagated-inputs
     (list ocaml-uri
@@ -102,7 +108,7 @@ uses the specified origin for all Tezos packages."
 
 (define-public ocaml-tezos-test-helpers-extra
   (package
-   (inherit tezos)
+   (inherit tezos-15.1)
    (name "ocaml-tezos-test-helpers-extra")
    (propagated-inputs
     (list ocaml-tezos-base
@@ -113,7 +119,7 @@ uses the specified origin for all Tezos packages."
 
 (define-public ocaml-tezos-stdlib
   (package
-   (inherit tezos)
+   (inherit tezos-15.1)
    (name "ocaml-tezos-stdlib")
    (propagated-inputs
     (list ocaml-lwt
@@ -135,7 +141,7 @@ uses the specified origin for all Tezos packages."
 
 (define-public ocaml-tezos-lwt-result-stdlib
   (package
-   (inherit tezos)
+   (inherit tezos-15.1)
    (name "ocaml-tezos-lwt-result-stdlib")
    (arguments `(#:package "tezos-lwt-result-stdlib"
 		#:test-target "."))
@@ -149,7 +155,7 @@ uses the specified origin for all Tezos packages."
 
 (define-public ocaml-tezos-error-monad
   (package
-   (inherit tezos)
+   (inherit tezos-15.1)
    (name "ocaml-tezos-error-monad")
    (arguments `(#:package "tezos-error-monad"
 		#:test-target "."))
@@ -164,7 +170,7 @@ uses the specified origin for all Tezos packages."
 
 (define-public ocaml-tezos-event-logging
   (package
-   (inherit tezos)
+   (inherit tezos-15.1)
    (name "ocaml-tezos-event-logging")
    (arguments `(#:package "tezos-event-logging"
 		#:test-target "."))
@@ -178,7 +184,7 @@ uses the specified origin for all Tezos packages."
 
 (define-public ocaml-tezos-stdlib-unix
   (package
-   (inherit tezos)
+   (inherit tezos-15.1)
    (name "ocaml-tezos-stdlib-unix")
    (arguments `(#:package "tezos-stdlib-unix"
 		#:test-target "."))
@@ -201,7 +207,7 @@ uses the specified origin for all Tezos packages."
 
 (define-public ocaml-tezos-hacl
   (package
-    (inherit tezos)
+    (inherit tezos-15.1)
     (name "ocaml-tezos-hacl")
     (arguments `(#:package "tezos-hacl"
 		 #:test-target "."))
@@ -222,7 +228,7 @@ uses the specified origin for all Tezos packages."
 
 (define-public ocaml-tezos-rpc
   (package
-    (inherit tezos)
+    (inherit tezos-15.1)
     (name "ocaml-tezos-rpc")
     (arguments `(#:package "tezos-rpc"
 		 #:test-target "."))
@@ -234,7 +240,7 @@ uses the specified origin for all Tezos packages."
 
 (define-public ocaml-tezos-micheline
   (package
-    (inherit tezos)
+    (inherit tezos-15.1)
     (name "ocaml-tezos-micheline")
     (arguments `(#:package "tezos-micheline"
 		 #:test-target "."))
@@ -249,7 +255,7 @@ uses the specified origin for all Tezos packages."
 
 (define-public ocaml-tezos-crypto
   (package
-    (inherit tezos)
+    (inherit tezos-15.1)
     (name "ocaml-tezos-crypto")
     (arguments `(#:package "tezos-crypto"
 		 #:test-target "."
@@ -277,7 +283,7 @@ uses the specified origin for all Tezos packages."
 
 (define-public ocaml-tezos-base
   (package
-    (inherit tezos)
+    (inherit tezos-15.1)
     (name "ocaml-tezos-base")
     (arguments `(#:package "tezos-base"
 		 #:test-target "."))
@@ -302,7 +308,7 @@ uses the specified origin for all Tezos packages."
 
 (define-public ocaml-tezos-context
   (package
-   (inherit tezos)
+   (inherit tezos-15.1)
    (name "ocaml-tezos-context")
    (arguments `(#:package "tezos-context"
 		#:test-target "."))
@@ -323,7 +329,7 @@ uses the specified origin for all Tezos packages."
 
 (define-public ocaml-tezos-p2p-services
   (package
-    (inherit tezos)
+    (inherit tezos-15.1)
     (name "ocaml-tezos-p2p-services")
     (arguments `(#:package "tezos-p2p-services"
 		 #:test-target "."))
@@ -332,7 +338,7 @@ uses the specified origin for all Tezos packages."
 
 (define-public ocaml-tezos-version
   (package
-    (inherit tezos)
+    (inherit tezos-15.1)
     (name "ocaml-tezos-version")
     (arguments `(#:package "tezos-version"
 		 #:test-target "."))
@@ -344,7 +350,7 @@ uses the specified origin for all Tezos packages."
 
 (define-public ocaml-tezos-shell-services
   (package
-    (inherit tezos)
+    (inherit tezos-15.1)
     (name "ocaml-tezos-shell-services")
     (arguments `(#:package "tezos-shell-services"
 		 #:test-target "."))
