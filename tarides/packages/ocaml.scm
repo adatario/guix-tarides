@@ -358,6 +358,18 @@ stubs in Javascript for use in Js_of_ocaml")
    (description "Ring data-structure and ring-derived data-structures for OCaml")
    (license license:expat)))
 
+(define-public ocaml-aches
+  (package
+    (inherit ocaml-ringo)
+    (name "ocaml-aches")
+    (arguments `(#:package "aches"))
+    (propagated-inputs
+     (list ocaml-ringo))
+    (synopsis "Caches (bounded-size stores) for in-memory values and
+for resources")
+    (description "Caches (bounded-size stores) for in-memory values and
+for resources")))
+
 (define-public ocaml-omd
   (package
     (name "ocaml-omd")
