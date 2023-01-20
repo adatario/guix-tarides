@@ -118,7 +118,7 @@ uses the specified origin for all Irmin packages."
 		      (commit version)))
 		(sha256
 		 (base32
-		  "1bjbi1m3n8pw6yb87i5l52cbi4n53xzv0179fb2p2hr5158hdiyy")))
+		  "0vcgxbgkv9f9cy7h830qlihskbxx63k06fl1nynh6axzpvgwabbz")))
      #:version version)))
 
 (define irmin-base
