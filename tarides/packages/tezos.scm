@@ -30,7 +30,7 @@ uses the specified origin for all Tezos packages."
 
   ;; packages that are built from the Tezos Git repository
   (define tezos-package-names
-    (list "ocal-tezos-test-helpers"
+    (list "ocaml-tezos-test-helpers"
 	  "ocaml-tezos-test-helpers-extra"
 	  "ocaml-tezos-stdlib"
 	  "ocaml-tezos-lwt-result-stdlib"
