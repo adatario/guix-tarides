@@ -47,11 +47,6 @@ uses the specified origin for all Tezos packages."
 	  "ocaml-tezos-version"
 	  "ocaml-tezos-shell-services"))
 
-  ;; packages that are NOT built from the tezos/tezos Git repository but
-  ;; share the ocaml-tezos prefix
-  (define not-tezos-package-names
-    (list "ocaml-tezos-base58"))
-
   (define (transform p)
     (cond
      ;; Use explicitly defined package-variant if available
@@ -60,11 +55,7 @@ uses the specified origin for all Tezos packages."
 
      ;; If we are dealing with a package that is built from the Tezos
      ;; repository replace the origin
-     ((and (or (string-prefix? "ocaml-tezos" (package-name p))
-	       (member (package-name p)
-		       tezos-package-names))
-	   (not (member (package-name p)
-			not-tezos-package-names)))
+     ((member (package-name p) tezos-package-names)
       (package
 	(inherit p)
 	(location (package-location p))
