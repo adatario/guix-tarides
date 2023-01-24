@@ -14,7 +14,9 @@
   #:use-module (gnu packages multiprecision)
   #:use-module (tarides packages ocaml)
   #:use-module (tarides packages irmin)
-  #:export (package-with-explicit-tezos-origin))
+  #:export (package-with-explicit-tezos-origin
+	    package-with-tezos-15
+	    package-with-tezos-16))
 
 (define* (package-with-explicit-tezos-origin p #:key origin version
 					     variant-property)
@@ -49,12 +51,21 @@ uses the specified origin for all Tezos packages."
 
   (define (transform p)
     (cond
-     ;; Use explicitly defined package-variant if available
+     ;; Use explicitly defined package-variant if available. This is
+     ;; useful for switching between major versions of tezos that might
+     ;; require different dependencies.
      ((package-variant p) =>
-      (lambda (variant) (transform (force variant))))
+      (lambda (variant)
+	(transform
+	 ;; Inherit package variant but set source to explicit origin
+	 (package
+	  (inherit (force variant))
+	  (location (package-location p))
+	  (version (if version version (package-version p)))
+	  (source origin)))))
 
-     ;; If we are dealing with a package that is built from the Tezos
-     ;; repository replace the origin
+     ;; Check if package is built from Tezos repository by checking
+     ;; the known list of packages.
      ((member (package-name p) tezos-package-names)
       (package
 	(inherit p)
@@ -91,11 +102,14 @@ uses the specified origin for all Tezos packages."
    (description "Tezos")
    (license license:expat)))
 
-(define-public (package-with-tezos-15 p)
-  (package-with-explicit-tezos-origin
-   p
-   #:origin (package-origin tezos-15.1)
-   #:version "15.1"))
+(define* (package-with-tezos-15 p
+				#:key
+				(origin (package-origin tezos-15.1))
+				(version "15.1"))
+  (package-with-explicit-tezos-origin p
+				      #:origin origin
+				      #:version version
+				      #:variant-property 'tezos-15-variant))
 
 (define tezos-16
   (package
@@ -116,12 +130,14 @@ uses the specified origin for all Tezos packages."
    (description "Tezos")
    (license license:expat)))
 
-(define-public (package-with-tezos-16 p)
-  (package-with-explicit-tezos-origin
-   p
-   #:origin (package-source tezos-16)
-   #:version (package-version tezos-16)
-   #:variant-property 'tezos-16-variant))
+(define* (package-with-tezos-16 p
+				#:key
+				(origin (package-origin tezos-16))
+				(version (package-version tezos-16)))
+  (package-with-explicit-tezos-origin p
+				      #:origin origin
+				      #:version version
+				      #:variant-property 'tezos-16-variant))
 
 (define-public ocaml-tezos-test-helpers
   (package
