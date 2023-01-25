@@ -438,3 +438,37 @@ uses the specified origin for all Tezos packages."
 	   ocaml-tezos-context))
     (native-inputs
      (list ocaml-alcotest))))
+
+(define-public ocaml-tezos-context-replay
+  (let ((commit "7cda5ed5f47cf1218cb97f2f6c7bd06781ee475c")
+	(revision "0"))
+   (package-with-tezos-16
+    (package
+     (name "ocaml-tezos-context-replay")
+     (version (git-version "git" revision commit))
+     (home-page "https://github.com/adatario/tezos-context-replay")
+     (source
+      (origin
+       (method git-fetch)
+       (uri (git-reference
+	     (url home-page)
+	     (commit commit)))
+       (sha256
+	(base32
+	 "17dv0mphx7m5602zbbhdzmpr1hjydwa4r3waczl97fwv04lw00vh"))))
+     (build-system dune-build-system)
+     (propagated-inputs
+      (list
+
+       ;; tezos-contest (aka lib_context)
+       ocaml-tezos-context
+
+       ;; Extra dependencies required by the replay patches
+       ocaml-ppx-deriving
+       ocaml-ppx-deriving-yojson
+       ocaml-printbox
+       ocaml-bentov))
+     (synopsis "Tezos Context Replay tools.")
+     (description "Tools that allow replaying of Tezos Context action
+traces.  This is used to benchmark performance of changes to Irmin.")
+     (license license:isc)))))
