@@ -104,7 +104,7 @@ uses the specified origin for all Tezos packages."
 
 (define* (package-with-tezos-15 p
 				#:key
-				(origin (package-origin tezos-15.1))
+				(origin (package-source tezos-15.1))
 				(version "15.1"))
   (package-with-explicit-tezos-origin p
 				      #:origin origin
@@ -132,7 +132,7 @@ uses the specified origin for all Tezos packages."
 
 (define* (package-with-tezos-16 p
 				#:key
-				(origin (package-origin tezos-16))
+				(origin (package-source tezos-16))
 				(version (package-version tezos-16)))
   (package-with-explicit-tezos-origin p
 				      #:origin origin
