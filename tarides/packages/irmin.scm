@@ -13,7 +13,9 @@
   #:use-module (gnu packages multiprecision)
   #:use-module (gnu packages pkg-config)
   #:use-module (tarides packages ocaml)
-  #:export (package-with-explicit-irmin-origin))
+  #:export (package-with-explicit-irmin-origin
+	    package-with-irmin-3.4
+	    package-with-irmin-3.5))
 
 (define-public ocaml-repr
   (let (;; Tests are fixed in an unreleased commit (https://github.com/mirage/repr/pull/100)
@@ -90,38 +92,7 @@ uses the specified origin for all Irmin packages."
 
   ((package-mapping transform cut?) p))
 
-(define-public (package-with-irmin-3.4 p)
-  (let ((version "3.4.3")
-	(home-page "https://github.com/mirage/irmin"))
-    (package-with-explicit-irmin-origin
-     p
-     #:origin (origin
-		(method git-fetch)
-		(uri (git-reference
-		      (url home-page)
-		      (commit version)))
-		(sha256
-		 (base32
-		  "0s914y34skcmz81jzgspi6frjcrplpzs7y42mviic854b5ixja9i")))
-     #:version version)))
-
-(define-public (package-with-irmin-3.5 p)
-  (let ((version "3.5.1")
-	(home-page "https://github.com/mirage/irmin"))
-
-    (package-with-explicit-irmin-origin
-     p
-     #:origin (origin
-		(method git-fetch)
-		(uri (git-reference
-		      (url home-page)
-		      (commit version)))
-		(sha256
-		 (base32
-		  "0vcgxbgkv9f9cy7h830qlihskbxx63k06fl1nynh6axzpvgwabbz")))
-     #:version version)))
-
-(define irmin-base
+(define irmin-base-3.4
   (package
    (name "ocaml-irmin")
    (version "3.4.3")
@@ -145,9 +116,39 @@ external C stubs; it aims to run everywhere, from Linux, to browsers and Xen
 unikernels.")
    (license license:isc)))
 
+(define irmin-base-3.5
+  (package
+   (inherit irmin-base-3.4)
+   (version "3.5.1")
+   (source (origin
+	    (method git-fetch)
+	    (uri (git-reference
+		  (url "https://github.com/mirage/irmin")
+		  (commit "3.5.1")))
+	    (sha256
+	     (base32
+	      "0vcgxbgkv9f9cy7h830qlihskbxx63k06fl1nynh6axzpvgwabbz"))))))
+
+(define* (package-with-irmin-3.4 p
+				 #:key
+				(origin (package-source irmin-base-3.4))
+				(version (package-version irmin-base-3.4)))
+  (package-with-explicit-irmin-origin p
+				      #:origin origin
+				      #:version version))
+
+(define* (package-with-irmin-3.5 p
+				 #:key
+				(origin (package-source irmin-base-3.5))
+				(version (package-version irmin-base-3.5)))
+  (package-with-explicit-irmin-origin p
+				      #:origin origin
+				      #:version version))
+
+
 (define-public ocaml-ppx-irmin
   (package
-   (inherit irmin-base)
+   (inherit irmin-base-3.4)
    (name "ocaml-ppx-irmin")
    (arguments `(#:package "ppx_irmin"))
    (propagated-inputs (list ocaml-ppx-repr ocaml-logs))
@@ -155,7 +156,7 @@ unikernels.")
 
 (define-public ocaml-irmin
   (package
-   (inherit irmin-base)
+   (inherit irmin-base-3.4)
    (name "ocaml-irmin")
    (arguments `(#:package "irmin"))
    (propagated-inputs
