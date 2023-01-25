@@ -39,6 +39,8 @@ Add the channel to your ~.config/guix/channels.scm~:
 
 See also [[https://guix.gnu.org/manual/en/html_node/Specifying-Additional-Channels.html#Specifying-Additional-Channels][Specifying Additional Channels]] in the Guix Reference Manual.
 
+Before being able to use the channel you need to pull it in by running `guix pull` (see also next section).
+
 ** Updating the channel
 
 If updates are pushed to the channel you need to fetch these updates by running:
@@ -93,77 +95,38 @@ Easy peasy:
   (package-with-ocaml5.0 ocaml-irmin)
 #+END_SRC
 
-** Creating a development environment with package from custom branches
-
-The following snippet will allow you to reproducibly build replay binaries used for benchmarking Irmin. It uses a custom branch of Tezos with some patches and a specific version of Irmin:
+** Building a package using a version of Irmin from a specific Git branch
 
 #+BEGIN_SRC scheme :tangle custom-ocaml-tezos-context-replay.scm
   (use-modules
    (guix packages)
+   (guix git)
    (guix git-download)
-   (gnu packages ocaml)
-   (tarides packages ocaml)
    (tarides packages irmin)
    (tarides packages tezos))
 
-  ;; the patched tezos-context library
-  (define ocaml-tezos-context-replay-oct22
-    (package
-      (inherit ocaml-tezos-context)
-      (propagated-inputs
-       (modify-inputs
-	(package-propagated-inputs ocaml-tezos-context)
-	;; extra packages required by the replay patches
-	(append ocaml-ppx-deriving
-		ocaml-ppx-deriving-yojson
-		ocaml-printbox
-		ocaml-bentov)))))
+  ;; Define the Git URL, version and commit of Irmin to use
 
-  ;; the replay binaries
-  (define ocaml-tezos-context-replay-bin
-    (package
-     (inherit ocaml-tezos-context)
-     (name "ocaml-tezos-context")
-     (arguments `(#:package "tezos-context-replay-bin"
-		  #:test-target "."))
-     (propagated-inputs
-      (list ocaml-tezos-base
-	    ocaml-tezos-context-replay-oct22
-	    ocaml-cmdliner))))
+  (define irmin-url "https://github.com/metanivek/irmin")
+  (define irmin-version "3.5.1-disallow-split") ; this is only used for human readability
+  (define irmin-commit "662f57f6b02cccbd6d782178f9c579b9c32bbdfb")
+  (define irmin-sha256 "16knbciyfp28gc8hn4mim4qymdvahb12z9blr5ilfl2h6ail28yn")
 
-  (let* (;; Irmin version to use
-	 (irmin-commit "2f37f2495ead523d043d0a2748414c2ab4b94ed0")
-	 (irmin-version "3.5-dev") ; only used for package naming
-	 (irmin-origin (origin
-			 (method git-fetch)
-			 (uri (git-reference
-			       (url "https://github.com/mirage/irmin")
-			       (commit irmin-commit)))
-			 (sha256
-			  (base32
-			   "0n3gxgccc0qnj9g2s6l4dqmw09w7y7fp06zh4c05siq4a2hwz5dn"))))
+  ;; Use the `package-with-irmin-3.5` transformation that allows the
+  ;; explicit origin of the Irmin source to be specified.
 
-	 ;; Tezos version to use
-	 (tezos-commit "80c09e059411552de58b4a13e6be2a6a9f44c80d")
-	 (tezos-version "15.0+replay_oct22")
-	 (tezos-origin (origin
-			 (method git-fetch)
-			 (uri (git-reference
-			       (url "https://github.com/adatario/tezos.git")
-			       (commit tezos-commit)))
-			 (sha256
-			  (base32
-			   "1n3b3z230xvjrqdqa4pik8kkga8jys4kafd41xmqp8pnlx87vx70")))))
-
-    (package-with-explicit-tezos-origin
-     (package-with-explicit-irmin-origin
-      ocaml-tezos-context-replay-bin
-      #:origin irmin-origin
-      #:version irmin-version)
-
-     #:origin tezos-origin
-     #:version tezos-version))
+  (package-with-irmin-3.5
+   ocaml-tezos-context-replay
+   #:origin (origin
+	     (method git-fetch)
+	     (uri (git-reference
+		   (url irmin-url)
+		   (commit irmin-commit)))
+	     (sha256 (base32 irmin-sha256)))
+   #:version irmin-version)
 #+END_SRC
+
+There is also a ~package-with-irmin-3.4~ transformation The differentiation is useful even when the exact origin of the Irmin source code is specified, as different versions of Irmin might require a different set of dependencies (e.g. ~ocam-my-cool-library~ might be needed for Irmin 3.5 but not Irmin 3.4).  Using the appropriate transformation makes sure the correct set of dependencies are provided. For finer control of dependencies we can use custom package transformations, see for example how ~package-with-irmin-3.*~ is defined in [[./tarides/packages/irmin.scm]].
 
 If stored in a file ~custom-ocaml-tezos-context-replay.scm~ (in Emacs try ~org-babel-tangle~) it can be built with:
 
@@ -172,13 +135,13 @@ If stored in a file ~custom-ocaml-tezos-context-replay.scm~ (in Emacs try ~org-b
 #+END_SRC
 
 #+BEGIN_RESULT
-/gnu/store/kha1bmd3iaj7176xgazyf6kdnbsvks02-ocaml-tezos-context-15.0+replay_oct22
+/gnu/store/yxk29w6x43rwh8igizg12k0knpziqy8b-ocaml-tezos-context-replay-git-0.7cda5ed
 #+END_RESULT
 
 The replay executables can then be run:
 
 #+BEGIN_SRC bash
-  /gnu/store/kha1bmd3iaj7176xgazyf6kdnbsvks02-ocaml-tezos-context-15.0+replay_oct22/bin/replay --help
+/gnu/store/yxk29w6x43rwh8igizg12k0knpziqy8b-ocaml-tezos-context-replay-git-0.7cda5ed/bin/tezos-context-replay --help
 #+END_SRC
 
 * License
