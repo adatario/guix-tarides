@@ -1621,3 +1621,44 @@ in several formats")
     (synopsis "1D histogram sketching for OCaml")
     (description "This OCaml library implements an algorithm which approximates a 1D histogram as data is streamed over it.")
     (license license:bsd-3)))
+
+(define-public ocaml-mirage-profile
+  (package
+    (name "ocaml-mirage-profile")
+    (version "0.9.1")
+    (home-page "https://github.com/mirage/mirage-profile")
+    (source
+     (origin
+       (method git-fetch)
+       (uri (git-reference
+             (url home-page)
+             (commit (string-append "v" version))))
+       (file-name (git-file-name name version))
+       (sha256
+        (base32
+         "11p3ai8g993algds9mbg4xf3is0agqah127r69fb7rm35dryzq95"))))
+    (build-system dune-build-system)
+    (arguments `(#:package "mirage-profile"
+		 ;; tests require mirage-profile-unix
+		 #:tests? #f))
+    (propagated-inputs
+     (list ocaml-cstruct
+	   ocaml-ocplib-endian
+	   ocaml-lwt))
+    (native-inputs
+     (list ocaml-ppx-cstruct))
+    (synopsis "OCaml library for collecting runtime profiling
+information in CTF format")
+    (description
+     "This library can be used to trace execution of OCaml/Lwt programs (such as
+Mirage unikernels) at the level of Lwt threads.  The traces can be viewed using
+JavaScript or GTK viewers provided by [mirage-trace-viewer][] or processed by
+tools supporting the [Common Trace Format (CTF)][ctf].  Some example traces can
+be found in the blog post [Visualising an Asynchronous
+Monad](http://roscidus.com/blog/blog/2014/10/27/visualising-an-asynchronous-monad/).
+ Libraries can use the functions mirage-profile provides to annotate the traces
+with extra information.  When compiled against a normal version of Lwt,
+mirage-profile's functions are null-ops (or call the underlying untraced
+operation, as appropriate) and OCaml's cross-module inlining will optimise these
+calls away, meaning there should be no overhead in the non-profiling case.")
+    (license license:bsd-2)))
