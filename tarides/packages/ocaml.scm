@@ -1662,3 +1662,29 @@ mirage-profile's functions are null-ops (or call the underlying untraced
 operation, as appropriate) and OCaml's cross-module inlining will optimise these
 calls away, meaning there should be no overhead in the non-profiling case.")
     (license license:bsd-2)))
+
+(define-public ocaml-shared-memory-ring
+  (package
+    (name "ocaml-shared-memory-ring")
+    (version "3.1.1")
+    (home-page "https://github.com/mirage/shared-memory-ring")
+    (source
+     (origin
+       (method git-fetch)
+       (uri (git-reference
+             (url home-page)
+             (commit (string-append "v" version))))
+       (file-name (git-file-name name version))
+       (sha256
+        (base32
+         "12cpbia39aifnd8rxpsra0lhssqj5qw0zygb5fd8kg58zy2clmrr"))))
+    (build-system dune-build-system)
+    (arguments `(#:package "shared-memory-ring"))
+    (propagated-inputs
+     (list ocaml-cstruct
+	   ocaml-ppx-cstruct
+           ocaml-mirage-profile))
+    (native-inputs (list ocaml-ounit))
+    (synopsis #f)
+    (description #f)
+    (license license:isc)))
