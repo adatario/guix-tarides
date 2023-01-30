@@ -1624,33 +1624,33 @@ in several formats")
 
 (define-public ocaml-mirage-profile
   (package
-    (name "ocaml-mirage-profile")
-    (version "0.9.1")
-    (home-page "https://github.com/mirage/mirage-profile")
-    (source
-     (origin
-       (method git-fetch)
-       (uri (git-reference
-             (url home-page)
-             (commit (string-append "v" version))))
-       (file-name (git-file-name name version))
-       (sha256
-        (base32
-         "11p3ai8g993algds9mbg4xf3is0agqah127r69fb7rm35dryzq95"))))
-    (build-system dune-build-system)
-    (arguments `(#:package "mirage-profile"
-		 ;; tests require mirage-profile-unix
-		 #:tests? #f))
-    (propagated-inputs
-     (list ocaml-cstruct
-	   ocaml-ocplib-endian
-	   ocaml-lwt))
-    (native-inputs
-     (list ocaml-ppx-cstruct))
-    (synopsis "OCaml library for collecting runtime profiling
+   (name "ocaml-mirage-profile")
+   (version "0.9.1")
+   (home-page "https://github.com/mirage/mirage-profile")
+   (source
+    (origin
+     (method git-fetch)
+     (uri (git-reference
+	   (url home-page)
+	   (commit (string-append "v" version))))
+     (file-name (git-file-name name version))
+     (sha256
+      (base32
+       "11p3ai8g993algds9mbg4xf3is0agqah127r69fb7rm35dryzq95"))))
+   (build-system dune-build-system)
+   (arguments `(#:package "mirage-profile"
+		;; tests require mirage-profile-unix
+		#:tests? #f))
+   (propagated-inputs
+    (list ocaml-cstruct
+	  ocaml-ocplib-endian
+	  ocaml-lwt))
+   (native-inputs
+    (list ocaml-ppx-cstruct))
+   (synopsis "OCaml library for collecting runtime profiling
 information in CTF format")
-    (description
-     "This library can be used to trace execution of OCaml/Lwt programs (such as
+   (description
+    "This library can be used to trace execution of OCaml/Lwt programs (such as
 Mirage unikernels) at the level of Lwt threads.  The traces can be viewed using
 JavaScript or GTK viewers provided by [mirage-trace-viewer][] or processed by
 tools supporting the [Common Trace Format (CTF)][ctf].  Some example traces can
@@ -1661,30 +1661,47 @@ with extra information.  When compiled against a normal version of Lwt,
 mirage-profile's functions are null-ops (or call the underlying untraced
 operation, as appropriate) and OCaml's cross-module inlining will optimise these
 calls away, meaning there should be no overhead in the non-profiling case.")
-    (license license:bsd-2)))
+   (license license:bsd-2)))
 
 (define-public ocaml-shared-memory-ring
   (package
-    (name "ocaml-shared-memory-ring")
-    (version "3.1.1")
-    (home-page "https://github.com/mirage/shared-memory-ring")
-    (source
-     (origin
-       (method git-fetch)
-       (uri (git-reference
-             (url home-page)
-             (commit (string-append "v" version))))
-       (file-name (git-file-name name version))
-       (sha256
-        (base32
-         "12cpbia39aifnd8rxpsra0lhssqj5qw0zygb5fd8kg58zy2clmrr"))))
-    (build-system dune-build-system)
-    (arguments `(#:package "shared-memory-ring"))
-    (propagated-inputs
-     (list ocaml-cstruct
-	   ocaml-ppx-cstruct
-           ocaml-mirage-profile))
-    (native-inputs (list ocaml-ounit))
-    (synopsis #f)
-    (description #f)
-    (license license:isc)))
+   (name "ocaml-shared-memory-ring")
+   (version "3.1.1")
+   (home-page "https://github.com/mirage/shared-memory-ring")
+   (source
+    (origin
+     (method git-fetch)
+     (uri (git-reference
+	   (url home-page)
+	   (commit (string-append "v" version))))
+     (file-name (git-file-name name version))
+     (sha256
+      (base32
+       "12cpbia39aifnd8rxpsra0lhssqj5qw0zygb5fd8kg58zy2clmrr"))))
+   (build-system dune-build-system)
+   (arguments `(#:package "shared-memory-ring"))
+   (propagated-inputs
+    (list ocaml-cstruct
+	  ocaml-ppx-cstruct
+	  ocaml-mirage-profile))
+   (native-inputs (list ocaml-ounit))
+   (synopsis #f)
+   (description #f)
+   (license license:isc)))
+
+(define-public ocaml-shared-memory-ring-lwt
+  (package
+   (inherit ocaml-shared-memory-ring)
+   (name "ocaml-shared-memory-ring-lwt")
+   (arguments `(#:package "shared-memory-ring-lwt"))
+   (propagated-inputs
+    (list ocaml-cstruct
+	  ocaml-ppx-cstruct
+          ocaml-shared-memory-ring
+	  ocaml-lwt
+	  ocaml-lwt-dllist))
+   (native-inputs
+    (list ocaml-ounit))
+   (synopsis #f)
+   (description #f)
+   (license license:isc)))
