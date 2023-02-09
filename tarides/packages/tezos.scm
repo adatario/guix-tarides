@@ -193,7 +193,8 @@ uses the specified origin for all Tezos packages."
 	 (package-propagated-inputs ocaml-tezos-stdlib)
        (delete "ocaml-ringo")
        (append ocaml-ringo)
-       (append ocaml-aches)))
+       (append ocaml-aches)
+       (append ocaml-aches-lwt)))
     (properties '())))
 
 (define-public ocaml-tezos-lwt-result-stdlib
