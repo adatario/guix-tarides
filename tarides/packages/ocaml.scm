@@ -365,6 +365,19 @@ for resources")
     (description "Caches (bounded-size stores) for in-memory values and
 for resources")))
 
+(define-public ocaml-aches-lwt
+  (package
+    (inherit ocaml-ringo)
+    (name "ocaml-aches-lwt")
+    (arguments `(#:package "aches-lwt"))
+    (propagated-inputs
+     (list ocaml-aches
+	   ocaml-lwt))
+    (synopsis "Caches (bounded-size stores) for in-memory values and
+for resources")
+    (description "Caches (bounded-size stores) for in-memory values and
+for resources")))
+
 (define-public ocaml-omd
   (package
     (name "ocaml-omd")
