@@ -4,6 +4,7 @@
 
 (define-module (tarides packages tezos)
   #:use-module (guix packages)
+  #:use-module (guix deprecation)
   #:use-module (guix git-download)
   #:use-module (guix build-system dune)
   #:use-module (guix build-system ocaml)
@@ -440,12 +441,12 @@ uses the specified origin for all Tezos packages."
     (native-inputs
      (list ocaml-alcotest))))
 
-(define-public ocaml-tezos-context-replay
-  (let ((commit "ebe4720d1d831971c88738dd90656836cc650902")
+(define-public ocaml-tezos-context-trace
+  (let ((commit "3828874f4211bfb0abb6d2f0fb26323e36983083")
 	(revision "0"))
    (package-with-tezos-16
     (package
-     (name "ocaml-tezos-context-replay")
+     (name "ocaml-tezos-context-trace")
      (version (git-version "git" revision commit))
      (home-page "https://github.com/adatario/tezos-context-replay")
      (source
@@ -456,7 +457,7 @@ uses the specified origin for all Tezos packages."
 	     (commit commit)))
        (sha256
 	(base32
-	 "0hrgnpmbpsnc2h2nl2l0slzi0gckf670xw1fcaw71n9dz5grwwgn"))))
+	 "0sl49ndjscn980bi649ahadf1hblsisakqd0dwgczmfqhdbinbbf"))))
      (build-system dune-build-system)
      (propagated-inputs
       (list
@@ -469,7 +470,15 @@ uses the specified origin for all Tezos packages."
        ocaml-ppx-deriving-yojson
        ocaml-printbox
        ocaml-bentov))
-     (synopsis "Tezos Context Replay tools.")
+     (synopsis "Tezos Context Trace tools.")
      (description "Tools that allow replaying of Tezos Context action
 traces.  This is used to benchmark performance of changes to Irmin.")
      (license license:isc)))))
+
+
+;; alias for backwards-compatibility
+(define-deprecated/public ocaml-tezos-context-replay ocaml-tezos-context-trace
+  (package
+   (inherit ocaml-tezos-context-trace)
+   (name "ocaml-tezos-context-replay")))
+
