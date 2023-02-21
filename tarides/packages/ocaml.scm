@@ -19,30 +19,6 @@
   #:use-module (gnu packages multiprecision)
   #:use-module (gnu packages pkg-config))
 
-(define-public ocaml-bheap
-  (package
-    (name "ocaml-bheap")
-    (version "2.0.0")
-    (home-page "https://github.com/backtracking/bheap")
-    (source
-      (origin
-        (method git-fetch)
-        (uri (git-reference
-              (url home-page)
-              (commit version)))
-        (file-name (git-file-name name version))
-        (sha256
-          (base32
-            "0b8md5zl4yz7j62jz0bf7lwyl0pyqkxqx36ghkgkbkxb4zzggfj1"))))
-    (build-system dune-build-system)
-    (native-inputs
-     (list ocaml-stdlib-shims))
-    (synopsis "OCaml library providing priority queues")
-    (description
-      "This OCaml library provides priority queues using a binary heap
-encoded in a resizable array.")
-    (license license:lgpl2.1)))
-
 (define-public ocaml-vector
   (package
    (name "ocaml-vector")
