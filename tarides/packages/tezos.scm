@@ -4,6 +4,7 @@
 
 (define-module (tarides packages tezos)
   #:use-module (guix packages)
+  #:use-module (guix gexp)
   #:use-module (guix deprecation)
   #:use-module (guix git-download)
   #:use-module (guix build-system dune)
@@ -133,7 +134,10 @@ uses the specified origin for all Tezos packages."
 
 (define* (package-with-tezos-16 p
 				#:key
-				(origin (package-source tezos-16))
+				(patches '())
+				(origin (origin
+					 (inherit (package-source tezos-16))
+					 (patches patches)))
 				(version (package-version tezos-16)))
   (package-with-explicit-tezos-origin p
 				      #:origin origin
@@ -442,7 +446,7 @@ uses the specified origin for all Tezos packages."
      (list ocaml-alcotest))))
 
 (define-public ocaml-tezos-context-trace
-  (let ((commit "3828874f4211bfb0abb6d2f0fb26323e36983083")
+  (let ((commit "66346f31bd150da60dd691fbddc97dc5a376e757")
 	(revision "0"))
    (package-with-tezos-16
     (package
@@ -457,7 +461,7 @@ uses the specified origin for all Tezos packages."
 	     (commit commit)))
        (sha256
 	(base32
-	 "0sl49ndjscn980bi649ahadf1hblsisakqd0dwgczmfqhdbinbbf"))))
+	 "0ipanlzfyabvq0qsq1jhl9yfk2j40bxm221gygnf5z0mfyflq2h3"))))
      (build-system dune-build-system)
      (propagated-inputs
       (list
@@ -473,7 +477,10 @@ uses the specified origin for all Tezos packages."
      (synopsis "Tezos Context Trace tools.")
      (description "Tools that allow replaying of Tezos Context action
 traces.  This is used to benchmark performance of changes to Irmin.")
-     (license license:isc)))))
+     (license license:isc))
+    #:patches (list
+	       (local-file
+		"./patches/tezos-context-add-irmin-stats.patch")))))
 
 
 ;; alias for backwards-compatibility

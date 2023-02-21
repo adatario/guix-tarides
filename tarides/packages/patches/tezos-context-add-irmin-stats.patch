@@ -1,0 +1,116 @@
+diff --git a/src/lib_context/disk/context.ml b/src/lib_context/disk/context.ml
+index 96509ed13a..d630800e14 100644
+--- a/src/lib_context/disk/context.ml
++++ b/src/lib_context/disk/context.ml
+@@ -495,6 +495,33 @@ module Make (Encoding : module type of Tezos_context_encoding.Context) = struct
+   let fold ?depth ctxt key ~order ~init ~f =
+     Tree.fold ?depth ctxt.tree (data_key key) ~order ~init ~f
+ 
++  type tree_stats = Store.Tree.stats = {
++    nodes : int;
++    leafs : int;
++    skips : int;
++    depth : int;
++    width : int;
++  }
++
++  let tree_stats tree = Store.Tree.stats tree
++
++  type module_tree_stats = Store.Tree.counters = {
++    mutable contents_hash : int;
++    mutable contents_find : int;
++    mutable contents_add : int;
++    mutable contents_mem : int;
++    mutable node_hash : int;
++    mutable node_mem : int;
++    mutable node_index : int;
++    mutable node_add : int;
++    mutable node_find : int;
++    mutable node_val_v : int;
++    mutable node_val_find : int;
++    mutable node_val_list : int;
++  }
++
++  let module_tree_stats = Store.Tree.counters
++
+   (** The light mode relies on the implementation of this
+     function, because it uses Irmin.Type.of_string to rebuild values
+     of type Irmin.Hash.t. This is a temporary workaround until we
+diff --git a/src/lib_context/memory/context.ml b/src/lib_context/memory/context.ml
+index a04227182a..20bc0ce1da 100644
+--- a/src/lib_context/memory/context.ml
++++ b/src/lib_context/memory/context.ml
+@@ -244,6 +244,33 @@ module Make (Encoding : module type of Tezos_context_encoding.Context) = struct
+   let fold ?depth ctxt key ~order ~init ~f =
+     Tree.fold ?depth ctxt.tree (data_key key) ~order ~init ~f
+ 
++  type tree_stats = Store.Tree.stats = {
++    nodes : int;
++    leafs : int;
++    skips : int;
++    depth : int;
++    width : int;
++  }
++
++  let tree_stats tree = Store.Tree.stats tree
++
++  type module_tree_stats = Store.Tree.counters = {
++    mutable contents_hash : int;
++    mutable contents_find : int;
++    mutable contents_add : int;
++    mutable contents_mem : int;
++    mutable node_hash : int;
++    mutable node_mem : int;
++    mutable node_index : int;
++    mutable node_add : int;
++    mutable node_find : int;
++    mutable node_val_v : int;
++    mutable node_val_find : int;
++    mutable node_val_list : int;
++  }
++
++  let module_tree_stats = Store.Tree.counters
++
+   (** The light mode relies on the implementation of this
+     function, because it uses Irmin.Type.of_string to rebuild values
+     of type Irmin.Hash.t. This is a temporary workaround until we
+diff --git a/src/lib_context/sigs/context.ml b/src/lib_context/sigs/context.ml
+index c5f9578493..e1eee9e13f 100644
+--- a/src/lib_context/sigs/context.ml
++++ b/src/lib_context/sigs/context.ml
+@@ -837,6 +837,35 @@ module type TEZOS_CONTEXT = sig
+ 
+   val add_predecessor_ops_metadata_hash :
+     context -> Operation_metadata_list_list_hash.t -> context Lwt.t
++
++  (** The type for tree stats. *)
++  type tree_stats = private {
++    nodes : int;
++    leafs : int;
++    skips : int;
++    depth : int;
++    width : int;
++  }
++
++  val tree_stats : tree -> tree_stats Lwt.t
++
++  (** Module-wise stats for all tree operations *)
++  type module_tree_stats = private {
++    mutable contents_hash : int;
++    mutable contents_find : int;
++    mutable contents_add : int;
++    mutable contents_mem : int;
++    mutable node_hash : int;
++    mutable node_mem : int;
++    mutable node_index : int;
++    mutable node_add : int;
++    mutable node_find : int;
++    mutable node_val_v : int;
++    mutable node_val_find : int;
++    mutable node_val_list : int;
++  }
++
++  val module_tree_stats : unit -> module_tree_stats
+ end
+ 
+ (** Functor [With_get_data] adds a [get_data] function to modules of signature [S].
