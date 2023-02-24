@@ -15,7 +15,8 @@
   #:use-module (tarides packages ocaml)
   #:export (package-with-explicit-irmin-origin
 	    package-with-irmin-3.4
-	    package-with-irmin-3.5))
+	    package-with-irmin-3.5
+	    package-with-irmin-3.6))
 
 (define-public ocaml-repr
   (let (;; Tests are fixed in an unreleased commit (https://github.com/mirage/repr/pull/100)
@@ -129,6 +130,19 @@ unikernels.")
 	     (base32
 	      "0vcgxbgkv9f9cy7h830qlihskbxx63k06fl1nynh6axzpvgwabbz"))))))
 
+(define irmin-base-3.6
+  (package
+   (inherit irmin-base-3.5)
+   (version "3.6.0")
+   (source (origin
+	    (method git-fetch)
+	    (uri (git-reference
+		  (url "https://github.com/mirage/irmin")
+		  (commit "3.6.0")))
+	    (sha256
+	     (base32
+	      "0jgnxd3qvkz7wfzj0j2clls5vd5ybrpyash2cazn4yj28xjx0r6z"))))))
+
 (define* (package-with-irmin-3.4 p
 				 #:key
 				(origin (package-source irmin-base-3.4))
@@ -145,6 +159,13 @@ unikernels.")
 				      #:origin origin
 				      #:version version))
 
+(define* (package-with-irmin-3.6 p
+				 #:key
+				(origin (package-source irmin-base-3.6))
+				(version (package-version irmin-base-3.6)))
+  (package-with-explicit-irmin-origin p
+				      #:origin origin
+				      #:version version))
 
 (define-public ocaml-ppx-irmin
   (package
