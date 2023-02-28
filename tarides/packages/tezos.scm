@@ -446,13 +446,13 @@ uses the specified origin for all Tezos packages."
      (list ocaml-alcotest))))
 
 (define-public ocaml-tezos-context-trace
-  (let ((commit "66346f31bd150da60dd691fbddc97dc5a376e757")
+  (let ((commit "e8729a10f271ff370752e559cd122f7db56e9d0b")
 	(revision "0"))
    (package-with-tezos-16
     (package
      (name "ocaml-tezos-context-trace")
      (version (git-version "git" revision commit))
-     (home-page "https://github.com/adatario/tezos-context-replay")
+     (home-page "https://github.com/adatario/tezos-context-trace")
      (source
       (origin
        (method git-fetch)
@@ -461,7 +461,7 @@ uses the specified origin for all Tezos packages."
 	     (commit commit)))
        (sha256
 	(base32
-	 "0ipanlzfyabvq0qsq1jhl9yfk2j40bxm221gygnf5z0mfyflq2h3"))))
+	 "1gpjd2vf0b7z05xkjpjvlkr78vhlskxlksin1dm52jc30znr0mpl"))))
      (build-system dune-build-system)
      (propagated-inputs
       (list
