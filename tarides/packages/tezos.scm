@@ -11,6 +11,7 @@
   #:use-module (guix build-system ocaml)
   #:use-module ((guix licenses) #:prefix license:)
   #:use-module (gnu packages ocaml)
+  #:use-module (gnu packages certs)
   #:use-module (gnu packages pkg-config)
   #:use-module (gnu packages libevent)
   #:use-module (gnu packages multiprecision)
@@ -473,7 +474,11 @@ uses the specified origin for all Tezos packages."
        ocaml-ppx-deriving
        ocaml-ppx-deriving-yojson
        ocaml-printbox
-       ocaml-bentov))
+       ocaml-bentov
+
+       ;; The manage_actions tool makes calls to tzstats.com and
+       ;; requires SSL certs
+       nss-certs))
      (synopsis "Tezos Context Trace tools.")
      (description "Tools that allow replaying of Tezos Context action
 traces.  This is used to benchmark performance of changes to Irmin.")
