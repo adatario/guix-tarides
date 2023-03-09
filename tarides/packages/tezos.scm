@@ -489,7 +489,7 @@ traces.  This is used to benchmark performance of changes to Irmin.")
 
 
 ;; An old version of the tooling that can handle the Huangzou trace
-(define-public ocaml-tezos-context-trace-2023-1
+(define-public ocaml-tezos-context-trace-2023.1
   (package
    (inherit ocaml-tezos-context-trace)
    (version "2023.1.0")
