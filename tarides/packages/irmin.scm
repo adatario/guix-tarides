@@ -91,8 +91,7 @@ uses the specified origin for all Irmin packages."
     (not (or (eq? (package-build-system p) ocaml-build-system)
              (eq? (package-build-system p) dune-build-system))))
 
-  (package-with-ocaml-mtime-1.4
-   ((package-mapping transform cut?) p)))
+  ((package-mapping transform cut?) p))
 
 (define irmin-base-3.4
   (package
@@ -177,24 +176,23 @@ unikernels.")
    (synopsis "PPX deriver for Irmin type representations")))
 
 (define-public ocaml-irmin
-  (package-with-ocaml-mtime-1.4
-   (package
-     (inherit irmin-base-3.4)
-     (name "ocaml-irmin")
-     (arguments `(#:package "irmin"))
-     (propagated-inputs
-      (list ocaml-repr
-	    ocaml-fmt
-	    ocaml-uri
-	    ocaml-uutf
-	    ocaml-jsonm
-	    ocaml-ppx-irmin
-	    ocaml-digestif
-	    ocaml-graph
-	    ocaml-logs
-	    ocaml-bheap
-	    ocaml-astring))
-     (native-inputs (list ocaml-alcotest ocaml-vector ocaml-fmt)))))
+  (package
+    (inherit irmin-base-3.4)
+    (name "ocaml-irmin")
+    (arguments `(#:package "irmin"))
+    (propagated-inputs
+     (list ocaml-repr
+	   ocaml-fmt
+	   ocaml-uri
+	   ocaml-uutf
+	   ocaml-jsonm
+	   ocaml-ppx-irmin
+	   ocaml-digestif
+	   ocaml-graph
+	   ocaml-logs
+	   ocaml-bheap
+	   ocaml-astring))
+    (native-inputs (list ocaml-alcotest ocaml-vector ocaml-fmt))))
 
 (define-public ocaml-irmin-3.5
   (package-with-irmin-3.5 ocaml-irmin))

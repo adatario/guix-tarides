@@ -62,10 +62,10 @@ uses the specified origin for all Tezos packages."
 	(transform
 	 ;; Inherit package variant but set source to explicit origin
 	 (package
-	  (inherit (force variant))
-	  (location (package-location p))
-	  (version (if version version (package-version p)))
-	  (source origin)))))
+	   (inherit (force variant))
+	   (location (package-location p))
+	   (version (if version version (package-version p)))
+	   (source origin)))))
 
      ;; Check if package is built from Tezos repository by checking
      ;; the known list of packages.
@@ -449,62 +449,64 @@ uses the specified origin for all Tezos packages."
 (define-public ocaml-tezos-context-trace
   (let ((commit "d3a2a0db83a5d6f5cf104e9423c34246789ad629")
 	(revision "0"))
-   (package-with-tezos-16
-    (package
-     (name "ocaml-tezos-context-trace")
-     (version (git-version "git" revision commit))
-     (home-page "https://github.com/adatario/tezos-context-trace")
-     (source
-      (origin
-       (method git-fetch)
-       (uri (git-reference
-	     (url home-page)
-	     (commit commit)))
-       (sha256
-	(base32
-	 "0nsa8328xchsgcmdfqlji2zqg6j40zsb7917549ya844zybccd3p"))))
-     (build-system dune-build-system)
-     (propagated-inputs
-      (list
+    (package-with-ocaml-mtime-1.4
+     (package-with-tezos-16
+      (package
+	(name "ocaml-tezos-context-trace")
+	(version (git-version "git" revision commit))
+	(home-page "https://github.com/adatario/tezos-context-trace")
+	(source
+	 (origin
+	   (method git-fetch)
+	   (uri (git-reference
+		 (url home-page)
+		 (commit commit)))
+	   (sha256
+	    (base32
+	     "0nsa8328xchsgcmdfqlji2zqg6j40zsb7917549ya844zybccd3p"))))
+	(build-system dune-build-system)
+	(propagated-inputs
+	 (list
 
-       ;; tezos-contest (aka lib_context)
-       ocaml-tezos-context
+	  ;; tezos-contest (aka lib_context)
+	  ocaml-tezos-context
 
-       ;; Extra dependencies required by the replay patches
-       ocaml-ppx-deriving
-       ocaml-ppx-deriving-yojson
-       ocaml-printbox
-       ocaml-bentov
+	  ;; Extra dependencies required by the replay patches
+	  ocaml-ppx-deriving
+	  ocaml-ppx-deriving-yojson
+	  ocaml-printbox
+	  ocaml-bentov
 
-       ;; The manage_actions tool makes calls to tzstats.com and
-       ;; requires SSL certs
-       nss-certs))
-     (synopsis "Tezos Context Trace tools.")
-     (description "Tools that allow replaying of Tezos Context action
+	  ;; The manage_actions tool makes calls to tzstats.com and
+	  ;; requires SSL certs
+	  nss-certs))
+	(synopsis "Tezos Context Trace tools.")
+	(description "Tools that allow replaying of Tezos Context action
 traces.  This is used to benchmark performance of changes to Irmin.")
-     (license license:isc))
-    #:patches (list
-	       (local-file
-		"./patches/tezos-context-add-irmin-stats.patch")))))
+	(license license:isc))
+      #:patches (list
+		 (local-file
+		  "./patches/tezos-context-add-irmin-stats.patch"))))))
 
 
 ;; An old version of the tooling that can handle the Huangzou trace
 (define-public ocaml-tezos-context-trace-2023.1
-  (package
-   (inherit ocaml-tezos-context-trace)
-   (version "2023.1.0")
-   (home-page "https://github.com/adatario/tezos-context-trace")
-   (synopsis "Tezos Context Trace tools. This version works with the
+  (package-with-ocaml-mtime-1.4
+   (package
+     (inherit ocaml-tezos-context-trace)
+     (version "2023.1.0")
+     (home-page "https://github.com/adatario/tezos-context-trace")
+     (synopsis "Tezos Context Trace tools. This version works with the
 old Hangzou trace.")
-   (source
-    (origin
-     (method git-fetch)
-     (uri (git-reference
-	   (url home-page)
-	   (commit (string-append "v" version))))
-     (sha256
-      (base32
-       "1cz3lixlnnwx8n7lwby55m9bh9yk57cm9aik57nzg9p5prf3vjmx"))))))
+     (source
+      (origin
+	(method git-fetch)
+	(uri (git-reference
+	      (url home-page)
+	      (commit (string-append "v" version))))
+	(sha256
+	 (base32
+	  "1cz3lixlnnwx8n7lwby55m9bh9yk57cm9aik57nzg9p5prf3vjmx")))))))
 
 ;; alias for backwards-compatibility
 (define-deprecated/public ocaml-tezos-context-replay ocaml-tezos-context-trace
