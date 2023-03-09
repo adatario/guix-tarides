@@ -19,6 +19,21 @@
   #:use-module (gnu packages multiprecision)
   #:use-module (gnu packages pkg-config))
 
+(define-public ocaml-mtime-1.4
+  (package
+    (inherit ocaml-mtime)
+    (version "1.4.0")
+    (source (origin
+              (method url-fetch)
+              (uri (string-append "http://erratique.ch/software/mtime/releases/"
+                                  "mtime-" version ".tbz"))
+              (sha256
+               (base32
+                "1xy6lg52n2zynp4p164ym9j0f1b95j5n4bi5y4mbdrry9w99h32m"))))))
+
+(define-public package-with-ocaml-mtime-1.4
+  (package-input-rewriting `((,ocaml-mtime . ,ocaml-mtime-1.4))))
+
 (define-public ocaml-vector
   (package
    (name "ocaml-vector")
