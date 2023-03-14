@@ -197,6 +197,9 @@ unikernels.")
 (define-public ocaml-irmin-3.5
   (package-with-irmin-3.5 ocaml-irmin))
 
+(define-public ocaml-irmin-3.6
+  (package-with-irmin-3.6 ocaml-irmin))
+
 (define-public ocaml-index
   (package
    (name "ocaml-index")
