@@ -117,7 +117,7 @@ uses the specified origin for all Tezos packages."
 (define tezos-16
   (package
    (name "tezos")
-   (version "16.0-rc2")
+   (version "16.0")
    (home-page "https://gitlab.com/tezos/tezos")
    (source
     (origin
@@ -127,7 +127,7 @@ uses the specified origin for all Tezos packages."
 	   (commit (string-append "v" version))))
      (sha256
       (base32
-       "0f1p6gp28ihimx6hpj4q4gvxvqb4zwmcblmc1svnh2v5y9m8fgzd"))))
+       "12n2kd41p3bwpp587jckw5m6r13agdda3rwq42355h2sf41k4lds"))))
    (build-system dune-build-system)
    (synopsis "Tezos")
    (description "Tezos")
