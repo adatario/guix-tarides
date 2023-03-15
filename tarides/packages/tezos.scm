@@ -405,14 +405,7 @@ uses the specified origin for all Tezos packages."
    (native-inputs
     (list ocaml-qcheck
 	  ocaml-alcotest-lwt
-	  ocaml-tezos-test-helpers-extra))
-   (properties `((tezos-16-variant . ,(delay ocaml-tezos-16-context))))))
-
-(define-public ocaml-tezos-16-context
-  (package-with-irmin-3.5
-   (package
-     (inherit ocaml-tezos-context)
-     (properties '()))))
+	  ocaml-tezos-test-helpers-extra))))
 
 (define-public ocaml-tezos-p2p-services
   (package
