@@ -91,7 +91,7 @@ uses the specified origin for all Irmin packages."
     (not (or (eq? (package-build-system p) ocaml-build-system)
              (eq? (package-build-system p) dune-build-system))))
 
-  ((package-mapping transform cut?) p))
+  (package-with-ocaml-mtime-1.4 ((package-mapping transform cut?) p)))
 
 (define irmin-base-3.4
   (package

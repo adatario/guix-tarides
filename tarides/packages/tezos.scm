@@ -442,44 +442,43 @@ uses the specified origin for all Tezos packages."
 (define-public ocaml-tezos-context-trace
   (let ((commit "d3a2a0db83a5d6f5cf104e9423c34246789ad629")
 	(revision "0"))
-    (package-with-ocaml-mtime-1.4
-     (package-with-tezos-16
-      (package
-	(name "ocaml-tezos-context-trace")
-	(version (git-version "git" revision commit))
-	(home-page "https://github.com/adatario/tezos-context-trace")
-	(source
-	 (origin
-	   (method git-fetch)
-	   (uri (git-reference
-		 (url home-page)
-		 (commit commit)))
-	   (sha256
-	    (base32
-	     "0nsa8328xchsgcmdfqlji2zqg6j40zsb7917549ya844zybccd3p"))))
-	(build-system dune-build-system)
-	(propagated-inputs
-	 (list
+    (package-with-tezos-16
+     (package
+      (name "ocaml-tezos-context-trace")
+      (version (git-version "git" revision commit))
+      (home-page "https://github.com/adatario/tezos-context-trace")
+      (source
+       (origin
+	(method git-fetch)
+	(uri (git-reference
+	      (url home-page)
+	      (commit commit)))
+	(sha256
+	 (base32
+	  "0nsa8328xchsgcmdfqlji2zqg6j40zsb7917549ya844zybccd3p"))))
+      (build-system dune-build-system)
+      (propagated-inputs
+       (list
 
-	  ;; tezos-contest (aka lib_context)
-	  ocaml-tezos-context
+	;; tezos-contest (aka lib_context)
+	ocaml-tezos-context
 
-	  ;; Extra dependencies required by the replay patches
-	  ocaml-ppx-deriving
-	  ocaml-ppx-deriving-yojson
-	  ocaml-printbox
-	  ocaml-bentov
+	;; Extra dependencies required by the replay patches
+	ocaml-ppx-deriving
+	ocaml-ppx-deriving-yojson
+	ocaml-printbox
+	ocaml-bentov
 
-	  ;; The manage_actions tool makes calls to tzstats.com and
-	  ;; requires SSL certs
-	  nss-certs))
-	(synopsis "Tezos Context Trace tools.")
-	(description "Tools that allow replaying of Tezos Context action
+	;; The manage_actions tool makes calls to tzstats.com and
+	;; requires SSL certs
+	nss-certs))
+      (synopsis "Tezos Context Trace tools.")
+      (description "Tools that allow replaying of Tezos Context action
 traces.  This is used to benchmark performance of changes to Irmin.")
-	(license license:isc))
-      #:patches (list
-		 (local-file
-		  "./patches/tezos-context-add-irmin-stats.patch"))))))
+      (license license:isc))
+     #:patches (list
+		(local-file
+		 "./patches/tezos-context-add-irmin-stats.patch")))))
 
 
 ;; An old version of the tooling that can handle the Huangzou trace
