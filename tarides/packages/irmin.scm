@@ -188,7 +188,7 @@ unikernels.")
 	   ocaml-jsonm
 	   ocaml-ppx-irmin
 	   ocaml-digestif
-	   ocaml-graph
+	   ocaml-ocamlgraph
 	   ocaml-logs
 	   ocaml-bheap
 	   ocaml-astring))

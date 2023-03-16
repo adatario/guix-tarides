@@ -1657,3 +1657,27 @@ calls away, meaning there should be no overhead in the non-profiling case.")
    (synopsis #f)
    (description #f)
    (license license:isc)))
+
+(define-public ocaml-ocamlgraph
+  (package
+    (name "ocaml-ocamlgraph")
+    (version "2.0.0")
+    (home-page "https://github.com/backtracking/ocamlgraph/")
+    (source
+     (origin
+       (method git-fetch)
+       (uri (git-reference
+	     (url home-page)
+	     (commit version)))
+       (sha256
+	(base32
+	 "1gjrsyyamvvn2rd9n9yjx6hsglhw0dbm4cgazq0dpx0bbr4inwc3"))))
+    (build-system dune-build-system)
+    (arguments `(#:package "ocamlgraph"))
+    (propagated-inputs (list ocaml-stdlib-shims))
+    (native-inputs (list ocaml-graphics))
+    (synopsis "A generic graph library for OCaml")
+    (description
+     "This package provides both graph data structures and graph algorithms")
+    (license license:lgpl2.1)))
+
