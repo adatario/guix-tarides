@@ -439,23 +439,22 @@ uses the specified origin for all Tezos packages."
     (native-inputs
      (list ocaml-alcotest))))
 
-(define-public ocaml-tezos-context-trace
+(define ocaml-tezos-context-trace-base
   (let ((commit "d3a2a0db83a5d6f5cf104e9423c34246789ad629")
 	(revision "0"))
-    (package-with-tezos-16
-     (package
+    (package
       (name "ocaml-tezos-context-trace")
       (version (git-version "git" revision commit))
       (home-page "https://github.com/adatario/tezos-context-trace")
       (source
        (origin
-	(method git-fetch)
-	(uri (git-reference
-	      (url home-page)
-	      (commit commit)))
-	(sha256
-	 (base32
-	  "0nsa8328xchsgcmdfqlji2zqg6j40zsb7917549ya844zybccd3p"))))
+	 (method git-fetch)
+	 (uri (git-reference
+	       (url home-page)
+	       (commit commit)))
+	 (sha256
+	  (base32
+	   "0nsa8328xchsgcmdfqlji2zqg6j40zsb7917549ya844zybccd3p"))))
       (build-system dune-build-system)
       (propagated-inputs
        (list
@@ -475,17 +474,21 @@ uses the specified origin for all Tezos packages."
       (synopsis "Tezos Context Trace tools.")
       (description "Tools that allow replaying of Tezos Context action
 traces.  This is used to benchmark performance of changes to Irmin.")
-      (license license:isc))
-     #:patches (list
-		(local-file
-		 "./patches/tezos-context-add-irmin-stats.patch")))))
+      (license license:isc))))
+
+(define-public ocaml-tezos-context-trace
+  (package-with-tezos-16
+   ocaml-tezos-context-trace-base
+   #:patches (list
+	      (local-file
+	       "./patches/tezos-context-add-irmin-stats.patch"))))
 
 
 ;; An old version of the tooling that can handle the Huangzou trace
 (define-public ocaml-tezos-context-trace-2023.1
-  (package-with-ocaml-mtime-1.4
+  (package-with-tezos-16
    (package
-     (inherit ocaml-tezos-context-trace)
+     (inherit ocaml-tezos-context-trace-base)
      (version "2023.1.0")
      (home-page "https://github.com/adatario/tezos-context-trace")
      (synopsis "Tezos Context Trace tools. This version works with the
@@ -498,7 +501,10 @@ old Hangzou trace.")
 	      (commit (string-append "v" version))))
 	(sha256
 	 (base32
-	  "1cz3lixlnnwx8n7lwby55m9bh9yk57cm9aik57nzg9p5prf3vjmx")))))))
+	  "1cz3lixlnnwx8n7lwby55m9bh9yk57cm9aik57nzg9p5prf3vjmx")))))
+   #:patches (list
+	      (local-file
+	       "./patches/tezos-context-add-irmin-stats.patch"))))
 
 ;; alias for backwards-compatibility
 (define-deprecated/public ocaml-tezos-context-replay ocaml-tezos-context-trace
