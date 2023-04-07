@@ -133,15 +133,15 @@ unikernels.")
 (define irmin-base-3.6
   (package
    (inherit irmin-base-3.5)
-   (version "3.6.0")
+   (version "3.6.1")
    (source (origin
 	    (method git-fetch)
 	    (uri (git-reference
 		  (url "https://github.com/mirage/irmin")
-		  (commit "3.6.0")))
+		  (commit "3.6.1")))
 	    (sha256
 	     (base32
-	      "0jgnxd3qvkz7wfzj0j2clls5vd5ybrpyash2cazn4yj28xjx0r6z"))))))
+	      "0i10k2rlmw9xfa2vrc50lcjdxsc70jsl26da5zfz8srbxjbj1i3y"))))))
 
 (define* (package-with-irmin-3.4 p
 				 #:key
