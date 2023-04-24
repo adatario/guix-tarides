@@ -16,7 +16,8 @@
   #:export (package-with-explicit-irmin-origin
 	    package-with-irmin-3.4
 	    package-with-irmin-3.5
-	    package-with-irmin-3.6))
+	    package-with-irmin-3.6
+	    package-with-irmin-3.7))
 
 (define-public ocaml-repr
   (let (;; Tests are fixed in an unreleased commit (https://github.com/mirage/repr/pull/100)
@@ -143,6 +144,19 @@ unikernels.")
 	     (base32
 	      "0i10k2rlmw9xfa2vrc50lcjdxsc70jsl26da5zfz8srbxjbj1i3y"))))))
 
+(define irmin-base-3.7
+  (package
+   (inherit irmin-base-3.6)
+   (version "3.7.0")
+   (source (origin
+	    (method git-fetch)
+	    (uri (git-reference
+		  (url "https://github.com/mirage/irmin")
+		  (commit "3.7.0")))
+	    (sha256
+	     (base32
+	      "1avbj3nf1sff0fmj2qhv8mkd5s2pfqx3mz7r6hxs783zlndr128r"))))))
+
 (define* (package-with-irmin-3.4 p
 				 #:key
 				(origin (package-source irmin-base-3.4))
@@ -163,6 +177,14 @@ unikernels.")
 				 #:key
 				(origin (package-source irmin-base-3.6))
 				(version (package-version irmin-base-3.6)))
+  (package-with-explicit-irmin-origin p
+				      #:origin origin
+				      #:version version))
+
+(define* (package-with-irmin-3.7 p
+				 #:key
+				(origin (package-source irmin-base-3.7))
+				(version (package-version irmin-base-3.7)))
   (package-with-explicit-irmin-origin p
 				      #:origin origin
 				      #:version version))
@@ -199,6 +221,9 @@ unikernels.")
 
 (define-public ocaml-irmin-3.6
   (package-with-irmin-3.6 ocaml-irmin))
+
+(define-public ocaml-irmin-3.7
+  (package-with-irmin-3.7 ocaml-irmin))
 
 (define-public ocaml-index
   (package
