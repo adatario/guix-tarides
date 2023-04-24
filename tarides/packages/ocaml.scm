@@ -160,7 +160,7 @@ weight constraint.")
 (define-public ocaml-checkseum
   (package
    (name "ocaml-checkseum")
-   (version "0.4.0")
+   (version "0.5.1")
    (home-page "https://github.com/mirage/checkseum")
    (source
     (origin
@@ -171,7 +171,7 @@ weight constraint.")
      (file-name (git-file-name name version))
      (sha256
       (base32
-       "10xi3g1jini3nlijhvdawsxpzpbaahx5wq7n7fzxcj29dm29bzns"))))
+       "17vm6560rhg4vjdy8ifd7lkfv6nhprjdzg2g5q1cbki104l9h0qi"))))
    (build-system dune-build-system)
    (propagated-inputs (list ocaml-optint))
    (native-inputs
