@@ -1673,7 +1673,9 @@ calls away, meaning there should be no overhead in the non-profiling case.")
 	(base32
 	 "1gjrsyyamvvn2rd9n9yjx6hsglhw0dbm4cgazq0dpx0bbr4inwc3"))))
     (build-system dune-build-system)
-    (arguments `(#:package "ocamlgraph"))
+    (arguments `(#:package "ocamlgraph"
+		 ;; tests fail for OCaml 5 (https://github.com/backtracking/ocamlgraph/issues/120)
+		 #:tests? #f))
     (propagated-inputs (list ocaml-stdlib-shims))
     (native-inputs (list ocaml-graphics))
     (synopsis "A generic graph library for OCaml")
