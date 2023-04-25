@@ -92,7 +92,8 @@ Easy peasy:
    (guix build-system ocaml)
    (tarides packages irmin))
 
-  (package-with-ocaml5.0 ocaml-irmin)
+  (package-with-ocaml-mtime-1.4
+   (package-with-ocaml5.0 ocaml-irmin))
 #+END_SRC
 
 ** Building a package using a version of Irmin from a specific Git branch
