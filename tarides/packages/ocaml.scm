@@ -31,10 +31,19 @@
                (base32
                 "1xy6lg52n2zynp4p164ym9j0f1b95j5n4bi5y4mbdrry9w99h32m"))))))
 
-(define-public package-with-ocaml-mtime-1.4
-  (package-input-rewriting/spec
-   `(("ocaml-mtime" . ,(const ocaml-mtime-1.4))
-     ("ocaml5.0-mtime" . ,(const (package-with-ocaml5.0 ocaml-mtime-1.4))))))
+(define-public (package-with-ocaml-mtime-1.4 p)
+  (define (transform p)
+    (cond
+     ((equal? (package-name p) "ocaml-mtime") ocaml-mtime-1.4)
+     ((equal? (package-name p) "ocaml5.0-mtime") (package-with-ocaml5.0 ocaml-mtime-1.4))
+     (else p)))
+
+  ;; stop package transformations when it's not an OCaml package
+  (define (cut? p)
+    (not (or (eq? (package-build-system p) ocaml-build-system)
+             (eq? (package-build-system p) dune-build-system))))
+
+  ((package-mapping transform cut?) p))
 
 (define-public ocaml-vector
   (package
