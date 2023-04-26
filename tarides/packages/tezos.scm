@@ -291,7 +291,7 @@ uses the specified origin for all Tezos packages."
     (inherit ocaml-tezos-hacl)
     (propagated-inputs
      (modify-inputs
-	 (package-propagated-inputs ocaml-tezos-stdlib)
+	 (package-propagated-inputs ocaml-tezos-hacl)
        (delete "ocaml-hacl-star-raw")
        (append ocaml-hacl-star-raw)
        (delete "ocaml-hacl-star")
