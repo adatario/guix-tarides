@@ -453,7 +453,6 @@ the command line tool `omd`.")
                              ocaml-json-data-encoding-bson
                              ocaml-either
                              ocaml-ppx-hash
-                             ocamlformat
                              ocaml-odoc))
     (native-inputs (list ocaml-alcotest
 			 ocaml-crowbar
