@@ -68,11 +68,17 @@ uses the specified origin for all Irmin packages."
   ;; packages that are built from the Irmin Git repository
   (define irmin-package-names
     (list "ocaml-irmin"
+	  "ocaml5.0-irmin"
 	  "ocaml-ppx-irmin"
+	  "ocaml5.0-ppx-irmin"
 	  "ocaml-irmin-pack"
+	  "ocaml5.0-irmin-pack"
 	  "ocaml-irmin-test"
+	  "ocaml5.0-irmin-test"
 	  "ocaml-irmin-tezos"
+	  "ocaml5.0-irmin-tezos"
 	  "ocaml-irmin-tezos-utils"
+	  "ocaml5.0-irmin-tezos-utils"
 	  "ocaml-irmin-fs"))
 
   (define (transform p)
