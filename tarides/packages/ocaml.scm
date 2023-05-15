@@ -1691,3 +1691,27 @@ calls away, meaning there should be no overhead in the non-profiling case.")
      "This package provides both graph data structures and graph algorithms")
     (license license:lgpl2.1)))
 
+(define-public ocaml-landmarks
+  (package
+    (name "ocaml-landmarks")
+    (version "1.4")
+    (home-page "https://github.com/LexiFi/landmarks")
+    (source
+     (origin
+       (method git-fetch)
+       (uri (git-reference
+	     (url home-page)
+	     (commit (string-append "v" version))))
+       (sha256
+	(base32
+	 "0k0232psb3slh8xq6i05mrphd031r21y1q8g74zfkmkj3qqx52yr"))))
+    (build-system dune-build-system)
+    (propagated-inputs (list ocaml-ppxlib))
+    (native-inputs (list ocaml-odoc))
+    (synopsis "A simple profiling library for OCaml")
+    (description
+     "Landmarks is a simple profiling library for OCaml.  It provides primitives to
+measure time spent in portion of instrumented code.  The instrumentation of the
+code may either done by hand, automatically or semi-automatically using the ppx
+pepreprocessor (see landmarks-ppx package).")
+    (license license:expat)))
