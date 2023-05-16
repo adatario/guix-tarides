@@ -13,6 +13,7 @@
   #:use-module (guix build-system ocaml)
   #:use-module ((guix licenses) #:prefix license:)
   #:use-module (gnu packages base)
+  #:use-module (gnu packages databases)
   #:use-module (gnu packages cmake)
   #:use-module (gnu packages ocaml)
   #:use-module (gnu packages maths)
@@ -1715,3 +1716,22 @@ measure time spent in portion of instrumented code.  The instrumentation of the
 code may either done by hand, automatically or semi-automatically using the ppx
 pepreprocessor (see landmarks-ppx package).")
     (license license:expat)))
+
+(define-public ocaml-postgresql
+  (package
+    (name "ocaml-postgresql")
+    (version "5.0.0")
+    (source (origin
+              (method url-fetch)
+              (uri
+               "https://github.com/mmottl/postgresql-ocaml/releases/download/5.0.0/postgresql-5.0.0.tbz")
+              (sha256
+               (base32
+                "1n7rgrh6z9jzs2wj1mjys0q0y8q7gy1v00jik631v0d4y9dl1kcw"))))
+    (build-system dune-build-system)
+    (native-inputs (list postgresql))
+    (home-page "https://mmottl.github.io/postgresql-ocaml")
+    (synopsis "Bindings to the PostgreSQL library")
+    (description
+     "Postgresql offers library functions for accessing PostgreSQL databases.")
+    (license license:lgpl2.1)))
