@@ -1735,3 +1735,27 @@ pepreprocessor (see landmarks-ppx package).")
     (description
      "Postgresql offers library functions for accessing PostgreSQL databases.")
     (license license:lgpl2.1)))
+
+(define-public ocaml-art
+  (package
+   (name "ocaml-art")
+   (version "0.2.0")
+   (home-page "https://github.com/dinosaure/art")
+   (source
+    (origin
+     (method git-fetch)
+     (uri (git-reference
+	   (url home-page)
+	   (commit (string-append "v" version))))
+     (sha256
+      (base32
+       "0nk337fywy32dxnx7l2j17crll2al2pd2nlvjlgv9f8wx4q2vvzw"))))
+   (build-system dune-build-system)
+   (arguments `(#:package "art"))
+   (propagated-inputs (list ocaml-fmt))
+   (native-inputs (list ocaml-alcotest ocaml-crowbar ocaml-monolith))
+   (synopsis "Adaptive Radix Tree")
+   (description
+    "Implementation of an Adaptive Radix Tree in OCaml.  A fast hash-table like
+structure plus the order.")
+   (license license:expat)))
