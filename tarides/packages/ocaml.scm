@@ -1737,25 +1737,34 @@ pepreprocessor (see landmarks-ppx package).")
     (license license:lgpl2.1)))
 
 (define-public ocaml-art
-  (package
-   (name "ocaml-art")
-   (version "0.2.0")
-   (home-page "https://github.com/dinosaure/art")
-   (source
-    (origin
-     (method git-fetch)
-     (uri (git-reference
-	   (url home-page)
-	   (commit (string-append "v" version))))
-     (sha256
-      (base32
-       "0nk337fywy32dxnx7l2j17crll2al2pd2nlvjlgv9f8wx4q2vvzw"))))
-   (build-system dune-build-system)
-   (arguments `(#:package "art"))
-   (propagated-inputs (list ocaml-fmt))
-   (native-inputs (list ocaml-alcotest ocaml-crowbar ocaml-monolith))
-   (synopsis "Adaptive Radix Tree")
-   (description
-    "Implementation of an Adaptive Radix Tree in OCaml.  A fast hash-table like
+  ;; unreleased version with some nice API additions
+  (let ((commit "70be87b6ba81db459decf21291f8f606400e8fbf")
+	(revision "0"))
+    (package
+     (name "ocaml-art")
+     (version (git-version "0.3.0" revision commit))
+     (home-page "https://github.com/dinosaure/art")
+     (source
+      (origin
+       (method git-fetch)
+       (uri (git-reference
+	     (url home-page)
+	     (commit commit)))
+       (file-name (git-file-name name version))
+       (sha256
+	(base32
+	 "1v6hn4gmwf2690374rpn87ril6iwys1rwy5r076z3r25h0c3d7ji"))))
+     (build-system dune-build-system)
+     (propagated-inputs (list ocaml-fmt
+
+			      ;; rowex dependencies
+			      ocaml-logs
+			      ocaml-fpath
+			      ocaml-bos
+			      ocaml-base64))
+     (native-inputs (list ocaml-alcotest ocaml-crowbar ocaml-monolith))
+     (synopsis "Adaptive Radix Tree")
+     (description
+      "Implementation of an Adaptive Radix Tree in OCaml.  A fast hash-table like
 structure plus the order.")
-   (license license:expat)))
+     (license license:expat))))
