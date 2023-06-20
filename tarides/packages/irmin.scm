@@ -17,7 +17,8 @@
 	    package-with-irmin-3.4
 	    package-with-irmin-3.5
 	    package-with-irmin-3.6
-	    package-with-irmin-3.7))
+	    package-with-irmin-3.7
+	    package-with-irmin-3.8))
 
 (define-public ocaml-repr
   (let (;; Tests are fixed in an unreleased commit (https://github.com/mirage/repr/pull/100)
@@ -98,7 +99,7 @@ uses the specified origin for all Irmin packages."
     (not (or (eq? (package-build-system p) ocaml-build-system)
              (eq? (package-build-system p) dune-build-system))))
 
-  (package-with-ocaml-mtime-1.4 ((package-mapping transform cut?) p)))
+  ((package-mapping transform cut?) p))
 
 (define irmin-base-3.4
   (package
@@ -163,34 +164,61 @@ unikernels.")
 	     (base32
 	      "1avbj3nf1sff0fmj2qhv8mkd5s2pfqx3mz7r6hxs783zlndr128r"))))))
 
+(define irmin-base-3.8-dev
+  (package
+   (inherit irmin-base-3.7)
+   (version "3.8.0-dev")
+   (source (origin
+	    (method git-fetch)
+	    (uri (git-reference
+		  (url "https://github.com/mirage/irmin")
+		  (commit "8da4d16e7cc8beddfc8a824feca325426bae08a9")))
+	    (file-name (git-file-name "irmin" version))
+	    (sha256
+	     (base32
+	      "1zjp2avqam2hhnp334lqlwrr11z3qwmzlr8n518qza6kbfgwd4gn"))))))
+
 (define* (package-with-irmin-3.4 p
 				 #:key
 				(origin (package-source irmin-base-3.4))
 				(version (package-version irmin-base-3.4)))
-  (package-with-explicit-irmin-origin p
-				      #:origin origin
-				      #:version version))
+  (package-with-ocaml-mtime-1.4
+   (package-with-explicit-irmin-origin p
+				       #:origin origin
+				       #:version version)))
 
 (define* (package-with-irmin-3.5 p
 				 #:key
 				(origin (package-source irmin-base-3.5))
 				(version (package-version irmin-base-3.5)))
-  (package-with-explicit-irmin-origin p
-				      #:origin origin
-				      #:version version))
+
+  (package-with-ocaml-mtime-1.4
+   (package-with-explicit-irmin-origin p
+				       #:origin origin
+				       #:version version)))
 
 (define* (package-with-irmin-3.6 p
 				 #:key
 				(origin (package-source irmin-base-3.6))
 				(version (package-version irmin-base-3.6)))
-  (package-with-explicit-irmin-origin p
-				      #:origin origin
-				      #:version version))
+  (package-with-ocaml-mtime-1.4
+   (package-with-explicit-irmin-origin p
+				       #:origin origin
+				       #:version version)))
 
 (define* (package-with-irmin-3.7 p
 				 #:key
 				(origin (package-source irmin-base-3.7))
 				(version (package-version irmin-base-3.7)))
+  (package-with-ocaml-mtime-1.4
+   (package-with-explicit-irmin-origin p
+				       #:origin origin
+				       #:version version)))
+
+(define* (package-with-irmin-3.8 p
+				 #:key
+				(origin (package-source irmin-base-3.8-dev))
+				(version (package-version irmin-base-3.8-dev)))
   (package-with-explicit-irmin-origin p
 				      #:origin origin
 				      #:version version))
