@@ -18,7 +18,32 @@
   #:use-module (gnu packages ocaml)
   #:use-module (gnu packages maths)
   #:use-module (gnu packages multiprecision)
-  #:use-module (gnu packages pkg-config))
+  #:use-module (gnu packages pkg-config)
+
+  #:export (replace-ocaml-package-mapping))
+
+(define (replace-ocaml-package-mapping name replacement)
+  "Returns a package transformation that replaces the OCaml package
+@var{name} with the package @var{replacement}."
+  (define ocaml5.0-name
+    (string-append "ocaml5.0-"
+		   (if (string-prefix? "ocaml-" name)
+		       (substring name (string-length "ocaml-"))
+		       name)))
+
+  (define (transform p)
+    (cond
+     ((equal? (package-name p) name) replacement)
+     ((equal? (package-name p) ocaml5.0-name)
+      (package-with-ocaml-5.0 replacement))
+     (else p)))
+
+  ;; stop package transformations when it's not an OCaml package
+  (define (cut? p)
+    (not (or (eq? (package-build-system p) ocaml-build-system)
+             (eq? (package-build-system p) dune-build-system))))
+
+  (package-mapping transform cut?))
 
 (define-public ocaml-mtime-1.4
   (package
@@ -32,19 +57,6 @@
                (base32
                 "1xy6lg52n2zynp4p164ym9j0f1b95j5n4bi5y4mbdrry9w99h32m"))))))
 
-(define-public (package-with-ocaml-mtime-1.4 p)
-  (define (transform p)
-    (cond
-     ((equal? (package-name p) "ocaml-mtime") ocaml-mtime-1.4)
-     ((equal? (package-name p) "ocaml5.0-mtime") (package-with-ocaml5.0 ocaml-mtime-1.4))
-     (else p)))
-
-  ;; stop package transformations when it's not an OCaml package
-  (define (cut? p)
-    (not (or (eq? (package-build-system p) ocaml-build-system)
-             (eq? (package-build-system p) dune-build-system))))
-
-  ((package-mapping transform cut?) p))
 
 (define-public ocaml-vector
   (package
@@ -67,7 +79,7 @@
 growable arrays.")
    (license license:lgpl2.1)))
 
-(define-public ocaml-progress
+(define-public ocaml-progress-0.2.1
   (package
    (name "ocaml-progress")
    (version "0.2.1")
@@ -85,7 +97,7 @@ growable arrays.")
    (build-system dune-build-system)
    (propagated-inputs (list ocaml-fmt
 			    ocaml-logs
-			    ocaml-mtime
+			    ocaml-mtime-1.4
 			    ocaml-uucp
 			    ocaml-uutf
 			    ocaml-vector
@@ -97,6 +109,31 @@ growable arrays.")
 declaratively specifying progress bar formats.  Supports rendering multiple
 progress bars simultaneously.")
    (license license:expat)))
+
+(define-public ocaml-progress
+  (package
+   (inherit ocaml-progress-0.2.1)
+   (name "ocaml-progress")
+   (version "0.2.2")
+   (home-page "https://github.com/CraigFe/progress")
+   (source
+    (origin
+     (method git-fetch)
+     (uri (git-reference
+	   (url home-page)
+	   (commit version)))
+     (file-name (git-file-name name version))
+     (sha256
+      (base32
+       "1vkvd8acb62yzfj6b4n5nxvizadvf4yhsmrxi6b1diarzwi3x2mz"))))
+   (build-system dune-build-system)
+   (propagated-inputs (list ocaml-fmt
+			    ocaml-logs
+			    ocaml-mtime
+			    ocaml-uucp
+			    ocaml-uutf
+			    ocaml-vector
+			    ocaml-optint))))
 
 (define-public ocaml-semaphore-compat
   (package

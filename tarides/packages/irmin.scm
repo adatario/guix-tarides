@@ -62,6 +62,102 @@ public consumption and provides no stability guarantee.")
     (list ocaml-repr ocaml-ppxlib))
    (native-inputs (list ocaml-alcotest ocaml-hex))))
 
+(define-public ocaml-index-1.6.1
+  (package
+   (name "ocaml-index")
+   (version "1.6.1")
+   (home-page "https://github.com/mirage/index")
+   (source
+    (origin
+     (method git-fetch)
+     (uri (git-reference
+	   (url home-page)
+	   (commit version)))
+     (file-name (git-file-name name version))
+     (sha256
+      (base32
+       "0bw2yvjp5ccibfzhil58ks8w7pws8ln2a8kf1m2dxj7ywwfncpas"))))
+   (build-system dune-build-system)
+   (propagated-inputs (list ocaml-optint
+			    ocaml-repr
+			    ocaml-ppx-repr
+			    ocaml-fmt
+			    ocaml-logs
+			    ocaml-mtime
+			    ocaml-cmdliner
+			    ocaml-progress
+			    ocaml-semaphore-compat
+			    ocaml-jsonm
+			    ocaml-stdlib-shims
+			    ocaml-lru))
+   (native-inputs (list ocaml-alcotest
+			ocaml-crowbar
+			ocaml-re
+			ocaml-yojson
+			ocaml-digestif
+			ocaml-ppx-deriving-yojson
+			ocaml-rusage
+			ocaml-metrics-unix
+			ocaml-tezos-base58
+			gmp))
+   (synopsis "A platform-agnostic multi-level index for OCaml")
+   (description
+    "Index is a scalable implementation of persistent indices in OCaml.  It takes an
+arbitrary IO implementation and user-supplied content types and supplies a
+standard key-value interface for persistent storage.  Index provides instance
+sharing: each OCaml run-time can share a common singleton instance.  Index
+supports multiple-reader/single-writer access.  Concurrent access is safely
+managed using lock files.")
+   (license license:expat)))
+
+(define-public ocaml-index
+  (package
+   (name "ocaml-index")
+   (version "1.6.2")
+   (home-page "https://github.com/mirage/index")
+   (source
+    (origin
+     (method git-fetch)
+     (uri (git-reference
+	   (url home-page)
+	   (commit version)))
+     (file-name (git-file-name name version))
+     (sha256
+      (base32
+       "0x1fgz6jv5max1kmpvajxg69nc0pgh1wvx8adsiddh84g0jfyrga"))))
+   (build-system dune-build-system)
+   (propagated-inputs (list ocaml-optint
+			    ocaml-repr
+			    ocaml-ppx-repr
+			    ocaml-fmt
+			    ocaml-logs
+			    ocaml-mtime
+			    ocaml-cmdliner
+			    ocaml-progress
+			    ocaml-semaphore-compat
+			    ocaml-jsonm
+			    ocaml-stdlib-shims
+			    ocaml-lru))
+   (native-inputs (list ocaml-alcotest
+			ocaml-crowbar
+			ocaml-re
+			ocaml-yojson
+			ocaml-digestif
+			ocaml-ppx-deriving-yojson
+			ocaml-rusage
+			ocaml-metrics-unix
+			ocaml-tezos-base58
+			gmp))
+   (synopsis "A platform-agnostic multi-level index for OCaml")
+   (description
+    "Index is a scalable implementation of persistent indices in OCaml.  It takes an
+arbitrary IO implementation and user-supplied content types and supplies a
+standard key-value interface for persistent storage.  Index provides instance
+sharing: each OCaml run-time can share a common singleton instance.  Index
+supports multiple-reader/single-writer access.  Concurrent access is safely
+managed using lock files.")
+   (license license:expat)))
+
 (define* (package-with-explicit-irmin-origin p #:key origin version)
   "Return a procedure that takes a package and returns a package that
 uses the specified origin for all Irmin packages."
@@ -178,11 +274,25 @@ unikernels.")
 	     (base32
 	      "1zjp2avqam2hhnp334lqlwrr11z3qwmzlr8n518qza6kbfgwd4gn"))))))
 
+(define-public (package-with-ocaml-mtime-1.4 p)
+  ((replace-ocaml-package-mapping "ocaml-mtime" ocaml-mtime-1.4) p))
+
+(define-public (package-with-ocaml-progress-0.2.1 p)
+  ((replace-ocaml-package-mapping "ocaml-progress" ocaml-progress-0.2.1) p))
+
+(define-public (package-with-ocaml-index-1.6.1 p)
+  ((replace-ocaml-package-mapping "ocaml-index" ocaml-index-1.6.1) p))
+
+(define package-with-ocaml-mtime-1.4-dependencies
+  (compose package-with-ocaml-mtime-1.4
+	   package-with-ocaml-index-1.6.1
+	   package-with-ocaml-progress-0.2.1))
+
 (define* (package-with-irmin-3.4 p
 				 #:key
 				(origin (package-source irmin-base-3.4))
 				(version (package-version irmin-base-3.4)))
-  (package-with-ocaml-mtime-1.4
+  (package-with-ocaml-mtime-1.4-dependencies
    (package-with-explicit-irmin-origin p
 				       #:origin origin
 				       #:version version)))
@@ -192,7 +302,7 @@ unikernels.")
 				(origin (package-source irmin-base-3.5))
 				(version (package-version irmin-base-3.5)))
 
-  (package-with-ocaml-mtime-1.4
+  (package-with-ocaml-mtime-1.4-dependencies
    (package-with-explicit-irmin-origin p
 				       #:origin origin
 				       #:version version)))
@@ -201,7 +311,7 @@ unikernels.")
 				 #:key
 				(origin (package-source irmin-base-3.6))
 				(version (package-version irmin-base-3.6)))
-  (package-with-ocaml-mtime-1.4
+  (package-with-ocaml-mtime-1.4-dependencies
    (package-with-explicit-irmin-origin p
 				       #:origin origin
 				       #:version version)))
@@ -210,7 +320,7 @@ unikernels.")
 				 #:key
 				(origin (package-source irmin-base-3.7))
 				(version (package-version irmin-base-3.7)))
-  (package-with-ocaml-mtime-1.4
+  (package-with-ocaml-mtime-1.4-dependencies
    (package-with-explicit-irmin-origin p
 				       #:origin origin
 				       #:version version)))
@@ -259,104 +369,6 @@ unikernels.")
 (define-public ocaml-irmin-3.7
   (package-with-irmin-3.7 ocaml-irmin))
 
-(define-public ocaml-index-1.6.1
-  (package
-   (name "ocaml-index")
-   (version "1.6.1")
-   (home-page "https://github.com/mirage/index")
-   (source
-    (origin
-     (method git-fetch)
-     (uri (git-reference
-	   (url home-page)
-	   (commit version)))
-     (file-name (git-file-name name version))
-     (sha256
-      (base32
-       "0bw2yvjp5ccibfzhil58ks8w7pws8ln2a8kf1m2dxj7ywwfncpas"))))
-   (build-system dune-build-system)
-   (propagated-inputs (list ocaml-optint
-			    ocaml-repr
-			    ocaml-ppx-repr
-			    ocaml-fmt
-			    ocaml-logs
-			    ocaml-mtime-1.4
-			    ocaml-cmdliner
-			    ocaml-progress
-			    ocaml-semaphore-compat
-			    ocaml-jsonm
-			    ocaml-stdlib-shims
-			    ocaml-lru))
-   (native-inputs (list ocaml-alcotest
-			ocaml-crowbar
-			ocaml-re
-			ocaml-yojson
-			ocaml-digestif
-			ocaml-ppx-deriving-yojson
-			ocaml-rusage
-			ocaml-metrics-unix
-			ocaml-tezos-base58
-			gmp))
-   (synopsis "A platform-agnostic multi-level index for OCaml")
-   (description
-    "Index is a scalable implementation of persistent indices in OCaml.  It takes an
-arbitrary IO implementation and user-supplied content types and supplies a
-standard key-value interface for persistent storage.  Index provides instance
-sharing: each OCaml run-time can share a common singleton instance.  Index
-supports multiple-reader/single-writer access.  Concurrent access is safely
-managed using lock files.")
-   (license license:expat)))
-
-(define-public ocaml-index-1.6.2
-  (package
-   (name "ocaml-index")
-   (version "1.6.2")
-   (home-page "https://github.com/mirage/index")
-   (source
-    (origin
-     (method git-fetch)
-     (uri (git-reference
-	   (url home-page)
-	   (commit version)))
-     (file-name (git-file-name name version))
-     (sha256
-      (base32
-       "0x1fgz6jv5max1kmpvajxg69nc0pgh1wvx8adsiddh84g0jfyrga"))))
-   (build-system dune-build-system)
-   (propagated-inputs (list ocaml-optint
-			    ocaml-repr
-			    ocaml-ppx-repr
-			    ocaml-fmt
-			    ocaml-logs
-			    ocaml-mtime
-			    ocaml-cmdliner
-			    ocaml-progress
-			    ocaml-semaphore-compat
-			    ocaml-jsonm
-			    ocaml-stdlib-shims
-			    ocaml-lru))
-   (native-inputs (list ocaml-alcotest
-			ocaml-crowbar
-			ocaml-re
-			ocaml-yojson
-			ocaml-digestif
-			ocaml-ppx-deriving-yojson
-			ocaml-rusage
-			ocaml-metrics-unix
-			ocaml-tezos-base58
-			gmp))
-   (synopsis "A platform-agnostic multi-level index for OCaml")
-   (description
-    "Index is a scalable implementation of persistent indices in OCaml.  It takes an
-arbitrary IO implementation and user-supplied content types and supplies a
-standard key-value interface for persistent storage.  Index provides instance
-sharing: each OCaml run-time can share a common singleton instance.  Index
-supports multiple-reader/single-writer access.  Concurrent access is safely
-managed using lock files.")
-   (license license:expat)))
-
-;; set default to 1.6.1
-(define-public ocaml-index ocaml-index-1.6.1)
 
 (define-public ocaml-irmin-pack
   (package
@@ -370,7 +382,7 @@ managed using lock files.")
 	  ocaml-fmt
 	  ocaml-logs
 	  ocaml-lwt
-	  ocaml-mtime-1.4
+	  ocaml-mtime
 	  ocaml-cmdliner
 	  ocaml-optint
 	  ocaml-checkseum
@@ -389,7 +401,7 @@ managed using lock files.")
 	  ocaml-jsonm
 	  ocaml-fmt
 	  ocaml-lwt
-	  ocaml-mtime-1.4
+	  ocaml-mtime
 	  ocaml-alcotest-lwt
 	  ocaml-metrics-unix))
    (native-inputs
