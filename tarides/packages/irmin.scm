@@ -259,7 +259,7 @@ unikernels.")
 (define-public ocaml-irmin-3.7
   (package-with-irmin-3.7 ocaml-irmin))
 
-(define-public ocaml-index
+(define-public ocaml-index-1.6.1
   (package
    (name "ocaml-index")
    (version "1.6.1")
@@ -306,6 +306,57 @@ sharing: each OCaml run-time can share a common singleton instance.  Index
 supports multiple-reader/single-writer access.  Concurrent access is safely
 managed using lock files.")
    (license license:expat)))
+
+(define-public ocaml-index-1.6.2
+  (package
+   (name "ocaml-index")
+   (version "1.6.2")
+   (home-page "https://github.com/mirage/index")
+   (source
+    (origin
+     (method git-fetch)
+     (uri (git-reference
+	   (url home-page)
+	   (commit version)))
+     (file-name (git-file-name name version))
+     (sha256
+      (base32
+       "0x1fgz6jv5max1kmpvajxg69nc0pgh1wvx8adsiddh84g0jfyrga"))))
+   (build-system dune-build-system)
+   (propagated-inputs (list ocaml-optint
+			    ocaml-repr
+			    ocaml-ppx-repr
+			    ocaml-fmt
+			    ocaml-logs
+			    ocaml-mtime
+			    ocaml-cmdliner
+			    ocaml-progress
+			    ocaml-semaphore-compat
+			    ocaml-jsonm
+			    ocaml-stdlib-shims
+			    ocaml-lru))
+   (native-inputs (list ocaml-alcotest
+			ocaml-crowbar
+			ocaml-re
+			ocaml-yojson
+			ocaml-digestif
+			ocaml-ppx-deriving-yojson
+			ocaml-rusage
+			ocaml-metrics-unix
+			ocaml-tezos-base58
+			gmp))
+   (synopsis "A platform-agnostic multi-level index for OCaml")
+   (description
+    "Index is a scalable implementation of persistent indices in OCaml.  It takes an
+arbitrary IO implementation and user-supplied content types and supplies a
+standard key-value interface for persistent storage.  Index provides instance
+sharing: each OCaml run-time can share a common singleton instance.  Index
+supports multiple-reader/single-writer access.  Concurrent access is safely
+managed using lock files.")
+   (license license:expat)))
+
+;; set default to 1.6.1
+(define-public ocaml-index ocaml-index-1.6.1)
 
 (define-public ocaml-irmin-pack
   (package
