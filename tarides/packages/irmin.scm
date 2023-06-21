@@ -85,7 +85,7 @@ public consumption and provides no stability guarantee.")
 			    ocaml-logs
 			    ocaml-mtime
 			    ocaml-cmdliner
-			    ocaml-progress
+			    ocaml-progress-0.2.1
 			    ocaml-semaphore-compat
 			    ocaml-jsonm
 			    ocaml-stdlib-shims
@@ -285,8 +285,8 @@ unikernels.")
 
 (define package-with-ocaml-mtime-1.4-dependencies
   (compose package-with-ocaml-mtime-1.4
-	   package-with-ocaml-index-1.6.1
-	   package-with-ocaml-progress-0.2.1))
+	   package-with-ocaml-progress-0.2.1
+	   package-with-ocaml-index-1.6.1))
 
 (define* (package-with-irmin-3.4 p
 				 #:key
@@ -368,7 +368,6 @@ unikernels.")
 
 (define-public ocaml-irmin-3.7
   (package-with-irmin-3.7 ocaml-irmin))
-
 
 (define-public ocaml-irmin-pack
   (package
